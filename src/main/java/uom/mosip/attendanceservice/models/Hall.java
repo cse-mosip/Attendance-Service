@@ -1,4 +1,4 @@
-package uom.mospi.attendanceservice.models;
+package uom.mosip.attendanceservice.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;

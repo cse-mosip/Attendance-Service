@@ -1,4 +1,4 @@
-package uom.mospi.attendanceservice;
+package uom.mosip.attendanceservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
