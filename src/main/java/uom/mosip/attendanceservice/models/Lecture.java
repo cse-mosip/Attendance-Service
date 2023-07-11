@@ -34,6 +34,12 @@ public class Lecture {
     @Column(nullable = false)
     private LocalDateTime endTime;
 
+    @Column(columnDefinition = "boolean default 0")
+    private boolean isStarted;
+
+    @Column(columnDefinition = "boolean default 0")
+    private boolean isEnded;
+
     @Column(nullable = false)
     private int expectedAttendance;
 
