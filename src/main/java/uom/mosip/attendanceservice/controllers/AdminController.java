@@ -21,7 +21,10 @@ public class AdminController {
     public ResponseDTO getStudentAttendance() {
         return null;
     }
-
+   @GetMapping("/admin/lecture-attendance/lecture ")
+    public ResponseDTO getLectureAttendance() {
+        return null;
+    }
 
 
 }
