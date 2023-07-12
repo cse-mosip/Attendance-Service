@@ -1,13 +1,9 @@
 package uom.mosip.attendanceservice.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.AdminService;
-
 
 @RestController
 public class AdminController {
@@ -19,18 +15,21 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/admin/lecture-attendance/student ")
-    public ResponseDTO getStudentAttendance() {
-        return null;
+    @GetMapping("/admin/lecture-attendance/student/{studentId}")
+    public ResponseDTO getStudentAttendance(@PathVariable String studentId) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setData(adminService.getStudentAttendance(studentId));
+        responseDTO.setStatus("200");
+        return responseDTO;
     }
-   @GetMapping("/admin/lecture-attendance/lecture/{lectureId}")
+
+    @GetMapping("/admin/lecture-attendance/lecture/{lectureId}")
     public ResponseDTO getLectureAttendance(
-        @PathVariable("lectureId") String lectureId
-    ) {
-
-
-        return null;
+            @PathVariable("lectureId") String lectureId) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setData(adminService.getLectureAttendance(lectureId));
+        responseDTO.setStatus("200");
+        return responseDTO;
     }
-
 
 }
