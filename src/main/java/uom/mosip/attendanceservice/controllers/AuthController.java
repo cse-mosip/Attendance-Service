@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uom.mosip.attendanceservice.dto.auth.LoginRequestDTO;
+import uom.mosip.attendanceservice.helpers.AuthHelper;
 import uom.mosip.attendanceservice.services.TokenService;
 
 @RestController
@@ -14,6 +15,9 @@ public class AuthController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private AuthHelper authHelper;
 
     @PostMapping("/admin/login")
     public Object login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
@@ -23,7 +27,7 @@ public class AuthController {
     }
 
     @GetMapping("/pend")
-    public String pend() {
-        return "This is a protected resource.";
+    public Object pend() {
+        return authHelper.getCurrentUserDetails();
     }
 }
