@@ -2,6 +2,8 @@ package uom.mosip.attendanceservice.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.AdminService;
@@ -21,8 +23,12 @@ public class AdminController {
     public ResponseDTO getStudentAttendance() {
         return null;
     }
-   @GetMapping("/admin/lecture-attendance/lecture ")
-    public ResponseDTO getLectureAttendance() {
+   @GetMapping("/admin/lecture-attendance/lecture/{lectureId}")
+    public ResponseDTO getLectureAttendance(
+        @PathVariable("lectureId") String lectureId
+    ) {
+
+
         return null;
     }
 
