@@ -17,6 +17,7 @@ public class AuthController {
     @PostMapping("/admin/login")
     public Object login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
 
-        return tokenService.generateJWTToken(loginRequestDTO.getUsername(), "1");
+        //return tokenService.generateJWTToken(loginRequestDTO.getUsername(), "1");
+        return tokenService.decodeJWTToken(loginRequestDTO.getUsername());
     }
 }
