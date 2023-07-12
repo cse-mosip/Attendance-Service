@@ -18,4 +18,8 @@ public class AdminService {
     public List<LectureAttendance> getStudentAttendance(String studentId){
         return lectureAttendanceRepository.getLectureAttendanceByStudentId(studentId);
     }
+
+      public List<LectureAttendance> getLectureAttendance(String lectureId){
+        return lectureAttendanceRepository.getLectureAttendanceByStudentId(lectureId);
+    }
 }
