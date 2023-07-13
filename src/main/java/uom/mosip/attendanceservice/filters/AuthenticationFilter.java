@@ -11,10 +11,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.server.PathContainer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.pattern.PathPattern;
 import uom.mosip.attendanceservice.dto.auth.TokenDTO;
 import uom.mosip.attendanceservice.dto.auth.UserDetails;
 import uom.mosip.attendanceservice.services.TokenService;
@@ -30,6 +32,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private AuthRouteMatcher authRouteMatcher;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -77,7 +82,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getRequestURI().equals("/admin/login");
+        // Match for the protected endpoints and include them in this filter
+        for (PathPattern pattern: authRouteMatcher.getPatterns()) {
+            if (pattern.matches(PathContainer.parsePath(request.getRequestURI())))
+                return false;
+        }
+        return true;
     }
 
     private void rejectRequest(HttpServletResponse response, String status, String message) throws IOException {
