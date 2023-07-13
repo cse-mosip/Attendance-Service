@@ -18,8 +18,8 @@ public class UserService {
     }
   
     public User saveUser(User user) throws Exception {
-        User existingUserByEmail = userRepository.findByEmail(user.getEmail());
-        if (existingUserByEmail != null) {
+        Optional<User> existingUserByEmail = userRepository.findByEmail(user.getEmail());
+        if (existingUserByEmail.isPresent()) {
             System.out.println(user.getEmail()+" already exist in the database");
             throw new Exception("User with the same email exists");
         }
