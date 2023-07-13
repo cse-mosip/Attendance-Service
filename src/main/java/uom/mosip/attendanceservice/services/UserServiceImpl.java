@@ -1,6 +1,5 @@
 package uom.mosip.attendanceservice.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.UserRepository;
 import uom.mosip.attendanceservice.models.User;
@@ -8,15 +7,15 @@ import uom.mosip.attendanceservice.models.User;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService{
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-  
+
+    @Override
     public User saveUser(User user) throws Exception {
         User existingUserByEmail = userRepository.findByEmail(user.getEmail());
         if (existingUserByEmail != null) {
@@ -36,3 +35,4 @@ public class UserService {
         return savedUser;
     }
 }
+
