@@ -23,12 +23,12 @@ public class HallService {
 //    update lecture hall
     public ResponseDTO updateHall(HallDTO hall) {
 
-        Hall updatedHall = hallRepository.findById(hall.getId()).get();
         ResponseDTO responseDTO = new ResponseDTO();
-        if (updatedHall == null) {
+        if (hallRepository.findById(hall.getId()).isEmpty()) {
             responseDTO.setMessage("Error occur when loading existing hall data!");
             responseDTO.setStatus("HALL_NOT_FOUND");
         } else{
+            Hall updatedHall = hallRepository.findById(hall.getId()).get();
             String errorMessage = validateHallInputs(hall);
             if (errorMessage != null) {
                 responseDTO.setMessage(errorMessage);
