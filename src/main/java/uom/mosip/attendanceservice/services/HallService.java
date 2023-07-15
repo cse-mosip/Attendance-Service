@@ -73,6 +73,7 @@ public class HallService {
         } else {
             Hall deletedHall = hallRepository.findById(hallId).get();
             deletedHall.setActive(false);
+            deletedHall = hallRepository.save(deletedHall);
             responseDTO.setMessage("Deleted lecture hall successfully!");
             responseDTO.setStatus("HALL_DELETED_SUCCESSFULLY");
         }
