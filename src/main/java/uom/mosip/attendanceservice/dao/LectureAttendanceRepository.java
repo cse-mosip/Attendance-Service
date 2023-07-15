@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface LectureAttendanceRepository extends CrudRepository<LectureAttendance,Long> {
     List<LectureAttendance> getLectureAttendanceByStudentId(String studentId);
+    List<LectureAttendance> getLectureAttendanceByLectureId(long studentId);
 }
