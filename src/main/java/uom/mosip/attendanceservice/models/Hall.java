@@ -18,6 +18,7 @@ public class Hall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private boolean isActive = true;
 
     @Column(nullable = false)
     private String name;
