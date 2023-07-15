@@ -11,13 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseDTO {
-    private String status;
+public class AdminRegisterDTO {
+    private String name;
+    private String email;
     private String message;
-    private Object data;
 
-    public ResponseDTO(String status, String message) {
-        this.status = status;
+    public AdminRegisterDTO(String message) {
         this.message = message;
     }
 }
