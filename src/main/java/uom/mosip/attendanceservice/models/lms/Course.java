@@ -21,7 +21,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "module_code", nullable = false)
+    @Column(name = "module_code", nullable = false, length = 8)
     private String moduleCode;
     @Column(nullable = false)
     private int intake;
