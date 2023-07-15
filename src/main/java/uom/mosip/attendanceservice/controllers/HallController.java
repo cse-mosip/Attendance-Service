@@ -11,7 +11,7 @@ import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.services.HallService;
 
 @RestController
-@RequestMapping("lectureHall")
+@RequestMapping("admin/hall")
 @CrossOrigin
 public class HallController {
     private final HallService hallService;
