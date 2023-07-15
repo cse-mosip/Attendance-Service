@@ -10,7 +10,6 @@ import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.services.HallService;
 
-
 @RestController
 @RequestMapping("lectureHall")
 @CrossOrigin
@@ -22,9 +21,9 @@ public class HallController {
         this.hallService = hallService;
     }
 
-//    get all lecture halls
+    // get all lecture halls
     @GetMapping("/getAllHalls")
-    public ResponseDTO getAllHalls(){
+    public ResponseDTO getAllHalls() {
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setData(hallService.getAllHalls());
         responseDTO.setMessage("Get all lecture halls successfully!");
@@ -32,16 +31,19 @@ public class HallController {
         return responseDTO;
     }
 
-//    Create lecture hall
+    // Create lecture hall
 
-//    update lecture hall
-    @PostMapping(path = "/update",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    // update lecture hall
+    @PostMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> updateHall(@RequestBody HallDTO hall) {
         return new ResponseEntity<>(hallService.updateHall(hall), HttpStatus.OK);
     }
 
-//    delete lecture hall
+    // delete lecture hall
+
+    @DeleteMapping("/deleteHall/{hallId}")
+    public void deleteHall(@PathVariable("hallId") long hallId) {
+        hallService.deleteHallById(hallId);
+    }
 
 }
