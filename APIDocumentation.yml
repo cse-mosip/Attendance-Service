@@ -56,6 +56,35 @@ paths:
       security:
         - access_token: []
 
+  /admin/login:
+    post:
+      tags:
+        - Users
+      summary: Authenticate users
+      description: Authenticate the users and receive an access token
+      operationId: login
+      requestBody:
+        description: Login details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Returns the access token after successfully authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessTokenDTO'
+        '400':
+          description: Invalid inputs/ Missing inputs/ Invalid grant type
+        '401':
+          description: Invalid credentials
+        '404':
+          description: Username not found
+
+
 components:
   schemas:
     ExamAttendance:
@@ -72,6 +101,38 @@ components:
           format: date-time
           example: 2023-07-15T11:36:50
           nullable: true
+
+    LoginRequestDTO:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          description: Grant type for authentication (should always be equal to 'password')
+          example: password
+          nullable: false
+        username:
+          type: string
+          description: Username (Email) of the user
+          example: 'user@gmail.com'
+          nullable: false
+        password:
+          type: string
+          description: Password of the user
+          example: password
+          nullable: false
+
+    AccessTokenDTO:
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: "eeyabcdefgh"
+          description: Access token that can be used to access protected endpoints
+        expires_in:
+          type: integer
+          format: int32
+          example: 3600
+          description: Token expiry time in seconds
 
   securitySchemes:
     access_token:
