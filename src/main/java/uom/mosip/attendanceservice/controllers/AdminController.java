@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.AdminService;
 
-
 @RestController
 public class AdminController {
 
@@ -23,10 +22,14 @@ public class AdminController {
         responseDTO.setStatus("200");
         return responseDTO;
     }
-   @GetMapping("/admin/lecture-attendance/lecture ")
-    public ResponseDTO getLectureAttendance() {
-        return null;
-    }
 
+    @GetMapping("/admin/lecture-attendance/lecture/{lectureId}")
+    public ResponseDTO getLectureAttendance(
+            @PathVariable("lectureId") String lectureId) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setData(adminService.getLectureAttendance(lectureId));
+        responseDTO.setStatus("200");
+        return responseDTO;
+    }
 
 }
