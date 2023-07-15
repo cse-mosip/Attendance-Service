@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  title: Attendance Service API
+  description: |-
+    This is the API documentation of Attendance Service (MOSIP).
+  version: 1.0.0
+
+#servers:
+#  - url: https://attendance.mosip.uom.lk/api/v1
+
+tags:
+  - name: Exams
+    description: APIs related to exam attendance
+  - name: Lectures
+    description: APIs related to lecture attendance
+  - name: Users
+    description:  APIs related to user authentication/registration
+
+paths:
+  /admin/exam-attendance/{examId}:
+    get:
+      tags:
+        - Exams
+      summary: Get attendance for an exam
+      description: This endpoint will provide a list of enrolled students for an exam with their attendance status.
+      operationId: getAttendanceForAnExam
+      parameters:
+        - name: examId
+          in: path
+          description: ID of the Exam
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Attendance fetched successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Attendance Fetched."
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ExamAttendance'
+        '400':
+          description: Invalid ID supplied or ID missing
+        '404':
+          description: Exam ID is not found.
+      security:
+        - access_token: []
+
+components:
+  schemas:
+    ExamAttendance:
+      type: object
+      properties:
+        student_id:
+          type: string
+          example: 190254R
+        present:
+          type: boolean
+          example: true
+        marked_time:
+          type: string
+          format: date-time
+          example: 2023-07-15T11:36:50
+          nullable: true
+
+  securitySchemes:
+    access_token:
+      type: apiKey
+      name: Access-Token
+      in: header
