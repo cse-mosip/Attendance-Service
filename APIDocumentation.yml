@@ -56,7 +56,7 @@ paths:
       security:
         - access_token: []
 
-  /admin/exam/{examId}:
+  /admin/exam/get-exam/{examId}:
     get:
       tags:
         - Exams
@@ -95,7 +95,7 @@ paths:
       security:
         - access_token: [ ]
 
-  /admin/all-exams:
+  /admin/exam/all-exams:
     get:
       tags:
         - Exams
