@@ -80,4 +80,18 @@ public class HallService {
 
         return responseDTO;
     }
+
+  //get hall by hallId
+    public ResponseDTO getHallById(long hallId) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        if (hallRepository.findById(hallId).isEmpty()) {
+            responseDTO.setMessage("No hall found corresponding to the hall ID!");
+            responseDTO.setStatus("HALL_NOT_FOUND");
+        } else {
+            responseDTO.setData(hallRepository.findById(hallId).get());
+            responseDTO.setMessage("Get lecture hall successfully!");
+            responseDTO.setStatus("HALL_FOUND");
+        }
+        return responseDTO;
+    }
 }

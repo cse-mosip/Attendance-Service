@@ -40,10 +40,17 @@ public class HallController {
     }
 
     // delete lecture hall
-
     @DeleteMapping("/deleteHall/{hallId}")
     public void deleteHall(@PathVariable("hallId") long hallId) {
         hallService.deleteHallById(hallId);
     }
+
+    //get hall by hallId
+    @GetMapping("/getHall/{hallId}")
+    public ResponseEntity<ResponseDTO> getHallById(@PathVariable("hallId") long hallId) {
+        ResponseDTO responseDTO = hallService.getHallById(hallId);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
 
 }
