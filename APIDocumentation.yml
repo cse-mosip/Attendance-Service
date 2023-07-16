@@ -15,6 +15,8 @@ tags:
     description: APIs related to lecture attendance
   - name: Users
     description:  APIs related to user authentication/registration
+  - name: Halls
+    description:  APIs related to Halls
 
 paths:
   /admin/exam-attendance/{examId}:
@@ -55,6 +57,74 @@ paths:
           description: Exam ID is not found.
       security:
         - access_token: []
+
+  /admin/exam/get-exam/{examId}:
+    get:
+      tags:
+        - Exams
+      summary: Get an exam by ID
+      description: This endpoint will provide details of an exam for a given exam ID.
+      operationId: getExamById
+      parameters:
+        - name: examId
+          in: path
+          description: ID of the Exam
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Exam fetched successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Exam Fetched."
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exam'
+        '400':
+          description: Invalid ID supplied or ID missing
+        '404':
+          description: Exam ID is not found.
+      security:
+        - access_token: [ ]
+
+  /admin/exam/all-exams:
+    get:
+      tags:
+        - Exams
+      summary: Get all exams
+      description: This endpoint will provide details of all exams of the system.
+      operationId: getAllExams
+      responses:
+        '200':
+          description: Exams fetched successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Exams Fetched."
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exam'
+        '404':
+          description: Exams not found.
+      security:
+        - access_token: [ ]
 
   /admin/login:
     post:
@@ -272,6 +342,33 @@ paths:
       security:
         - access_token: [ ]
 
+/admin/hall/getAllHalls:
+    get:
+      tags:
+        - Halls
+      summary: Get all of the Halls
+      description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
+      operationId: getAllHalls
+      parameters: none
+      responses:
+        '200':
+          description: Get all lecture halls successfully!.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Get all lecture halls successfully!"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HallsDTO'
+      security:
+        - access_token: []
 
 components:
   schemas:
@@ -357,6 +454,29 @@ components:
           description: Picture of student
           example: 23xcewjf4wyfcw4093ixh32feefr4f4cgttrbtrbt
           nullable: false
+    
+    HallsDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of hall
+          example: 6513213
+          nullable: false
+        name:
+          type: string
+          example: Exam hall 215
+        location:
+          type: string
+          example: Sumanadasa Building
+        capacity:
+          type: integer
+          description: ID of hall
+          example: 50
+        active:
+          type: boolean
+          example: true
 
   securitySchemes:
     access_token:
