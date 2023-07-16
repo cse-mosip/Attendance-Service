@@ -59,12 +59,22 @@ public class ExamController {
     @GetMapping("/get-exam/{examId}")
     public Object getExamById(@PathVariable long examId){
         Exam exam = examService.getExamById(examId);
+        if (exam == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO("EXAM_NOT_FOUND", "Exam ID is not found."));
+        }
         return new ResponseDTO("OK", "Exam Fetched.", exam);
     }
 
     @GetMapping("/all-exams")
     public Object getAllExams(){
         Iterable<Exam> exams = examService.getAllExams();
-        return new ResponseDTO("OK", "Exams Fetched.", exams);
+        Iterator<Exam> iterator = exams.iterator();
+        if (iterator.hasNext()) {
+            return new ResponseDTO("OK", "Exams Fetched.", exams);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO("EXAMS_NOT_FOUND", "Exams are not found."));
+        }
     }
 }
