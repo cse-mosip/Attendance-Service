@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uom.mosip.attendanceservice.dto.AdminRegisterDTO;
-import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.User;
 import uom.mosip.attendanceservice.services.UserService;
 
