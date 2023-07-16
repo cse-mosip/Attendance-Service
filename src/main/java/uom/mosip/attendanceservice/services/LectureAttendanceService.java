@@ -10,17 +10,20 @@ import uom.mosip.attendanceservice.models.Lecture;
 import uom.mosip.attendanceservice.models.LectureAttendance;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class LectureAttendanceService {
     private final LectureRepository lectureRepository;
     private final LectureAttendanceRepository lectureAttendanceRepository;
+    private final LMSService lmsService;
 
     @Autowired
-    public LectureAttendanceService(LectureRepository lectureRepository, LectureAttendanceRepository lectureAttendanceRepository) {
+    public LectureAttendanceService(LectureRepository lectureRepository, LectureAttendanceRepository lectureAttendanceRepository, LMSService lmsService) {
         this.lectureRepository = lectureRepository;
         this.lectureAttendanceRepository = lectureAttendanceRepository;
+        this.lmsService = lmsService;
     }
 
     public ResponseDTO markLectureAttendance(MarkAttendanceRequestDTO markAttendanceRequestDTO) {
@@ -28,7 +31,7 @@ public class LectureAttendanceService {
         Long lecture_id = markAttendanceRequestDTO.getEventId();
 
         if (fingerprint == null || lecture_id == null) {
-            return new ResponseDTO("400", "Invalid data", "Invalid data");
+            return new ResponseDTO("INVALID_DATA", "Fingerprint or Lecture id is not set");
         }
 
         // TODO  - call authentication service and get the student id
@@ -41,18 +44,19 @@ public class LectureAttendanceService {
                 Lecture validLecture = lecture.get();
 
                 if (!validLecture.isStarted()) {
-                    return new ResponseDTO("400", "Invalid data", "Lecture is not yet started");
+                    return new ResponseDTO("INVALID_DATA", "Lecture is not yet started");
                 } else if (validLecture.isEnded()) {
-                    return new ResponseDTO("400", "Invalid data", "Lecture has already ended");
+                    return new ResponseDTO("INVALID_DATA", "Lecture has already ended");
                 } else {
-                    // TODO - validate if the student can attend the lecture
-                    boolean canAttend = true;
+                    List<String> studentList = lmsService.getStudentsForACourse(validLecture.getModuleCode(), validLecture.getIntake());
+
+                    boolean canAttend = studentList.contains(student_id);
 
                     if (canAttend) {
-                        Optional<LectureAttendance> studentLectureAttendance = lectureAttendanceRepository.findByStudentIdAndLecture(student_id, validLecture);
+                        List<LectureAttendance> studentLectureAttendance = lectureAttendanceRepository.getLectureAttendanceByStudentIdAndLecture(student_id, validLecture);
 
-                        if (studentLectureAttendance.isPresent()) {
-                            return new ResponseDTO("400", "Invalid data", "Attendance already marked");
+                        if (!studentLectureAttendance.isEmpty()) {
+                            return new ResponseDTO("INVALID_DATA", "Attendance already marked");
                         }
 
                         LectureAttendance lectureAttendance = new LectureAttendance();
@@ -67,16 +71,16 @@ public class LectureAttendanceService {
                         // TODO - get full details of the student from registration service
                         // TODO - add student object in response
 
-                        return new ResponseDTO("200", "Attendance marked successfully", student_id);
+                        return new ResponseDTO("OK", "Attendance marked successfully", student_id);
                     } else {
-                        return new ResponseDTO("400", "Invalid data", "Student does not have access to this lecture");
+                        return new ResponseDTO("INVALID_DATA", "Student does not have access to this lecture");
                     }
                 }
             } else {
-                return new ResponseDTO("400", "Invalid data", "Invalid lecture");
+                return new ResponseDTO("INVALID_DATA", "Invalid lecture");
             }
         } else {
-            return new ResponseDTO("400", "Invalid data", "No Match");
+            return new ResponseDTO("INVALID_DATA", "No Match");
         }
 
     }
