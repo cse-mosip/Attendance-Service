@@ -176,6 +176,102 @@ paths:
       security:
         - access_token: [ ]
 
+  /admin/lecture/start-lecture/{lectureId}:
+    get:
+      tags:
+        - Lectures
+      summary: Start a lecture
+      description: This endpoint will provide functionality for a admin to start a lecture.
+      operationId: startLecture
+      parameters:
+        - name: lectureId
+          in: path
+          description: ID of the lecture
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Lecture started successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Lecture started successfully"
+                  data:
+                    type: integer
+                    format: int64
+                    description: "Lecture id"
+                    example: 43872
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_DATA"
+                  message:
+                    type: string
+                    example: "Lecture already started"
+      security:
+        - access_token: [ ]
+
+  /admin/lecture/end-lecture/{lectureId}:
+    get:
+      tags:
+        - Lectures
+      summary: End a lecture
+      description: This endpoint will provide functionality for a admin to end a lecture.
+      operationId: endLecture
+      parameters:
+        - name: lectureId
+          in: path
+          description: ID of the lecture
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Lecture ended successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Lecture finished successfully"
+                  data:
+                    type: integer
+                    format: int64
+                    description: "Lecture id"
+                    example: 43872
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_DATA"
+                  message:
+                    type: string
+                    example: "Invalid lecture"
+      security:
+        - access_token: [ ]
+
 
 components:
   schemas:
