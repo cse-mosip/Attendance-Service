@@ -14,4 +14,5 @@ public class HallDTO {
     private String name;
     private String location;
     private int capacity;
+    private boolean isActive;
 }

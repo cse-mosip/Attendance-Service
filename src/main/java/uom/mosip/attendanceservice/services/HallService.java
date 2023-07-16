@@ -1,5 +1,7 @@
 package uom.mosip.attendanceservice.services;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.HallRepository;
@@ -7,15 +9,19 @@ import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Hall;
 
+import java.util.List;
+
 @Service
 public class HallService {
 
     @Autowired
     private HallRepository hallRepository;
-
+@Autowired
+    private ModelMapper modelMapper;
     // get all lecture halls
-    public Iterable<Hall> getAllHalls() {
-        return hallRepository.findAll();
+    public Iterable<HallDTO> getAllHalls() {
+        Iterable<Hall> halls =  hallRepository.findAll();
+        return modelMapper.map(halls,new TypeToken<List<HallDTO>>(){}.getType());
     }
 
     // Create lecture hall
