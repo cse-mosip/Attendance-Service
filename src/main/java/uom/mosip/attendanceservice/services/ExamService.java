@@ -16,4 +16,14 @@ public class ExamService {
     public Optional<Exam> getAttendanceForAnExamById(long examId) {
         return examRepository.fetchExamAttendanceById(examId);
     }
+
+    public Iterable<Exam> getAllExams(){
+        return examRepository.findAll();
+    }
+
+    public Exam getExamById(long examId){
+        return examRepository.findById(examId)
+                .orElseThrow(()->new IllegalArgumentException
+                        ("examId: " + examId + "was not found!"));
+    }
 }

@@ -53,4 +53,16 @@ public class ExamController {
 
         return new ResponseDTO("OK", "Attendance Fetched.", attendanceDTOS);
     }
+
+    @GetMapping("admin/exam/{examId}")
+    public Object getExamById(@PathVariable long examId){
+        Exam exam = examService.getExamById(examId);
+        return new ResponseDTO("OK", "Exam Fetched.", exam);
+    }
+
+    @GetMapping("admin/all-exams")
+    public Object getAllExams(){
+        Iterable<Exam> exams = examService.getAllExams();
+        return new ResponseDTO("OK", "Exams Fetched.", exams);
+    }
 }
