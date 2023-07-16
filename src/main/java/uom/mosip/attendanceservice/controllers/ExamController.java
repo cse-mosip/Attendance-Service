@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uom.mosip.attendanceservice.dto.ExamAttendanceDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
@@ -16,6 +17,7 @@ import uom.mosip.attendanceservice.services.LMSService;
 import java.util.*;
 
 @RestController
+@RequestMapping("admin/exam")
 public class ExamController {
 
     @Autowired
@@ -24,7 +26,7 @@ public class ExamController {
     @Autowired
     private LMSService lmsService;
 
-    @GetMapping("/admin/exam-attendance/{examId}")
+    @GetMapping("/exam-attendance/{examId}")
     public Object getAttendanceForAnExam(@PathVariable long examId) {
         Optional<Exam> examOptional = examService.getAttendanceForAnExamById(examId);
 
@@ -52,5 +54,27 @@ public class ExamController {
         }
 
         return new ResponseDTO("OK", "Attendance Fetched.", attendanceDTOS);
+    }
+
+    @GetMapping("/get-exam/{examId}")
+    public Object getExamById(@PathVariable long examId){
+        Exam exam = examService.getExamById(examId);
+        if (exam == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO("EXAM_NOT_FOUND", "Exam ID is not found."));
+        }
+        return new ResponseDTO("OK", "Exam Fetched.", exam);
+    }
+
+    @GetMapping("/all-exams")
+    public Object getAllExams(){
+        Iterable<Exam> exams = examService.getAllExams();
+        Iterator<Exam> iterator = exams.iterator();
+        if (iterator.hasNext()) {
+            return new ResponseDTO("OK", "Exams Fetched.", exams);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO("EXAMS_NOT_FOUND", "Exams are not found."));
+        }
     }
 }
