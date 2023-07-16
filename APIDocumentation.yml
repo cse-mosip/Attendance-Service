@@ -130,6 +130,52 @@ paths:
       security:
         - access_token: [ ]
 
+  /student/exam-attendance-attendance/mark-exam-attendance:
+    post:
+      tags:
+        - Exams
+      summary: Mark and verify attendance for a exam
+      description: This endpoint will provide functionality for a student to mark and verify their attendance in a exam and display their details.
+      operationId: markExamAttendance
+      requestBody:
+        description: Biometric credentials and exam id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkAttendanceRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Attendance marked successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Attendance marked successfully"
+                  data:
+                    type: object
+                    items:
+                      $ref: '#/components/schemas/StudentDTO'
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_DATA"
+                  message:
+                    type: string
+                    example: "Student does not have access to this exam"
+      security:
+        - access_token: [ ]
+
 
 components:
   schemas:

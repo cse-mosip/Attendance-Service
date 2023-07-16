@@ -6,6 +6,7 @@ import uom.mosip.attendanceservice.dao.LectureAttendanceRepository;
 import uom.mosip.attendanceservice.dao.LectureRepository;
 import uom.mosip.attendanceservice.dto.MarkAttendanceRequestDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
+import uom.mosip.attendanceservice.dto.StudentDTO;
 import uom.mosip.attendanceservice.models.Lecture;
 import uom.mosip.attendanceservice.models.LectureAttendance;
 
@@ -69,9 +70,9 @@ public class LectureAttendanceService {
                         lectureRepository.save(validLecture);
 
                         // TODO - get full details of the student from registration service
-                        // TODO - add student object in response
+                        StudentDTO student = new StudentDTO();
 
-                        return new ResponseDTO("OK", "Attendance marked successfully", student_id);
+                        return new ResponseDTO("OK", "Attendance marked successfully", student);
                     } else {
                         return new ResponseDTO("INVALID_DATA", "Student does not have access to this lecture");
                     }
