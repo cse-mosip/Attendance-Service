@@ -1,5 +1,6 @@
 package uom.mosip.attendanceservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HallDTO {
-    private long id;
-    private String name;
-    private String location;
-    private int capacity;
-    private boolean isActive;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class MarkAttendanceRequestDTO {
+    private Object fingerprint;
+    private Long eventId;
 }

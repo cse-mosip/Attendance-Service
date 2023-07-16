@@ -15,6 +15,8 @@ tags:
     description: APIs related to lecture attendance
   - name: Users
     description:  APIs related to user authentication/registration
+  - name: Halls
+    description:  APIs related to Halls
 
 paths:
   /admin/exam-attendance/{examId}:
@@ -56,6 +58,74 @@ paths:
       security:
         - access_token: []
 
+  /admin/exam/get-exam/{examId}:
+    get:
+      tags:
+        - Exams
+      summary: Get an exam by ID
+      description: This endpoint will provide details of an exam for a given exam ID.
+      operationId: getExamById
+      parameters:
+        - name: examId
+          in: path
+          description: ID of the Exam
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Exam fetched successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Exam Fetched."
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exam'
+        '400':
+          description: Invalid ID supplied or ID missing
+        '404':
+          description: Exam ID is not found.
+      security:
+        - access_token: [ ]
+
+  /admin/exam/all-exams:
+    get:
+      tags:
+        - Exams
+      summary: Get all exams
+      description: This endpoint will provide details of all exams of the system.
+      operationId: getAllExams
+      responses:
+        '200':
+          description: Exams fetched successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Exams Fetched."
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exam'
+        '404':
+          description: Exams not found.
+      security:
+        - access_token: [ ]
+
   /admin/login:
     post:
       tags:
@@ -84,6 +154,221 @@ paths:
         '404':
           description: Username not found
 
+  /student/lecture-attendance/mark-lecture-attendance:
+    post:
+      tags:
+        - Lectures
+      summary: Mark attendance for a lecture
+      description: This endpoint will provide functionality for a student to mark their attendance in a lecture and display their details.
+      operationId: markLectureAttendance
+      requestBody:
+        description: Biometric credentials and lecture id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkAttendanceRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Attendance marked successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Attendance marked successfully"
+                  data:
+                    type: object
+                    items:
+                      $ref: '#/components/schemas/StudentDTO'
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_DATA"
+                  message:
+                    type: string
+                    example: "Attendance already marked"
+      security:
+        - access_token: [ ]
+
+  /student/exam-attendance-attendance/mark-exam-attendance:
+    post:
+      tags:
+        - Exams
+      summary: Mark and verify attendance for a exam
+      description: This endpoint will provide functionality for a student to mark and verify their attendance in a exam and display their details.
+      operationId: markExamAttendance
+      requestBody:
+        description: Biometric credentials and exam id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkAttendanceRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Attendance marked successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Attendance marked successfully"
+                  data:
+                    type: object
+                    items:
+                      $ref: '#/components/schemas/StudentDTO'
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_DATA"
+                  message:
+                    type: string
+                    example: "Student does not have access to this exam"
+      security:
+        - access_token: [ ]
+
+  /admin/lecture/start-lecture/{lectureId}:
+    get:
+      tags:
+        - Lectures
+      summary: Start a lecture
+      description: This endpoint will provide functionality for a admin to start a lecture.
+      operationId: startLecture
+      parameters:
+        - name: lectureId
+          in: path
+          description: ID of the lecture
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Lecture started successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Lecture started successfully"
+                  data:
+                    type: integer
+                    format: int64
+                    description: "Lecture id"
+                    example: 43872
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_DATA"
+                  message:
+                    type: string
+                    example: "Lecture already started"
+      security:
+        - access_token: [ ]
+
+  /admin/lecture/end-lecture/{lectureId}:
+    get:
+      tags:
+        - Lectures
+      summary: End a lecture
+      description: This endpoint will provide functionality for a admin to end a lecture.
+      operationId: endLecture
+      parameters:
+        - name: lectureId
+          in: path
+          description: ID of the lecture
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Lecture ended successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Lecture finished successfully"
+                  data:
+                    type: integer
+                    format: int64
+                    description: "Lecture id"
+                    example: 43872
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_DATA"
+                  message:
+                    type: string
+                    example: "Invalid lecture"
+      security:
+        - access_token: [ ]
+
+/admin/hall/getAllHalls:
+    get:
+      tags:
+        - Halls
+      summary: Get all of the Halls
+      description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
+      operationId: getAllHalls
+      parameters: none
+      responses:
+        '200':
+          description: Get all lecture halls successfully!.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Get all lecture halls successfully!"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HallsDTO'
+      security:
+        - access_token: []
 
 components:
   schemas:
@@ -121,6 +406,22 @@ components:
           example: password
           nullable: false
 
+    MarkAttendanceRequestDTO:
+      type: object
+      properties:
+        fingerprint:
+          type: string
+          format: base64
+          description: Fingerprint object of the user
+          example: 3edfxref5f4e5cf54tec5eg544gve5tge6vtercf
+          nullable: false
+        eventId:
+          type: integer
+          format: int64
+          description: ID of lecture or exam
+          example: 6513213
+          nullable: false
+
     AccessTokenDTO:
       type: object
       properties:
@@ -133,6 +434,49 @@ components:
           format: int32
           example: 3600
           description: Token expiry time in seconds
+
+    StudentDTO:
+      type: object
+      properties:
+        index_number:
+          type: string
+          description: University index number
+          example: 190429G
+          nullable: false
+        name:
+          type: string
+          description: Name of student
+          example: D.T.A.W.S.Paranayapa
+          nullable: false
+        picture:
+          type: string
+          format: base64
+          description: Picture of student
+          example: 23xcewjf4wyfcw4093ixh32feefr4f4cgttrbtrbt
+          nullable: false
+    
+    HallsDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of hall
+          example: 6513213
+          nullable: false
+        name:
+          type: string
+          example: Exam hall 215
+        location:
+          type: string
+          example: Sumanadasa Building
+        capacity:
+          type: integer
+          description: ID of hall
+          example: 50
+        active:
+          type: boolean
+          example: true
 
   securitySchemes:
     access_token:

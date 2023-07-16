@@ -1,5 +1,6 @@
 package uom.mosip.attendanceservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Hall {
     @Column(nullable = false)
     private int capacity;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY)
     private List<Lecture> lectures;
 

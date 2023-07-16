@@ -27,7 +27,7 @@ public class HallController {
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setData(hallService.getAllHalls());
         responseDTO.setMessage("Get all lecture halls successfully!");
-        responseDTO.setStatus("200");
+        responseDTO.setStatus("OK");
         return responseDTO;
     }
 

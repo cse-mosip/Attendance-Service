@@ -1,5 +1,7 @@
 package uom.mosip.attendanceservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,21 +36,29 @@ public class Lecture {
     @Column(nullable = false)
     private LocalDateTime endTime;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean isStarted;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean isEnded;
+
     @Column(nullable = false)
     private int expectedAttendance;
 
     @Column(nullable = false)
     private int attendance;
 
-
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "lecturer_id", nullable = false)
     private User lecturer;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "lecture", fetch = FetchType.LAZY)
     private List<LectureAttendance> attendees;
 }
