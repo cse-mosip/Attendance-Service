@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.LectureRepository;
 import uom.mosip.attendanceservice.dto.LectureDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
+import uom.mosip.attendanceservice.models.Exam;
 import uom.mosip.attendanceservice.models.Lecture;
 
 import java.util.List;
@@ -61,6 +62,12 @@ public class LectureService {
         } else {
             return new ResponseDTO("INVALID_DATA", "Invalid lecture");
         }
+    }
+
+    public Lecture getLectureById(long lectureId) {
+        return lectureRepository.findById(lectureId)
+                .orElseThrow(() -> new IllegalArgumentException
+                        ("examId: " + lectureId + "was not found!"));
     }
 
     // create lecture
