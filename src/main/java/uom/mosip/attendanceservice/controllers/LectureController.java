@@ -3,11 +3,9 @@ package uom.mosip.attendanceservice.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import uom.mosip.attendanceservice.dto.LectureDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.LectureService;
 
@@ -41,6 +39,11 @@ public class LectureController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
         }
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
+    @PostMapping(path="/createLecture", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createLecture(@RequestBody LectureDTO lectureDTO){
+        return new ResponseEntity<>(lectureService.createLecture(lectureDTO), HttpStatus.OK);
     }
 
     @GetMapping(path = "/getAllLectures", produces = MediaType.APPLICATION_JSON_VALUE)
