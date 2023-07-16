@@ -75,8 +75,8 @@ public class LectureService {
         ResponseDTO responseDTO = new ResponseDTO();
 
         if (lectureRepository.findById(lectureDTO.getId()).isEmpty()) {
-            responseDTO.setMessage("");
-            responseDTO.setStatus("");
+            responseDTO.setMessage("Error occur when loading existing lecture data!");
+            responseDTO.setStatus("LECTURE_NOT_FOUND");
         } else {
             Lecture createdLecture = lectureRepository.findById(lectureDTO.getId()).get();
             String errorMessage = validateLectureInputs(lectureDTO);
@@ -101,7 +101,7 @@ public class LectureService {
 
                 responseDTO.setData(lectureDTO);
                 responseDTO.setMessage("Lecture created successfully!");
-                responseDTO.setMessage("LECTURE_CREATED_SUCCESSFULLY");
+                responseDTO.setStatus("LECTURE_CREATED_SUCCESSFULLY");
             }
         }
 
@@ -115,6 +115,8 @@ public class LectureService {
             message = "Start time should be earlier than End time";
         } else if (lectureDTO.getExpectedAttendance() <= 0) {
             message = "Expected attendance should be greater than zero";
+        } else if (lectureDTO.getAttendance() > lectureDTO.getExpectedAttendance()){
+            message = "Attendance should not be greater than expected attendance";
         }
 
         return message;
