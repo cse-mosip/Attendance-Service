@@ -3,10 +3,9 @@ package uom.mosip.attendanceservice.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
+import uom.mosip.attendanceservice.dto.LectureDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.LectureService;
 import uom.mosip.attendanceservice.models.Lecture;
@@ -43,13 +42,26 @@ public class LectureController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
-    @GetMapping("/get-lecture/{lectureId}")
-    public Object getLectureById(@PathVariable long lectureId){
+
+    @GetMapping(path = "/get-lecture/{lectureId}")
+    public Object getLectureById(@PathVariable long lectureId) {
         Lecture lecture = lectureService.getLectureById(lectureId);
         if (lecture == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResponseDTO("LECTURE_NOT_FOUND", "Lecture ID is not found."));
         }
         return new ResponseDTO("OK", "Lecture Fetched.", lecture);
+    }
+
+    @PostMapping(path="/createLecture", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createLecture(@RequestBody LectureDTO lectureDTO){
+        return new ResponseEntity<>(lectureService.createLecture(lectureDTO), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getAllLectures", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> getAllLectures(){
+        ResponseDTO responseDTO = lectureService.getAllLectures();
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+
     }
 }

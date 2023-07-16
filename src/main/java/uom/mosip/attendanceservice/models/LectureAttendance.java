@@ -1,5 +1,6 @@
 package uom.mosip.attendanceservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class LectureAttendance {
     @Column(nullable = false)
     private LocalDateTime arrivalTime;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "lecture_id", nullable = false)
     private Lecture lecture;
