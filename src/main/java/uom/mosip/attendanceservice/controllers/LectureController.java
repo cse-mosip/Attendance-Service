@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 import uom.mosip.attendanceservice.dto.LectureDTO;
+import uom.mosip.attendanceservice.dto.LectureUpdateRequestDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.LectureService;
 import uom.mosip.attendanceservice.models.Lecture;
@@ -42,7 +43,6 @@ public class LectureController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
-
     @GetMapping(path = "/get-lecture/{lectureId}")
     public Object getLectureById(@PathVariable long lectureId) {
         Lecture lecture = lectureService.getLectureById(lectureId);
@@ -53,15 +53,21 @@ public class LectureController {
         return new ResponseDTO("OK", "Lecture Fetched.", lecture);
     }
 
-    @PostMapping(path="/createLecture", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDTO> createLecture(@RequestBody LectureDTO lectureDTO){
+    @PostMapping(path = "/createLecture", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createLecture(@RequestBody LectureDTO lectureDTO) {
         return new ResponseEntity<>(lectureService.createLecture(lectureDTO), HttpStatus.OK);
     }
 
     @GetMapping(path = "/getAllLectures", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDTO> getAllLectures(){
+    public ResponseEntity<ResponseDTO> getAllLectures() {
         ResponseDTO responseDTO = lectureService.getAllLectures();
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
 
     }
+
+    @PutMapping(path = "/update")
+    public ResponseDTO markLectureAttendance(@RequestBody LectureUpdateRequestDTO lectureUpdateRequestDTO) {
+        return lectureService.updateLecture(lectureUpdateRequestDTO);
+    }
+
 }

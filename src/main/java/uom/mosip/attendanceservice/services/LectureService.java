@@ -3,6 +3,7 @@ package uom.mosip.attendanceservice.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.LectureRepository;
+import uom.mosip.attendanceservice.dto.LectureUpdateRequestDTO;
 import uom.mosip.attendanceservice.dto.LectureDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Exam;
@@ -66,21 +67,20 @@ public class LectureService {
 
     public Lecture getLectureById(long lectureId) {
         return lectureRepository.findById(lectureId)
-                .orElseThrow(() -> new IllegalArgumentException
-                        ("examId: " + lectureId + "was not found!"));
+                .orElseThrow(() -> new IllegalArgumentException("examId: " + lectureId + "was not found!"));
     }
 
     // create lecture
-    public ResponseDTO createLecture(LectureDTO lectureDTO){
+    public ResponseDTO createLecture(LectureDTO lectureDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
 
-        if (lectureRepository.findById(lectureDTO.getId()).isEmpty()){
+        if (lectureRepository.findById(lectureDTO.getId()).isEmpty()) {
             responseDTO.setMessage("");
             responseDTO.setStatus("");
         } else {
             Lecture createdLecture = lectureRepository.findById(lectureDTO.getId()).get();
             String errorMessage = validateLectureInputs(lectureDTO);
-            if (errorMessage != null){
+            if (errorMessage != null) {
                 responseDTO.setMessage(errorMessage);
                 responseDTO.setStatus("INVALID_INPUTS");
             } else {
@@ -108,12 +108,12 @@ public class LectureService {
         return responseDTO;
     }
 
-    private String validateLectureInputs(LectureDTO lectureDTO){
+    private String validateLectureInputs(LectureDTO lectureDTO) {
         String message = null;
 
-        if(lectureDTO.getEndTime().compareTo(lectureDTO.getStartTime()) <= 0){
+        if (lectureDTO.getEndTime().compareTo(lectureDTO.getStartTime()) <= 0) {
             message = "Start time should be earlier than End time";
-        } else if (lectureDTO.getExpectedAttendance() <= 0){
+        } else if (lectureDTO.getExpectedAttendance() <= 0) {
             message = "Expected attendance should be greater than zero";
         }
 
@@ -123,6 +123,30 @@ public class LectureService {
     public ResponseDTO getAllLectures() {
         List<Lecture> lectureList = (List<Lecture>) lectureRepository.findAll();
         return new ResponseDTO("OK", "All lectures fetched successfully", lectureList);
+    }
+
+    public ResponseDTO updateLecture(LectureUpdateRequestDTO lectureUpdateRequestDTO) {
+        ResponseDTO res = new ResponseDTO();
+        if (lectureRepository.findById(lectureUpdateRequestDTO.getLectureId()).isEmpty()) {
+            res.setMessage("Error occur when loading existing lecture data!");
+            res.setStatus("LECTURE_NOT_FOUND");
+        } else {
+            Lecture lecture = new Lecture();
+            lecture.setId(lectureUpdateRequestDTO.getLectureId());
+            lecture.setModuleCode(lectureUpdateRequestDTO.getModuleCode());
+            lecture.setModuleName(lectureUpdateRequestDTO.getModuleName());
+            lecture.setIntake(lectureUpdateRequestDTO.getIntake());
+            lecture.setEndTime(lectureUpdateRequestDTO.getEndTime());
+            lecture.setStartTime(lectureUpdateRequestDTO.getStartTime());
+            lecture.setStarted(lectureUpdateRequestDTO.isStarted());
+            lecture.setEnded(lectureUpdateRequestDTO.isEnded());
+            lecture.setExpectedAttendance(lectureUpdateRequestDTO.getExpectedAttendance());
+            lecture.setAttendance(lectureUpdateRequestDTO.getAttendance());
+            lectureRepository.save(lecture);
+            res.setMessage("Updated lecture details successfully!");
+            res.setStatus("LECTURE_UPDATED_SUCCESSFULLY");
+        }
+        return res;
     }
 
 }
