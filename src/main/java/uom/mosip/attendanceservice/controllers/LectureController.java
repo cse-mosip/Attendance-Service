@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.LectureService;
+import uom.mosip.attendanceservice.models.Lecture;
 
 import java.util.Objects;
 
@@ -40,5 +41,15 @@ public class LectureController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
         }
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
+    @GetMapping("/get-lecture/{lectureId}")
+    public Object getLectureById(@PathVariable long lectureId){
+        Lecture lecture = lectureService.getLectureById(lectureId);
+        if (lecture == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO("LECTURE_NOT_FOUND", "Lecture ID is not found."));
+        }
+        return new ResponseDTO("OK", "Lecture Fetched.", lecture);
     }
 }
