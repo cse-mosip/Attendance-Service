@@ -25,7 +25,7 @@ public class LectureAttendanceService {
 
     public ResponseDTO markLectureAttendance(MarkAttendanceRequestDTO markAttendanceRequestDTO) {
         Object fingerprint = markAttendanceRequestDTO.getFingerprint();
-        Long lecture_id = markAttendanceRequestDTO.getLecture_id();
+        Long lecture_id = markAttendanceRequestDTO.getEventId();
 
         if (fingerprint == null || lecture_id == null) {
             return new ResponseDTO("400", "Invalid data", "Invalid data");
@@ -63,6 +63,9 @@ public class LectureAttendanceService {
 
                         validLecture.setAttendance(validLecture.getAttendance() + 1);
                         lectureRepository.save(validLecture);
+
+                        // TODO - get full details of the student from registration service
+                        // TODO - add student object in response
 
                         return new ResponseDTO("200", "Attendance marked successfully", student_id);
                     } else {

@@ -13,5 +13,5 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MarkAttendanceRequestDTO {
     private Object fingerprint;
-    private Long lecture_id;
+    private Long eventId;
 }
