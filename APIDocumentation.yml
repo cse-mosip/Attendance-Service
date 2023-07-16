@@ -84,6 +84,52 @@ paths:
         '404':
           description: Username not found
 
+  /student/lecture-attendance/mark-lecture-attendance:
+    post:
+      tags:
+        - Lectures
+      summary: Mark attendance for a lecture
+      description: This endpoint will provide functionality for a student to mark their attendance in a lecture and display their details.
+      operationId: markLectureAttendance
+      requestBody:
+        description: Biometric credentials and lecture id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkAttendanceRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Attendance marked successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Attendance marked successfully"
+                  data:
+                    type: object
+                    items:
+                      $ref: '#/components/schemas/StudentDTO'
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_DATA"
+                  message:
+                    type: string
+                    example: "Attendance already marked"
+      security:
+        - access_token: [ ]
+
 
 components:
   schemas:
@@ -121,6 +167,22 @@ components:
           example: password
           nullable: false
 
+    MarkAttendanceRequestDTO:
+      type: object
+      properties:
+        fingerprint:
+          type: string
+          format: base64
+          description: Fingerprint object of the user
+          example: 3edfxref5f4e5cf54tec5eg544gve5tge6vtercf
+          nullable: false
+        eventId:
+          type: integer
+          format: int64
+          description: ID of lecture or exam
+          example: 6513213
+          nullable: false
+
     AccessTokenDTO:
       type: object
       properties:
@@ -133,6 +195,26 @@ components:
           format: int32
           example: 3600
           description: Token expiry time in seconds
+
+    StudentDTO:
+      type: object
+      properties:
+        index_number:
+          type: string
+          description: University index number
+          example: 190429G
+          nullable: false
+        name:
+          type: string
+          description: Name of student
+          example: D.T.A.W.S.Paranayapa
+          nullable: false
+        picture:
+          type: string
+          format: base64
+          description: Picture of student
+          example: 23xcewjf4wyfcw4093ixh32feefr4f4cgttrbtrbt
+          nullable: false
 
   securitySchemes:
     access_token:
