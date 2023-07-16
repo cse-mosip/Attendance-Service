@@ -35,7 +35,7 @@ public class AdminController {
     public ResponseEntity<ResponseDTO> getLectureAttendance(@PathVariable("lectureId") long lectureId) {
         ResponseDTO responseDTO = new ResponseDTO();
         List<LectureAttendance> attendanceList = adminService.getLectureAttendance(lectureId);
-        if (attendanceList.size() <1){
+        if (attendanceList == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResponseDTO("404", "Lecture ID is not found."));
         }

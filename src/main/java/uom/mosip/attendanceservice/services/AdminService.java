@@ -14,19 +14,20 @@ import java.util.Optional;
 public class AdminService {
     private final LectureAttendanceRepository lectureAttendanceRepository;
     private final LectureRepository lectureRepository;
+
     @Autowired
-    public AdminService(LectureAttendanceRepository lectureAttendanceRepository,LectureRepository lectureRepository) {
+    public AdminService(LectureAttendanceRepository lectureAttendanceRepository, LectureRepository lectureRepository) {
         this.lectureAttendanceRepository = lectureAttendanceRepository;
-        this.lectureRepository =  lectureRepository;
+        this.lectureRepository = lectureRepository;
     }
 
-    public List<LectureAttendance> getStudentAttendance(String studentId){
+    public List<LectureAttendance> getStudentAttendance(String studentId) {
         return lectureAttendanceRepository.getLectureAttendanceByStudentId(studentId);
     }
 
-      public List<LectureAttendance> getLectureAttendance(long lectureId){
+    public List<LectureAttendance> getLectureAttendance(long lectureId) {
         Optional<Lecture> lecture = lectureRepository.findById(lectureId);
-        if (lecture.isEmpty()){
+        if (lecture.isEmpty()) {
             return null;
         }
         return lectureAttendanceRepository.getLectureAttendanceByLectureId(lectureId);
