@@ -24,6 +24,9 @@ public class ExamAttendance {
     @Column(nullable = false)
     private LocalDateTime markedTime;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean isValidated;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "exam_id", nullable = false)
     private Exam exam;
