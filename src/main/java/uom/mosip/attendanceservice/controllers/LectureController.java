@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import uom.mosip.attendanceservice.dto.LectureUpdateRequestDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.LectureService;
 
@@ -44,8 +47,14 @@ public class LectureController {
     }
 
     @GetMapping(path = "/getAllLectures", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDTO> getAllLectures(){
+    public ResponseEntity<ResponseDTO> getAllLectures() {
         ResponseDTO responseDTO = lectureService.getAllLectures();
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
+
+    @PutMapping(path = "/update")
+    public ResponseDTO markLectureAttendance(@RequestBody LectureUpdateRequestDTO lectureUpdateRequestDTO) {
+        return lectureService.updateLecture(lectureUpdateRequestDTO);
+    }
+
 }
