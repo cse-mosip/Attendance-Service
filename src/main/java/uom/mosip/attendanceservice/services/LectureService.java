@@ -6,6 +6,7 @@ import uom.mosip.attendanceservice.dao.LectureRepository;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Lecture;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,6 +60,11 @@ public class LectureService {
         } else {
             return new ResponseDTO("INVALID_DATA", "Invalid lecture");
         }
+    }
+
+    public ResponseDTO getAllLectures() {
+        List<Lecture> lectureList = (List<Lecture>) lectureRepository.findAll();
+        return new ResponseDTO("OK", "All lectures fetched successfully", lectureList);
     }
 
 }
