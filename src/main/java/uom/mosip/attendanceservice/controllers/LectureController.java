@@ -70,4 +70,8 @@ public class LectureController {
         return lectureService.updateLecture(lectureUpdateRequestDTO);
     }
 
+    @DeleteMapping("/deleteLecture/{lectureId}")
+    public void deleteLecture(@PathVariable("lectureId") long hallId) {
+        lectureService.deleteLectureByID(hallId);
+    }
 }
