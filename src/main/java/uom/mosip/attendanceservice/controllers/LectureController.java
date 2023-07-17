@@ -53,7 +53,7 @@ public class LectureController {
         return new ResponseDTO("OK", "Lecture Fetched.", lecture);
     }
 
-    @PostMapping(path = "/createLecture", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> createLecture(@RequestBody LectureDTO lectureDTO) {
         return new ResponseEntity<>(lectureService.createLecture(lectureDTO), HttpStatus.OK);
     }
