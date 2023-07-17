@@ -91,7 +91,7 @@ public class HallService {
     public ResponseDTO getHallById(long hallId) {
         ResponseDTO responseDTO = new ResponseDTO();
         if (hallRepository.findById(hallId).isEmpty()) {
-            responseDTO.setMessage("No hall found corresponding to the hall ID!");
+            responseDTO.setMessage("No hall found respective to the hall ID!");
             responseDTO.setStatus("HALL_NOT_FOUND");
         } else {
             responseDTO.setData(hallRepository.findById(hallId).get());
