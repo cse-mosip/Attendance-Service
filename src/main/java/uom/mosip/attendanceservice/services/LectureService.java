@@ -7,6 +7,7 @@ import uom.mosip.attendanceservice.dto.LectureUpdateRequestDTO;
 import uom.mosip.attendanceservice.dto.LectureDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Exam;
+import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.models.Lecture;
 
 import java.util.List;
@@ -151,4 +152,18 @@ public class LectureService {
         return res;
     }
 
+    public ResponseDTO deleteLectureByID(long lectureID) {
+
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        if (lectureRepository.findById(lectureID).isEmpty()) {
+            responseDTO.setMessage("No Lecture found corresponding to the lecture ID!");
+            responseDTO.setStatus("LECTURE_NOT_FOUND");
+        } else {
+            lectureRepository.deleteById(lectureID);
+            responseDTO.setMessage("Deleted lecture successfully!");
+            responseDTO.setStatus("LECTURE_DELETED_SUCCESSFULLY");
+        }
+        return responseDTO;
+    }
 }
