@@ -5,13 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.dto.auth.LoginRequestDTO;
-import uom.mosip.attendanceservice.helpers.AuthHelper;
 import uom.mosip.attendanceservice.models.User;
 import uom.mosip.attendanceservice.services.TokenService;
 import uom.mosip.attendanceservice.services.UserService;
@@ -25,9 +23,6 @@ public class AuthController {
     private TokenService tokenService;
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private AuthHelper authHelper;
 
     @PostMapping("/admin/login")
     public Object login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
@@ -54,8 +49,4 @@ public class AuthController {
         return tokenService.generateJWTToken(String.valueOf(user.get().getId()), String.valueOf(user.get().getUserType()));
     }
 
-    @GetMapping("/pend")
-    public Object pend() {
-        return authHelper.getCurrentUserDetails();
-    }
 }
