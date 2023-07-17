@@ -6,9 +6,9 @@ import uom.mosip.attendanceservice.dao.LectureRepository;
 import uom.mosip.attendanceservice.dto.LectureUpdateRequestDTO;
 import uom.mosip.attendanceservice.dto.LectureDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
-import uom.mosip.attendanceservice.models.Exam;
-import uom.mosip.attendanceservice.models.Lecture;
+import uom.mosip.attendanceservice.models.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,36 +73,30 @@ public class LectureService {
     // create lecture
     public ResponseDTO createLecture(LectureDTO lectureDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
+        Lecture lecture = new Lecture();
 
-        if (lectureRepository.findById(lectureDTO.getId()).isEmpty()) {
-            responseDTO.setMessage("Error occur when loading existing lecture data!");
-            responseDTO.setStatus("LECTURE_NOT_FOUND");
+        String errorMessage = validateLectureInputs(lectureDTO);
+        if (errorMessage != null) {
+            responseDTO.setMessage(errorMessage);
+            responseDTO.setStatus("INVALID_INPUTS");
         } else {
-            Lecture createdLecture = lectureRepository.findById(lectureDTO.getId()).get();
-            String errorMessage = validateLectureInputs(lectureDTO);
-            if (errorMessage != null) {
-                responseDTO.setMessage(errorMessage);
-                responseDTO.setStatus("INVALID_INPUTS");
-            } else {
-                createdLecture.setId(lectureDTO.getId());
-                createdLecture.setModuleCode(lectureDTO.getModuleCode());
-                createdLecture.setModuleName(lectureDTO.getModuleName());
-                createdLecture.setIntake(lectureDTO.getIntake());
-                createdLecture.setStartTime(lectureDTO.getStartTime());
-                createdLecture.setEndTime(lectureDTO.getEndTime());
-                createdLecture.setStarted(lectureDTO.isStarted());
-                createdLecture.setEnded(lectureDTO.isEnded());
-                createdLecture.setExpectedAttendance(lectureDTO.getExpectedAttendance());
-                createdLecture.setAttendance(lectureDTO.getAttendance());
-                createdLecture.setHall(lectureDTO.getHall());
-                createdLecture.setLecturer(lectureDTO.getLecturer());
+            lecture.setModuleCode(lectureDTO.getModuleCode());
+            lecture.setModuleName(lectureDTO.getModuleName());
+            lecture.setIntake(lectureDTO.getIntake());
+            lecture.setStartTime(lectureDTO.getStartTime());
+            lecture.setEndTime(lectureDTO.getEndTime());
+            lecture.setStarted(lectureDTO.isStarted());
+            lecture.setEnded(lectureDTO.isEnded());
+            lecture.setExpectedAttendance(lectureDTO.getExpectedAttendance());
+            lecture.setAttendance(lectureDTO.getAttendance());
+            lecture.setHall(lectureDTO.getHall());
+            lecture.setLecturer(lectureDTO.getLecturer());
 
-                createdLecture = lectureRepository.save(createdLecture);
+            lectureRepository.save(lecture);
 
-                responseDTO.setData(lectureDTO);
-                responseDTO.setMessage("Lecture created successfully!");
-                responseDTO.setStatus("LECTURE_CREATED_SUCCESSFULLY");
-            }
+            responseDTO.setData(lectureDTO);
+            responseDTO.setMessage("Lecture created successfully!");
+            responseDTO.setStatus("LECTURE_CREATED_SUCCESSFULLY");
         }
 
         return responseDTO;
@@ -111,7 +105,23 @@ public class LectureService {
     private String validateLectureInputs(LectureDTO lectureDTO) {
         String message = null;
 
-        if (lectureDTO.getEndTime().compareTo(lectureDTO.getStartTime()) <= 0) {
+        String moduleCode = lectureDTO.getModuleCode();
+        String moduleName = lectureDTO.getModuleName();
+        int intake = lectureDTO.getIntake();
+        LocalDateTime startTime = lectureDTO.getStartTime();
+        LocalDateTime endTime = lectureDTO.getEndTime();
+        boolean isStarted = lectureDTO.isStarted();
+        boolean isEnded = lectureDTO.isEnded();
+        int expectedAttendance = lectureDTO.getExpectedAttendance();
+        int attendance = lectureDTO.getAttendance();
+        Hall hall = lectureDTO.getHall();
+        User lecturer = lectureDTO.getLecturer();
+        List<LectureAttendance> attendees = lectureDTO.getAttendees();
+
+        if (moduleCode==null || moduleName==null || !Optional.ofNullable(intake).isPresent() || startTime.equals(null) || endTime.equals(null) || !Optional.ofNullable(isStarted).isPresent() || !Optional.ofNullable(isEnded).isPresent() ||
+                !Optional.ofNullable(expectedAttendance).isPresent() || !Optional.ofNullable(attendance).isPresent() || hall==null || lecturer==null || attendees.isEmpty()){
+            message = "Cannot be empty";
+        } else if (lectureDTO.getEndTime().compareTo(lectureDTO.getStartTime()) <= 0) {
             message = "Start time should be earlier than End time";
         } else if (lectureDTO.getExpectedAttendance() <= 0) {
             message = "Expected attendance should be greater than zero";
