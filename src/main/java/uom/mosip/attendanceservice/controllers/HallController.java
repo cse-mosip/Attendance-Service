@@ -48,6 +48,11 @@ public class HallController {
     //get hall by hallId
     @GetMapping("/getHall/{hallId}")
     public ResponseEntity<ResponseDTO> getHallById(@PathVariable("hallId") long hallId) {
+        //validate id is valid
+        if (hallId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("INVALID_DATA", "Invalid hall id."));
+        }
+
         ResponseDTO responseDTO = hallService.getHallById(hallId);
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
