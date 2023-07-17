@@ -342,33 +342,32 @@ paths:
       security:
         - access_token: [ ]
 
-/admin/hall/getAllHalls:
-    get:
-      tags:
-        - Halls
-      summary: Get all of the Halls
-      description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
-      operationId: getAllHalls
-      parameters: none
-      responses:
-        '200':
-          description: Get all lecture halls successfully!.
-          content:
-            application/json:
-              schema:
-                properties:
-                  status:
-                    type: string
-                    example: "OK"
-                  message:
-                    type: string
-                    example: "Get all lecture halls successfully!"
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/HallsDTO'
-      security:
-        - access_token: []
+  /admin/hall/getAllHalls:
+      get:
+        tags:
+          - Halls
+        summary: Get all of the Halls
+        description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
+        operationId: getAllHalls
+        responses:
+          '200':
+            description: Get all lecture halls successfully!.
+            content:
+              application/json:
+                schema:
+                  properties:
+                    status:
+                      type: string
+                      example: "OK"
+                    message:
+                      type: string
+                      example: "Get all lecture halls successfully!"
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/HallsDTO'
+        security:
+          - access_token: []
 
 components:
   schemas:
@@ -387,6 +386,47 @@ components:
           example: 2023-07-15T11:36:50
           nullable: true
 
+    Exam:
+      type: object
+      properties:
+        exam_id:
+          type: integer
+          example: 1341
+        module_code:
+          type: string
+          example: "CS1012"
+        module_name:
+          type: string
+          example: "Programming Fundamentals"
+        intake:
+          type: integer
+          example: 22
+        hall_id:
+          type: integer
+          example: 6
+        invigilator_id:
+          type: integer
+          example: 987
+        start_time:
+          type: string
+          format: date-time
+          example: 2023-07-15T11:00:00
+        end_time:
+          type: string
+          format: date-time
+          example: 2023-07-15T13:00:00
+        is_started:
+          type: boolean
+          example: true
+        is_ended:
+          type: boolean
+          example: false
+        expected_attendance:
+          type: integer
+          example: 128
+        attendance:
+          type: integer
+          example: 126
     LoginRequestDTO:
       type: object
       properties:
