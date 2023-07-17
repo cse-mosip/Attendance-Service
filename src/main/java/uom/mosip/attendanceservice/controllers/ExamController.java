@@ -23,6 +23,11 @@ public class ExamController {
 
     @GetMapping("/get-exam/{examId}")
     public Object getExamById(@PathVariable long examId){
+        //validate the examId is valid or not
+        if (examId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("INVALID_DATA", "Exam ID is invalid."));
+        }
+
         Exam exam = examService.getExamById(examId);
         if (exam == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
