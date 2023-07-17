@@ -95,7 +95,7 @@ public class HallService {
             responseDTO.setStatus("HALL_NOT_FOUND");
         } else {
             responseDTO.setData(hallRepository.findById(hallId).get());
-            responseDTO.setMessage("Get lecture hall successfully!");
+            responseDTO.setMessage("Get lecture hall details successfully!");
             responseDTO.setStatus("HALL_FOUND");
         }
         return responseDTO;
