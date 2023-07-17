@@ -13,8 +13,8 @@ public class LMSService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public List<String> getStudentsForACourse(String moduleCode, int intake) {
-        return studentRepository.fetchCourseByModuleCodeWithStudents(moduleCode, intake)
+    public List<String> getStudentsForACourse(long courseId) {
+        return studentRepository.fetchCourseByModuleCodeWithStudents(courseId)
                 .stream().map(Student::getStudentId)
                 .toList();
     }

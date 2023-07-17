@@ -80,9 +80,7 @@ public class LectureService {
             responseDTO.setMessage(errorMessage);
             responseDTO.setStatus("INVALID_INPUTS");
         } else {
-            lecture.setModuleCode(lectureDTO.getModuleCode());
-            lecture.setModuleName(lectureDTO.getModuleName());
-            lecture.setIntake(lectureDTO.getIntake());
+            lecture.setCourseId(lectureDTO.getCourseId());
             lecture.setStartTime(lectureDTO.getStartTime());
             lecture.setEndTime(lectureDTO.getEndTime());
             lecture.setStarted(lectureDTO.isStarted());
@@ -105,9 +103,7 @@ public class LectureService {
     private String validateLectureInputs(LectureDTO lectureDTO) {
         String message = null;
 
-        String moduleCode = lectureDTO.getModuleCode();
-        String moduleName = lectureDTO.getModuleName();
-        int intake = lectureDTO.getIntake();
+        long courseId = lectureDTO.getCourseId();
         LocalDateTime startTime = lectureDTO.getStartTime();
         LocalDateTime endTime = lectureDTO.getEndTime();
         boolean isStarted = lectureDTO.isStarted();
@@ -118,7 +114,7 @@ public class LectureService {
         User lecturer = lectureDTO.getLecturer();
         List<LectureAttendance> attendees = lectureDTO.getAttendees();
 
-        if (moduleCode==null || moduleName==null || !Optional.ofNullable(intake).isPresent() || startTime.equals(null) || endTime.equals(null) || !Optional.ofNullable(isStarted).isPresent() || !Optional.ofNullable(isEnded).isPresent() ||
+        if (startTime.equals(null) || endTime.equals(null) || !Optional.ofNullable(isStarted).isPresent() || !Optional.ofNullable(isEnded).isPresent() ||
                 !Optional.ofNullable(expectedAttendance).isPresent() || !Optional.ofNullable(attendance).isPresent() || hall==null || lecturer==null || attendees.isEmpty()){
             message = "Cannot be empty";
         } else if (lectureDTO.getEndTime().compareTo(lectureDTO.getStartTime()) <= 0) {
@@ -139,15 +135,16 @@ public class LectureService {
 
     public ResponseDTO updateLecture(LectureUpdateRequestDTO lectureUpdateRequestDTO) {
         ResponseDTO res = new ResponseDTO();
-        if (lectureRepository.findById(lectureUpdateRequestDTO.getLectureId()).isEmpty()) {
+
+        Optional<Lecture> lectureOptional = lectureRepository.findById(lectureUpdateRequestDTO.getLectureId());
+
+        if (lectureOptional.isEmpty()) {
             res.setMessage("Error occur when loading existing lecture data!");
             res.setStatus("LECTURE_NOT_FOUND");
         } else {
-            Lecture lecture = new Lecture();
+            Lecture lecture = lectureOptional.get();
             lecture.setId(lectureUpdateRequestDTO.getLectureId());
-            lecture.setModuleCode(lectureUpdateRequestDTO.getModuleCode());
-            lecture.setModuleName(lectureUpdateRequestDTO.getModuleName());
-            lecture.setIntake(lectureUpdateRequestDTO.getIntake());
+            lecture.setCourseId(lectureUpdateRequestDTO.getCourseId());
             lecture.setEndTime(lectureUpdateRequestDTO.getEndTime());
             lecture.setStartTime(lectureUpdateRequestDTO.getStartTime());
             lecture.setStarted(lectureUpdateRequestDTO.isStarted());

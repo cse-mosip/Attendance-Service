@@ -17,9 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class LectureDTO {
     private long id;
-    private String moduleCode;
-    private String moduleName;
-    private int intake;
+    private long courseId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean isStarted;

@@ -49,7 +49,7 @@ public class LectureAttendanceService {
                 } else if (validLecture.isEnded()) {
                     return new ResponseDTO("INVALID_DATA", "Lecture has already ended");
                 } else {
-                    List<String> studentList = lmsService.getStudentsForACourse(validLecture.getModuleCode(), validLecture.getIntake());
+                    List<String> studentList = lmsService.getStudentsForACourse(validLecture.getCourseId());
 
                     boolean canAttend = studentList.contains(student_id);
 

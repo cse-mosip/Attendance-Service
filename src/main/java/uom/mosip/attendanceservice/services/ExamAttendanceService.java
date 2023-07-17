@@ -49,7 +49,7 @@ public class ExamAttendanceService {
                 } else if (validExam.getEndTime().plusMinutes(30).isBefore(LocalDateTime.now())) {
                     return new ResponseDTO("INVALID_DATA", "Exam attendance marking is finished");
                 } else {
-                    List<String> studentList = lmsService.getStudentsForACourse(validExam.getModuleCode(), validExam.getIntake());
+                    List<String> studentList = lmsService.getStudentsForACourse(validExam.getCourseId());
 
                     boolean canAttend = studentList.contains(student_id);
 

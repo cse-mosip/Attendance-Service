@@ -24,6 +24,8 @@ public class Course {
     @Column(name = "module_code", nullable = false, length = 8)
     private String moduleCode;
     @Column(nullable = false)
+    private String moduleName;
+    @Column(nullable = false)
     private int intake;
 
     @ManyToMany

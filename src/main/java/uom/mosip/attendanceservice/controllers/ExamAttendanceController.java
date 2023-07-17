@@ -58,7 +58,7 @@ public class ExamAttendanceController {
         }
 
         // Get all enrolled Students and map their attendance
-        List<String> enrolledStudentIds = lmsService.getStudentsForACourse(exam.getModuleCode(), exam.getIntake());
+        List<String> enrolledStudentIds = lmsService.getStudentsForACourse(exam.getCourseId());
         List<ExamAttendanceDTO> attendanceDTOS = new LinkedList<>();
         for (String studentId: enrolledStudentIds) {
             ExamAttendance ea = null;
