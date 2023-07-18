@@ -1,56 +1,53 @@
 package uom.mosip.attendanceservice.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import uom.mosip.attendanceservice.dto.ExamAttendanceDTO;
+import org.springframework.web.bind.annotation.*;
+import uom.mosip.attendanceservice.dto.ExamDTO;
+import uom.mosip.attendanceservice.dto.GetExamsRequestDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
-import uom.mosip.attendanceservice.models.Exam;
-import uom.mosip.attendanceservice.models.ExamAttendance;
+import uom.mosip.attendanceservice.dto.auth.UserDetails;
+import uom.mosip.attendanceservice.helpers.AuthHelper;
 import uom.mosip.attendanceservice.services.ExamService;
-import uom.mosip.attendanceservice.services.LMSService;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
+@RequestMapping("admin/exam")
 public class ExamController {
 
-    @Autowired
-    private ExamService examService;
+    private final ExamService examService;
+    private final AuthHelper authHelper;
 
-    @Autowired
-    private LMSService lmsService;
+    public ExamController(ExamService examService, AuthHelper authHelper) {
+        this.examService = examService;
+        this.authHelper = authHelper;
+    }
 
-    @GetMapping("/admin/exam-attendance/{examId}")
-    public Object getAttendanceForAnExam(@PathVariable long examId) {
-        Optional<Exam> examOptional = examService.getAttendanceForAnExamById(examId);
+    @GetMapping("/get-exam/{examId}")
+    public ResponseEntity<ResponseDTO> getExamById(@PathVariable long examId) {
+        //validate the examId is valid or not
+        if (examId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("INVALID_DATA", "Exam ID is invalid."));
+        }
 
-        if (examOptional.isEmpty())
+        ExamDTO examDTO = examService.getExamById(examId);
+        if (examDTO == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResponseDTO("EXAM_NOT_FOUND", "Exam ID is not found."));
-
-        // Get Attendance
-        Exam exam = examOptional.get();
-        List<ExamAttendance> examAttendance = exam.getAttendees();
-        Map<String, ExamAttendance> attendanceMap = new HashMap<>();
-        for (ExamAttendance ea: examAttendance) {
-            attendanceMap.put(ea.getStudentId(), ea);
         }
-
-        // Get all enrolled Students and map their attendance
-        List<String> enrolledStudentIds = lmsService.getStudentsForACourse(exam.getModuleCode(), exam.getIntake());
-        List<ExamAttendanceDTO> attendanceDTOS = new LinkedList<>();
-        for (String studentId: enrolledStudentIds) {
-            ExamAttendance ea = null;
-            if (attendanceMap.containsKey(studentId)) {
-                ea = attendanceMap.get(studentId);
-            }
-            attendanceDTOS.add(new ExamAttendanceDTO(studentId, ea));
-        }
-
-        return new ResponseDTO("OK", "Attendance Fetched.", attendanceDTOS);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO("OK", "Exams Fetched.", examDTO));
     }
+
+    @PostMapping("/all-exams")
+    public ResponseEntity<ResponseDTO> getAllExams(@RequestBody GetExamsRequestDTO getExamsRequestDTO) {
+        UserDetails userDetails = authHelper.getCurrentUserDetails();
+
+        List<ExamDTO> examDTOList = examService.getAllExams(userDetails.getUserID(), getExamsRequestDTO);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO("OK", "Exams Fetched.", examDTOList));
+    }
+
 }

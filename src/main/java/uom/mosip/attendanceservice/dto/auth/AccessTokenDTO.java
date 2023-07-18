@@ -15,4 +15,6 @@ import lombok.Setter;
 public class AccessTokenDTO {
     private String accessToken;
     private int expiresIn;
+    private long userId;
+    private String userType;
 }

@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HallDTO {
-    private long id;
-    private String name;
-    private String location;
-    private int capacity;
-    private boolean isActive;
+public class GetExamsRequestDTO {
+    private LocalDateTime minTime;
+    private LocalDateTime maxTime;
 }

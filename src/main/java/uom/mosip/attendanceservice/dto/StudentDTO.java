@@ -9,10 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HallDTO {
-    private long id;
+public class StudentDTO {
+    private String id;
+    private String index_number;
+
     private String name;
-    private String location;
-    private int capacity;
-    private boolean isActive;
+
+    private String picture;
 }

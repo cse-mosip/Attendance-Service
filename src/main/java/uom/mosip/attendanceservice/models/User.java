@@ -1,5 +1,6 @@
 package uom.mosip.attendanceservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, unique = true)
+    private String mosipId;
+
     @Column(nullable = false)
     private int userType;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "lecturer", fetch = FetchType.LAZY)
     private List<Lecture> lectures;
 

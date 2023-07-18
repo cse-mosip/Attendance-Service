@@ -10,8 +10,7 @@ import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.HallService;
 
 @RestController
-@RequestMapping("lectureHall")
-@CrossOrigin
+@RequestMapping("admin/hall")
 public class HallController {
     private final HallService hallService;
 
@@ -26,7 +25,7 @@ public class HallController {
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setData(hallService.getAllHalls());
         responseDTO.setMessage("Get all lecture halls successfully!");
-        responseDTO.setStatus("200");
+        responseDTO.setStatus("OK");
         return responseDTO;
     }
 
@@ -39,10 +38,31 @@ public class HallController {
     }
 
     // delete lecture hall
-
     @DeleteMapping("/deleteHall/{hallId}")
-    public void deleteHall(@PathVariable("hallId") long hallId) {
-        hallService.deleteHallById(hallId);
+    public ResponseEntity<ResponseDTO> deleteHall(@PathVariable("hallId") long hallId) {
+        ResponseDTO responseDTO = hallService.deleteHallById(hallId);
+
+        if (responseDTO.getStatus().equals("HALL_NOT_FOUND")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
+
+    //get hall by hallId
+    @GetMapping("/getHall/{hallId}")
+    public ResponseEntity<ResponseDTO> getHallById(@PathVariable("hallId") long hallId) {
+        //validate id is valid
+        if (hallId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("INVALID_DATA", "Invalid hall id."));
+        }
+
+        Hall hall = hallService.getHallById(hallId);
+
+        if (hall == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO("INVALID_DATA", "Hall not found by id"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK", "Hall found", hall));
+    }
+
 
 }
