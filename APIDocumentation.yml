@@ -492,6 +492,11 @@ components:
           description: University index number
           example: 190429G
           nullable: false
+        id:
+          type: string
+          description: MOSIP id
+          example: 99
+          nullable: false
         name:
           type: string
           description: Name of student

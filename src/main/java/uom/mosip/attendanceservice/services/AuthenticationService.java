@@ -1,7 +1,6 @@
 package uom.mosip.attendanceservice.services;
 
 import org.springframework.stereotype.Service;
-import uom.mosip.attendanceservice.dto.StudentDTO;
 
 @Service
 public class AuthenticationService {
