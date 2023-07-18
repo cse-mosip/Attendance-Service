@@ -15,5 +15,5 @@ public class StudentDTO {
 
     private String name;
 
-    private Object picture;
+    private String picture;
 }
