@@ -9,18 +9,23 @@ import uom.mosip.attendanceservice.dto.CreateLectureRequestDTO;
 import uom.mosip.attendanceservice.dto.LectureDTO;
 import uom.mosip.attendanceservice.dto.LectureUpdateRequestDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
+import uom.mosip.attendanceservice.dto.auth.UserDetails;
+import uom.mosip.attendanceservice.helpers.AuthHelper;
 import uom.mosip.attendanceservice.services.LectureService;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/admin/lecture")
 public class LectureController {
     private final LectureService lectureService;
+    private final AuthHelper authHelper;
 
     @Autowired
-    public LectureController(LectureService lectureService) {
+    public LectureController(LectureService lectureService, AuthHelper authHelper) {
         this.lectureService = lectureService;
+        this.authHelper = authHelper;
     }
 
     @GetMapping(path = "/start-lecture/{lectureId}")
@@ -66,8 +71,12 @@ public class LectureController {
 
     @GetMapping(path = "/getAllLectures", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> getAllLectures() {
-        ResponseDTO responseDTO = lectureService.getAllLectures();
-        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+        UserDetails userDetails = authHelper.getCurrentUserDetails();
+
+        List<LectureDTO> lectureDTOList = lectureService.getAllLectures(userDetails.getUserID());
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO("OK", "Lectures Fetched.", lectureDTOList));
 
     }
 

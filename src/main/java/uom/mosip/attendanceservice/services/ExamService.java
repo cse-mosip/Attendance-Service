@@ -7,6 +7,7 @@ import uom.mosip.attendanceservice.dto.ExamDTO;
 import uom.mosip.attendanceservice.dto.GetExamsRequestDTO;
 import uom.mosip.attendanceservice.models.Exam;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,4 +74,9 @@ public class ExamService {
 
         return examDTO;
     }
+
+    public List<Exam> getExamsInTimePeriod(LocalDateTime startTime, LocalDateTime endTime) {
+        return examRepository.fetchExamsByStartTimeAndEndTime(startTime, endTime);
+    }
+
 }

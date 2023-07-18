@@ -7,7 +7,6 @@ import lombok.Setter;
 import uom.mosip.attendanceservice.dto.lms.CourseDTO;
 import uom.mosip.attendanceservice.models.ExamAttendance;
 import uom.mosip.attendanceservice.models.Hall;
-import uom.mosip.attendanceservice.models.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
