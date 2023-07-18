@@ -474,6 +474,15 @@ components:
           format: int32
           example: 3600
           description: Token expiry time in seconds
+        user_id:
+          type: integer
+          format: int32
+          example: 142
+          description: ID of the user
+        user_type:
+          type: string
+          example: ADMIN
+          description: User's type (Either 'ADMIN' or 'LECTURER')
 
     StudentDTO:
       type: object

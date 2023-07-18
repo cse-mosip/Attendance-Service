@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.dto.auth.LoginRequestDTO;
+import uom.mosip.attendanceservice.helpers.UserTypeHelper;
 import uom.mosip.attendanceservice.models.User;
 import uom.mosip.attendanceservice.services.TokenService;
 import uom.mosip.attendanceservice.services.UserService;
@@ -23,6 +24,9 @@ public class AuthController {
     private TokenService tokenService;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserTypeHelper userTypeHelper;
 
     @PostMapping("/admin/login")
     public Object login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
@@ -46,7 +50,10 @@ public class AuthController {
                     .body(new ResponseDTO("INCORRECT_PASSWORD", "Incorrect Password."));
         }
 
-        return tokenService.generateJWTToken(String.valueOf(user.get().getId()), String.valueOf(user.get().getUserType()));
+        return tokenService.generateJWTToken(String.valueOf(user.get().getId()),
+                String.valueOf(user.get().getUserType()),
+                user.get().getId(),
+                userTypeHelper.getUserTypeName(user.get().getUserType()));
     }
 
 }
