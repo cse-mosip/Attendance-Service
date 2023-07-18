@@ -11,7 +11,8 @@ import uom.mosip.attendanceservice.models.Exam;
 import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.models.Lecture;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,10 +23,6 @@ public class HallService {
     private HallRepository hallRepository;
     @Autowired
     private ModelMapper modelMapper;
-    @Autowired
-    private LectureService lectureService;
-    @Autowired
-    private ExamService examService;
 
     // get all lecture halls
     public Iterable<HallDTO> getAllHalls() {
@@ -103,22 +100,22 @@ public class HallService {
         return hallOptional.orElse(null);
     }
 
-    public boolean isHallAvailable(Hall hall, LocalDateTime startTime, LocalDateTime endTime) {
+    public boolean isHallAvailable(Hall hall, Date startTime, Date endTime) {
         if (!hall.isActive()) {
             return false;
         }
 
-        List<Lecture> lectureListInPeriod = lectureService.getLecturesInTimePeriod(startTime, endTime);
-        List<Exam> examListInPeriod = examService.getExamsInTimePeriod(startTime, endTime);
+        List<Lecture> lectureList = hall.getLectures();
+        List<Exam> examList = hall.getExams();
 
-        for (Lecture lecture : lectureListInPeriod) {
-            if (lecture.getHall().equals(hall)) {
+        for (Lecture lecture : lectureList) {
+            if (Date.from(Instant.from(lecture.getEndTime())).after(startTime) || Date.from(Instant.from(lecture.getStartTime())).before(endTime)) {
                 return false;
             }
         }
 
-        for (Exam exam : examListInPeriod) {
-            if (exam.getHall().equals(hall)) {
+        for (Exam exam : examList) {
+            if (Date.from(Instant.from(exam.getEndTime())).after(startTime) || Date.from(Instant.from(exam.getStartTime())).before(endTime)) {
                 return false;
             }
         }
