@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uom.mosip.attendanceservice.dto.GetHallRequestDTO;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Hall;
@@ -21,10 +22,10 @@ public class HallController {
     }
 
     // get all lecture halls
-    @GetMapping("/getAllHalls")
-    public ResponseDTO getAllHalls() {
+    @PostMapping("/getAllHalls")
+    public ResponseDTO getAllHalls(@RequestBody(required = false) GetHallRequestDTO getHallRequestDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setData(hallService.getAllHalls());
+        responseDTO.setData(hallService.getAllHalls(getHallRequestDTO));
         responseDTO.setMessage("Get all lecture halls successfully!");
         responseDTO.setStatus("OK");
         return responseDTO;
