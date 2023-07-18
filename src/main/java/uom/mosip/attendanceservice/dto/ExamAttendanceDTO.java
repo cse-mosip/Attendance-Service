@@ -21,13 +21,16 @@ public class ExamAttendanceDTO {
         if (examAttendance != null) {
             this.isPresent = true;
             this.markedTime = examAttendance.getMarkedTime();
+            this.isValidated = examAttendance.isValidated();
         } else {
             this.isPresent = false;
+            this.isValidated = false;
         }
     }
 
     private String studentId;
     private boolean isPresent;
     private LocalDateTime markedTime;
+    private boolean isValidated;
 
 }
