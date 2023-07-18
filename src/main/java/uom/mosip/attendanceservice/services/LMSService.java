@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.lms.CourseRepository;
 import uom.mosip.attendanceservice.dao.lms.StudentRepository;
 import uom.mosip.attendanceservice.dto.lms.CourseDTO;
+import uom.mosip.attendanceservice.models.lms.Course;
 import uom.mosip.attendanceservice.models.lms.Student;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LMSService {
@@ -28,6 +30,11 @@ public class LMSService {
         return courseRepository.fetchAllCourses()
                 .stream().map(CourseDTO::new)
                 .toList();
+    }
+
+    public CourseDTO getCourseByID(String courseId) {
+        Optional<Course> c = courseRepository.findById(courseId);
+        return c.map(CourseDTO::new).orElse(null);
     }
 
 }
