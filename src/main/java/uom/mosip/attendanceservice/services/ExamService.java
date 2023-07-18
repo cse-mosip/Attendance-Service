@@ -7,9 +7,7 @@ import uom.mosip.attendanceservice.dto.ExamDTO;
 import uom.mosip.attendanceservice.dto.GetExamsRequestDTO;
 import uom.mosip.attendanceservice.models.Exam;
 
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,11 +31,11 @@ public class ExamService {
         if (examsRequestDTO.getMinTime() == null && examsRequestDTO.getMaxTime() == null) {
             examList = examRepository.fetchExamsByInvigilator(userId);
         } else if (examsRequestDTO.getMinTime() != null && examsRequestDTO.getMaxTime() == null) {
-            examList = examRepository.fetchExamsByInvigilatorAndMinTime(userId, Date.from(Instant.from(examsRequestDTO.getMinTime())));
+            examList = examRepository.fetchExamsByInvigilatorAndMinTime(userId, examsRequestDTO.getMinTime());
         } else if (examsRequestDTO.getMinTime() == null) {
-            examList = examRepository.fetchExamsByInvigilatorAndMaxTime(userId, Date.from(Instant.from(examsRequestDTO.getMaxTime())));
+            examList = examRepository.fetchExamsByInvigilatorAndMaxTime(userId, examsRequestDTO.getMaxTime());
         } else {
-            examList = examRepository.fetchExamsByInvigilatorAndMinTimeAndMaxTime(userId, Date.from(Instant.from(examsRequestDTO.getMinTime())), Date.from(Instant.from(examsRequestDTO.getMaxTime())));
+            examList = examRepository.fetchExamsByInvigilatorAndMinTimeAndMaxTime(userId, examsRequestDTO.getMinTime(), examsRequestDTO.getMaxTime());
         }
 
         for (Exam exam : examList) {
@@ -74,10 +72,6 @@ public class ExamService {
         examDTO.setAttendees(exam.getAttendees());
 
         return examDTO;
-    }
-
-    public List<Exam> getExamsInTimePeriod(Date startTime, Date endTime) {
-        return examRepository.fetchExamsByStartTimeAndEndTime(startTime, endTime);
     }
 
 }

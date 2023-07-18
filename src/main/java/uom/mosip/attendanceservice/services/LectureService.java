@@ -11,10 +11,8 @@ import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.models.Lecture;
 import uom.mosip.attendanceservice.models.User;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,7 +135,7 @@ public class LectureService {
             message = "Invalid lecturer id";
         } else if (hall == null) {
             message = "Invalid hall id";
-        } else if (!hallService.isHallAvailable(hall, Date.from(Instant.from(startTime)), Date.from(Instant.from(endTime)))) {
+        } else if (!hallService.isHallAvailable(hall, startTime, endTime)) {
             message = "Hall unavailable";
         }
         return message;
@@ -211,10 +209,6 @@ public class LectureService {
         lectureDTO.setAttendees(lecture.getAttendees());
 
         return lectureDTO;
-    }
-
-    public List<Lecture> getLecturesInTimePeriod(Date startTime, Date endTime) {
-        return lectureRepository.fetchLecturesByStartTimeAndEndTime(startTime, endTime);
     }
 
 }

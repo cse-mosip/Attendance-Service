@@ -11,8 +11,7 @@ import uom.mosip.attendanceservice.models.Exam;
 import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.models.Lecture;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,7 +99,7 @@ public class HallService {
         return hallOptional.orElse(null);
     }
 
-    public boolean isHallAvailable(Hall hall, Date startTime, Date endTime) {
+    public boolean isHallAvailable(Hall hall, LocalDateTime startTime, LocalDateTime endTime) {
         if (!hall.isActive()) {
             return false;
         }
@@ -109,13 +108,13 @@ public class HallService {
         List<Exam> examList = hall.getExams();
 
         for (Lecture lecture : lectureList) {
-            if (Date.from(Instant.from(lecture.getEndTime())).after(startTime) || Date.from(Instant.from(lecture.getStartTime())).before(endTime)) {
+            if (lecture.getEndTime().isAfter(startTime) || lecture.getStartTime().isBefore(endTime)) {
                 return false;
             }
         }
 
         for (Exam exam : examList) {
-            if (Date.from(Instant.from(exam.getEndTime())).after(startTime) || Date.from(Instant.from(exam.getStartTime())).before(endTime)) {
+            if (exam.getEndTime().isAfter(startTime) || exam.getStartTime().isBefore(endTime)) {
                 return false;
             }
         }
