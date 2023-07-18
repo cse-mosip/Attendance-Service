@@ -48,3 +48,8 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/cse-mosip/attendance-service:latest
+
+      - name: Invoke deployment script
+        uses: distributhor/workflow-webhook@v2
+        env:
+          webhook_url: ${{ secrets.DEPLOY_HOOK_URL }}
