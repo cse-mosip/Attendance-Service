@@ -439,19 +439,24 @@ components:
       properties:
         grant_type:
           type: string
-          description: Grant type for authentication (should always be equal to 'password')
+          description: Grant type for authentication (should be either 'password' or 'fingerprint')
           example: password
           nullable: false
         username:
           type: string
-          description: Username (Email) of the user
+          description: Username (Email) of the user (mandatory if grant_type = 'password')
           example: 'user@gmail.com'
-          nullable: false
+          nullable: true
         password:
           type: string
-          description: Password of the user
+          description: Password of the user (mandatory if grant_type = 'password')
           example: password
-          nullable: false
+          nullable: true
+        fingerprint:
+          type: string
+          description: Fingerprint of the user (mandatory if grant_type = 'fingerprint')
+          example: data
+          nullable: true
 
     MarkAttendanceRequestDTO:
       type: object
