@@ -19,12 +19,16 @@ public class ExamAttendanceService {
     private final ExamRepository examRepository;
     private final ExamAttendanceRepository examAttendanceRepository;
     private final LMSService lmsService;
+    private final AuthenticationService authenticationService;
+    private final RegistrationService registrationService;
 
     @Autowired
-    public ExamAttendanceService(ExamRepository examRepository, ExamAttendanceRepository examAttendanceRepository, LMSService lmsService) {
+    public ExamAttendanceService(ExamRepository examRepository, ExamAttendanceRepository examAttendanceRepository, LMSService lmsService, AuthenticationService authenticationService, RegistrationService registrationService) {
         this.examRepository = examRepository;
         this.examAttendanceRepository = examAttendanceRepository;
         this.lmsService = lmsService;
+        this.authenticationService = authenticationService;
+        this.registrationService = registrationService;
     }
 
     public ResponseDTO markExamAttendance(MarkAttendanceRequestDTO markAttendanceRequestDTO) {
@@ -35,8 +39,7 @@ public class ExamAttendanceService {
             return new ResponseDTO("INVALID_DATA", "Fingerprint or Exam id is not set");
         }
 
-        // TODO  - call authentication service and get the student id
-        String student_id = "S-123";
+        String student_id = authenticationService.authenticateStudent(fingerprint);
 
         if (student_id != null) {
             Optional<Exam> exam = examRepository.findById(exam_id);
@@ -56,8 +59,7 @@ public class ExamAttendanceService {
                     if (canAttend) {
                         List<ExamAttendance> studentExamAttendance = examAttendanceRepository.getExamAttendanceByStudentIdAndExam(student_id, validExam);
 
-                        // TODO - get full details of the student from registration service
-                        StudentDTO student = new StudentDTO();
+                        StudentDTO student = registrationService.getStudentDetails(student_id);
 
                         if (studentExamAttendance.isEmpty()) {
                             ExamAttendance newExamAttendance = new ExamAttendance();
