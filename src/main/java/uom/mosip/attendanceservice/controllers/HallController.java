@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uom.mosip.attendanceservice.dto.CreateHallRequestDTO;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Hall;
@@ -31,6 +32,10 @@ public class HallController {
     }
 
     // Create lecture hall
+    @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createHall(@RequestBody CreateHallRequestDTO createHallRequestDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(hallService.createHall(createHallRequestDTO));
+    }
 
     // update lecture hall
     @PostMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -64,6 +69,5 @@ public class HallController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK", "Hall found", hall));
     }
-
 
 }
