@@ -68,7 +68,7 @@ public class ExamService {
         examDTO.setExpectedAttendance(exam.getExpectedAttendance());
         examDTO.setAttendance(exam.getAttendance());
         examDTO.setHall(exam.getHall());
-        examDTO.setLecturer(exam.getInvigilator());
+        examDTO.setLecturerName(exam.getInvigilator().getName());
         examDTO.setAttendees(exam.getAttendees());
 
         return examDTO;

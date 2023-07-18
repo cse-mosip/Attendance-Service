@@ -26,6 +26,6 @@ public class ExamDTO {
     private int expectedAttendance;
     private int attendance;
     private Hall hall;
-    private User lecturer;
+    private String lecturerName;
     private List<ExamAttendance> attendees;
 }
