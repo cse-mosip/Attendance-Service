@@ -39,7 +39,7 @@ public class ExamAttendanceService {
             return new ResponseDTO("INVALID_DATA", "Fingerprint or Exam id is not set");
         }
 
-        String student_id = authenticationService.authenticateStudent(fingerprint);
+        String student_id = authenticationService.authenticate(fingerprint);
 
         if (student_id != null) {
             Optional<Exam> exam = examRepository.findById(exam_id);

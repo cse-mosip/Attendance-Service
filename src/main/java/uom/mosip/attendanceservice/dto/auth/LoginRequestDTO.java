@@ -16,12 +16,13 @@ public class LoginRequestDTO {
     @NotBlank(message = "Grant Type should not be blank.")
     private String grant_type;
 
-    @NotNull(message = "Username should not be null.")
     @NotBlank(message = "Username should not be blank.")
     @Email(message = "Not a valid Email.")
     private String username;
 
-    @NotNull(message = "Password should not be null.")
     @NotBlank(message = "Password should not be blank.")
     private String password;
+
+    @NotBlank(message = "Fingerprint should not be blank.")
+    private String fingerprint;
 }
