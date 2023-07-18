@@ -66,6 +66,11 @@ public class AuthController {
     private Object handleFingerprintLogin(String fingerprint) {
         String mosipId = authenticationService.authenticate(fingerprint);
 
+        if (mosipId == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO("USER_NOT_FOUND", "Fingerprint does not match with a user."));
+        }
+
         Optional<User> user = userService.getUserByMosipID(mosipId);
         if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
