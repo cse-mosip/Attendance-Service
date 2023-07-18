@@ -22,6 +22,7 @@ public class ExamAttendanceDTO {
             this.isPresent = true;
             this.markedTime = examAttendance.getMarkedTime();
             this.isValidated = examAttendance.isValidated();
+            this.validatedTime = examAttendance.getValidatedTime();
         } else {
             this.isPresent = false;
             this.isValidated = false;
@@ -32,5 +33,6 @@ public class ExamAttendanceDTO {
     private boolean isPresent;
     private LocalDateTime markedTime;
     private boolean isValidated;
+    private LocalDateTime validatedTime;
 
 }

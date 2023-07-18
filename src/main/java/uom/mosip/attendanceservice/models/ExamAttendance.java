@@ -28,7 +28,7 @@ public class ExamAttendance {
     private boolean isValidated;
 
     @Column(nullable = false)
-    private LocalDateTime verifiedTime;
+    private LocalDateTime validatedTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "exam_id", nullable = false)

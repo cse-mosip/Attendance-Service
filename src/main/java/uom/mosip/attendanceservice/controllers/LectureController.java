@@ -2,14 +2,14 @@ package uom.mosip.attendanceservice.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
+import uom.mosip.attendanceservice.dto.CreateLectureRequestDTO;
 import uom.mosip.attendanceservice.dto.LectureDTO;
 import uom.mosip.attendanceservice.dto.LectureUpdateRequestDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.LectureService;
-import uom.mosip.attendanceservice.models.Lecture;
 
 import java.util.Objects;
 
@@ -44,18 +44,24 @@ public class LectureController {
     }
 
     @GetMapping(path = "/get-lecture/{lectureId}")
-    public Object getLectureById(@PathVariable long lectureId) {
-        Lecture lecture = lectureService.getLectureById(lectureId);
-        if (lecture == null) {
+    public ResponseEntity<ResponseDTO> getLectureById(@PathVariable long lectureId) {
+        if (lectureId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("INVALID_DATA", "Lecture ID is invalid."));
+        }
+
+        LectureDTO lectureDTO = lectureService.getLectureById(lectureId);
+
+        if (lectureDTO == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResponseDTO("LECTURE_NOT_FOUND", "Lecture ID is not found."));
         }
-        return new ResponseDTO("OK", "Lecture Fetched.", lecture);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO("OK", "Lecture Fetched.", lectureDTO));
     }
 
     @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDTO> createLecture(@RequestBody LectureDTO lectureDTO) {
-        return new ResponseEntity<>(lectureService.createLecture(lectureDTO), HttpStatus.OK);
+    public ResponseEntity<ResponseDTO> createLecture(@RequestBody CreateLectureRequestDTO createLectureRequestDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(lectureService.createLecture(createLectureRequestDTO));
     }
 
     @GetMapping(path = "/getAllLectures", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -71,7 +77,7 @@ public class LectureController {
     }
 
     @DeleteMapping("/deleteLecture/{lectureId}")
-    public void deleteLecture(@PathVariable("lectureId") long hallId) {
-        lectureService.deleteLectureByID(hallId);
+    public ResponseDTO deleteLecture(@PathVariable("lectureId") long hallId) {
+        return lectureService.deleteLectureByID(hallId);
     }
 }

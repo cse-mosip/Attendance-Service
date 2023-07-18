@@ -19,7 +19,8 @@ public class AuthRouteMatcher {
                 "/admin/lecture-attendance/**",
                 "/admin/exam/**",
                 "/admin/hall/**",
-                "/admin/lecture/**"
+                "/admin/lecture/**",
+                "/student/exam-attendance/mark-exam-attendance"
         );
 
         PathPatternParser parser = new PathPatternParser();

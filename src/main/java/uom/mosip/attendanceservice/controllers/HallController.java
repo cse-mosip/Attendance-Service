@@ -7,12 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
-import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.services.HallService;
 
 @RestController
 @RequestMapping("admin/hall")
-@CrossOrigin
 public class HallController {
     private final HallService hallService;
 
@@ -41,8 +39,13 @@ public class HallController {
 
     // delete lecture hall
     @DeleteMapping("/deleteHall/{hallId}")
-    public void deleteHall(@PathVariable("hallId") long hallId) {
-        hallService.deleteHallById(hallId);
+    public ResponseEntity<ResponseDTO> deleteHall(@PathVariable("hallId") long hallId) {
+        ResponseDTO responseDTO = hallService.deleteHallById(hallId);
+
+        if (responseDTO.getStatus().equals("HALL_NOT_FOUND")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
     //get hall by hallId

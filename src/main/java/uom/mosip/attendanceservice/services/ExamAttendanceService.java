@@ -77,7 +77,7 @@ public class ExamAttendanceService {
                         } else if (studentExamAttendance.size() == 1 && !studentExamAttendance.get(0).isValidated()) {
                             ExamAttendance notValidatedExamAttendance = studentExamAttendance.get(0);
                             notValidatedExamAttendance.setValidated(true);
-                            notValidatedExamAttendance.setVerifiedTime(LocalDateTime.now());
+                            notValidatedExamAttendance.setValidatedTime(LocalDateTime.now());
                             examAttendanceRepository.save(notValidatedExamAttendance);
 
                             return new ResponseDTO("OK", "Attendance verified successfully", student);
