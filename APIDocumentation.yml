@@ -372,7 +372,19 @@ components:
       properties:
         student_id:
           type: string
+          example: ID1
+        index_no:
+          type: string
           example: 190254R
+          nullable: true
+        student_name:
+          type: string
+          example: name1
+          nullable: true
+        picture:
+          type: string
+          example: "https://imgbb.com/abcdefgh"
+          nullable: true
         present:
           type: boolean
           example: true

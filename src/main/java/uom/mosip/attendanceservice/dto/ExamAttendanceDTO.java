@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ExamAttendanceDTO {
 
-    public ExamAttendanceDTO(String studentId, ExamAttendance examAttendance) {
+    public ExamAttendanceDTO(String studentId, ExamAttendance examAttendance, StudentDTO studentDTO) {
         this.studentId = studentId;
 
         if (examAttendance != null) {
@@ -27,9 +27,18 @@ public class ExamAttendanceDTO {
             this.isPresent = false;
             this.isValidated = false;
         }
+
+        if (studentDTO != null) {
+            this.studentName = studentDTO.getName();
+            this.indexNo = studentDTO.getIndex_number();
+            this.picture = studentDTO.getPicture();
+        }
     }
 
     private String studentId;
+    private String indexNo;
+    private String studentName;
+    private String picture;
     private boolean isPresent;
     private LocalDateTime markedTime;
     private boolean isValidated;
