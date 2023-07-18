@@ -11,9 +11,11 @@ import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.models.Lecture;
 import uom.mosip.attendanceservice.models.User;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -102,7 +104,7 @@ public class LectureService {
             lecture.setEndTime(lectureRequestDTO.getEndTime());
             lecture.setExpectedAttendance(lectureRequestDTO.getExpectedAttendance());
 
-            Hall hall = (Hall) hallService.getHallById(lectureRequestDTO.getHallId()).getData();
+            Hall hall = hallService.getHallById(lectureRequestDTO.getHallId());
             User lecturer = userService.getUserByMosipID(Long.toString(lectureRequestDTO.getLecturerId())).get();
 
             lecture.setHall(hall);
@@ -124,7 +126,7 @@ public class LectureService {
         LocalDateTime startTime = lectureRequestDTO.getStartTime();
         LocalDateTime endTime = lectureRequestDTO.getEndTime();
 
-        ResponseDTO responseDTOHall = hallService.getHallById(lectureRequestDTO.getHallId());
+        Hall hall = hallService.getHallById(lectureRequestDTO.getHallId());
         Optional<User> responseDTOLecturer = userService.getUserByMosipID(Long.toString(lectureRequestDTO.getLecturerId()));
 
         if (startTime == null || endTime == null) {
@@ -133,15 +135,25 @@ public class LectureService {
             message = "Start time should be earlier than End time";
         } else if (responseDTOLecturer.isEmpty()) {
             message = "Invalid lecturer id";
-        } else if (Objects.equals(responseDTOHall.getStatus(), "HALL_NOT_FOUND")) {
+        } else if (hall == null) {
             message = "Invalid hall id";
+        } else if (!hallService.isHallAvailable(hall, Date.from(Instant.from(startTime)), Date.from(Instant.from(endTime)))) {
+            message = "Hall unavailable";
         }
         return message;
     }
 
-    public ResponseDTO getAllLectures() {
-        List<Lecture> lectureList = (List<Lecture>) lectureRepository.findAll();
-        return new ResponseDTO("OK", "All lectures fetched successfully", lectureList);
+    public List<LectureDTO> getAllLectures(long userId) {
+        List<Lecture> lectureList = lectureRepository.fetchLecturesByLecturer(userId);
+
+        List<LectureDTO> lectureDTOList = new ArrayList<>();
+
+        for (Lecture lecture : lectureList) {
+            LectureDTO lectureDTO = createLectureDTO(lecture);
+            lectureDTOList.add(lectureDTO);
+        }
+
+        return lectureDTOList;
     }
 
     public ResponseDTO updateLecture(LectureUpdateRequestDTO lectureUpdateRequestDTO) {
@@ -199,6 +211,10 @@ public class LectureService {
         lectureDTO.setAttendees(lecture.getAttendees());
 
         return lectureDTO;
+    }
+
+    public List<Lecture> getLecturesInTimePeriod(Date startTime, Date endTime) {
+        return lectureRepository.fetchLecturesByStartTimeAndEndTime(startTime, endTime);
     }
 
 }

@@ -87,9 +87,7 @@ paths:
                     type: string
                     example: "Exam Fetched."
                   data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Exam'
+                    $ref: '#/components/schemas/Exam'
         '400':
           description: Invalid ID supplied or ID missing
         '404':

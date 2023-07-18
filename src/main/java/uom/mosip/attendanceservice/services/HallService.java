@@ -7,9 +7,14 @@ import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.HallRepository;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
+import uom.mosip.attendanceservice.models.Exam;
 import uom.mosip.attendanceservice.models.Hall;
+import uom.mosip.attendanceservice.models.Lecture;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HallService {
@@ -18,10 +23,12 @@ public class HallService {
     private HallRepository hallRepository;
     @Autowired
     private ModelMapper modelMapper;
+
     // get all lecture halls
     public Iterable<HallDTO> getAllHalls() {
-        Iterable<Hall> halls =  hallRepository.findAll();
-        return modelMapper.map(halls,new TypeToken<List<HallDTO>>(){}.getType());
+        Iterable<Hall> halls = hallRepository.findAll();
+        return modelMapper.map(halls, new TypeToken<List<HallDTO>>() {
+        }.getType());
     }
 
     // Create lecture hall
@@ -87,17 +94,33 @@ public class HallService {
         return responseDTO;
     }
 
-  //get hall by hallId
-    public ResponseDTO getHallById(long hallId) {
-        ResponseDTO responseDTO = new ResponseDTO();
-        if (hallRepository.findById(hallId).isEmpty()) {
-            responseDTO.setMessage("No hall found respective to the hall ID!");
-            responseDTO.setStatus("HALL_NOT_FOUND");
-        } else {
-            responseDTO.setData(hallRepository.findById(hallId).get());
-            responseDTO.setMessage("Get lecture hall details successfully!");
-            responseDTO.setStatus("HALL_FOUND");
-        }
-        return responseDTO;
+    //get hall by hallId
+    public Hall getHallById(long hallId) {
+        Optional<Hall> hallOptional = hallRepository.findById(hallId);
+        return hallOptional.orElse(null);
     }
+
+    public boolean isHallAvailable(Hall hall, Date startTime, Date endTime) {
+        if (!hall.isActive()) {
+            return false;
+        }
+
+        List<Lecture> lectureList = hall.getLectures();
+        List<Exam> examList = hall.getExams();
+
+        for (Lecture lecture : lectureList) {
+            if (Date.from(Instant.from(lecture.getEndTime())).after(startTime) || Date.from(Instant.from(lecture.getStartTime())).before(endTime)) {
+                return false;
+            }
+        }
+
+        for (Exam exam : examList) {
+            if (Date.from(Instant.from(exam.getEndTime())).after(startTime) || Date.from(Instant.from(exam.getStartTime())).before(endTime)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
