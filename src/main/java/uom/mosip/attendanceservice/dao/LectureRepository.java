@@ -9,4 +9,7 @@ import java.util.List;
 public interface LectureRepository extends CrudRepository<Lecture, Long> {
     @Query("SELECT l FROM Lecture l WHERE l.lecturer=?1")
     List<Lecture> fetchLecturesByLecturer(long userId);
+
+    @Query("SELECT l FROM Lecture l WHERE l.lecturer=?1 and l.isStarted=true and l.isEnded=false")
+    List<Lecture> fetchCurrentLecturesByLecturer(long userId);
 }

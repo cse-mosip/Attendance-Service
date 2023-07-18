@@ -211,4 +211,15 @@ public class LectureService {
         return lectureDTO;
     }
 
+    public List<LectureDTO> getCurrentLectures(Long userId){
+        List<Lecture> lectureList = lectureRepository.fetchCurrentLecturesByLecturer(userId);
+        List<LectureDTO> lectureDTOList = new ArrayList<>();
+
+        for (Lecture lecture : lectureList) {
+            LectureDTO lectureDTO = createLectureDTO(lecture);
+            lectureDTOList.add(lectureDTO);
+        }
+
+        return lectureDTOList;
+    }
 }

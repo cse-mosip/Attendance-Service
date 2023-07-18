@@ -89,4 +89,12 @@ public class LectureController {
     public ResponseDTO deleteLecture(@PathVariable("lectureId") long hallId) {
         return lectureService.deleteLectureByID(hallId);
     }
+
+    @GetMapping("/getCurrentLectures")
+    public ResponseEntity<ResponseDTO> getCurrentLectures(){
+        UserDetails userDetails = authHelper.getCurrentUserDetails();
+        List<LectureDTO> lectureDTOList = lectureService.getCurrentLectures(userDetails.getUserID());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseDTO("OK", "Lectures Fetched.", lectureDTOList));
+    }
 }
