@@ -182,9 +182,7 @@ paths:
                     type: string
                     example: "Attendance marked successfully"
                   data:
-                    type: object
-                    items:
-                      $ref: '#/components/schemas/StudentDTO'
+                    $ref: '#/components/schemas/StudentDTO'
         '400':
           description: Invalid or missing details
           content:
@@ -228,9 +226,7 @@ paths:
                     type: string
                     example: "Attendance marked successfully"
                   data:
-                    type: object
-                    items:
-                      $ref: '#/components/schemas/StudentDTO'
+                    $ref: '#/components/schemas/StudentDTO'
         '400':
           description: Invalid or missing details
           content:
@@ -342,33 +338,32 @@ paths:
       security:
         - access_token: [ ]
 
-/admin/hall/getAllHalls:
-    get:
-      tags:
-        - Halls
-      summary: Get all of the Halls
-      description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
-      operationId: getAllHalls
-      parameters: none
-      responses:
-        '200':
-          description: Get all lecture halls successfully!.
-          content:
-            application/json:
-              schema:
-                properties:
-                  status:
-                    type: string
-                    example: "OK"
-                  message:
-                    type: string
-                    example: "Get all lecture halls successfully!"
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/HallsDTO'
-      security:
-        - access_token: []
+  /admin/hall/getAllHalls:
+      get:
+        tags:
+          - Halls
+        summary: Get all of the Halls
+        description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
+        operationId: getAllHalls
+        responses:
+          '200':
+            description: Get all lecture halls successfully!.
+            content:
+              application/json:
+                schema:
+                  properties:
+                    status:
+                      type: string
+                      example: "OK"
+                    message:
+                      type: string
+                      example: "Get all lecture halls successfully!"
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/HallsDTO'
+        security:
+          - access_token: []
 
 components:
   schemas:
@@ -377,7 +372,19 @@ components:
       properties:
         student_id:
           type: string
+          example: ID1
+        index_no:
+          type: string
           example: 190254R
+          nullable: true
+        student_name:
+          type: string
+          example: name1
+          nullable: true
+        picture:
+          type: string
+          example: "https://imgbb.com/abcdefgh"
+          nullable: true
         present:
           type: boolean
           example: true
@@ -386,25 +393,82 @@ components:
           format: date-time
           example: 2023-07-15T11:36:50
           nullable: true
+        validated:
+          type: boolean
+          example: true
+        validated_time:
+          type: string
+          format: date-time
+          example: 2023-07-15T13:45:00
+          nullable: true
+
+    Exam:
+      type: object
+      properties:
+        exam_id:
+          type: integer
+          example: 1341
+        course:
+          $ref: '#/components/schemas/CourseDTO'
+        hall_id:
+          type: integer
+          example: 6
+        invigilator_id:
+          type: integer
+          example: 987
+        start_time:
+          type: string
+          format: date-time
+          example: 2023-07-15T11:00:00
+        end_time:
+          type: string
+          format: date-time
+          example: 2023-07-15T13:00:00
+        is_started:
+          type: boolean
+          example: true
+        is_ended:
+          type: boolean
+          example: false
+        expected_attendance:
+          type: integer
+          example: 128
+        attendance:
+          type: integer
+          example: 126
+        hall:
+          $ref: '#/components/schemas/HallsDTO'
+        lecturer:
+          type: string
+          example: "Prof. Indika Perera"
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentDTO'
 
     LoginRequestDTO:
       type: object
       properties:
         grant_type:
           type: string
-          description: Grant type for authentication (should always be equal to 'password')
+          description: Grant type for authentication (should be either 'password' or 'fingerprint')
           example: password
           nullable: false
         username:
           type: string
-          description: Username (Email) of the user
+          description: Username (Email) of the user (mandatory if grant_type = 'password')
           example: 'user@gmail.com'
-          nullable: false
+          nullable: true
         password:
           type: string
-          description: Password of the user
+          description: Password of the user (mandatory if grant_type = 'password')
           example: password
-          nullable: false
+          nullable: true
+        fingerprint:
+          type: string
+          description: Fingerprint of the user (mandatory if grant_type = 'fingerprint')
+          example: data
+          nullable: true
 
     MarkAttendanceRequestDTO:
       type: object
@@ -434,6 +498,15 @@ components:
           format: int32
           example: 3600
           description: Token expiry time in seconds
+        user_id:
+          type: integer
+          format: int32
+          example: 142
+          description: ID of the user
+        user_type:
+          type: string
+          example: ADMIN
+          description: User's type (Either 'ADMIN' or 'LECTURER')
 
     StudentDTO:
       type: object
@@ -442,6 +515,11 @@ components:
           type: string
           description: University index number
           example: 190429G
+          nullable: false
+        id:
+          type: string
+          description: MOSIP id
+          example: 99
           nullable: false
         name:
           type: string
@@ -477,6 +555,26 @@ components:
         active:
           type: boolean
           example: true
+
+    CourseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of course
+          example: 32
+          nullable: false
+        moduleCode:
+          type: string
+          example: "CS1012"
+        moduleName:
+          type: string
+          example: "Programming Fundamentals"
+        intake:
+          type: integer
+          description: Intake of course
+          example: 22
 
   securitySchemes:
     access_token:

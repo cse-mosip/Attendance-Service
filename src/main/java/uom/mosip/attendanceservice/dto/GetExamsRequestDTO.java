@@ -5,15 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentDTO {
-    private String id;
-    private String index_number;
-
-    private String name;
-
-    private String picture;
+public class GetExamsRequestDTO {
+    private LocalDateTime minTime;
+    private LocalDateTime maxTime;
 }

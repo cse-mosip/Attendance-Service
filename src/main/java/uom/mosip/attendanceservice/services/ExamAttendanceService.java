@@ -19,12 +19,16 @@ public class ExamAttendanceService {
     private final ExamRepository examRepository;
     private final ExamAttendanceRepository examAttendanceRepository;
     private final LMSService lmsService;
+    private final AuthenticationService authenticationService;
+    private final RegistrationService registrationService;
 
     @Autowired
-    public ExamAttendanceService(ExamRepository examRepository, ExamAttendanceRepository examAttendanceRepository, LMSService lmsService) {
+    public ExamAttendanceService(ExamRepository examRepository, ExamAttendanceRepository examAttendanceRepository, LMSService lmsService, AuthenticationService authenticationService, RegistrationService registrationService) {
         this.examRepository = examRepository;
         this.examAttendanceRepository = examAttendanceRepository;
         this.lmsService = lmsService;
+        this.authenticationService = authenticationService;
+        this.registrationService = registrationService;
     }
 
     public ResponseDTO markExamAttendance(MarkAttendanceRequestDTO markAttendanceRequestDTO) {
@@ -35,8 +39,7 @@ public class ExamAttendanceService {
             return new ResponseDTO("INVALID_DATA", "Fingerprint or Exam id is not set");
         }
 
-        // TODO  - call authentication service and get the student id
-        String student_id = "S-123";
+        String student_id = authenticationService.authenticate(fingerprint);
 
         if (student_id != null) {
             Optional<Exam> exam = examRepository.findById(exam_id);
@@ -49,15 +52,14 @@ public class ExamAttendanceService {
                 } else if (validExam.getEndTime().plusMinutes(30).isBefore(LocalDateTime.now())) {
                     return new ResponseDTO("INVALID_DATA", "Exam attendance marking is finished");
                 } else {
-                    List<String> studentList = lmsService.getStudentsForACourse(validExam.getModuleCode(), validExam.getIntake());
+                    List<String> studentList = lmsService.getStudentsForACourse(validExam.getCourseId());
 
                     boolean canAttend = studentList.contains(student_id);
 
                     if (canAttend) {
                         List<ExamAttendance> studentExamAttendance = examAttendanceRepository.getExamAttendanceByStudentIdAndExam(student_id, validExam);
 
-                        // TODO - get full details of the student from registration service
-                        StudentDTO student = new StudentDTO();
+                        StudentDTO student = registrationService.getStudentDetails(student_id);
 
                         if (studentExamAttendance.isEmpty()) {
                             ExamAttendance newExamAttendance = new ExamAttendance();
@@ -75,6 +77,7 @@ public class ExamAttendanceService {
                         } else if (studentExamAttendance.size() == 1 && !studentExamAttendance.get(0).isValidated()) {
                             ExamAttendance notValidatedExamAttendance = studentExamAttendance.get(0);
                             notValidatedExamAttendance.setValidated(true);
+                            notValidatedExamAttendance.setValidatedTime(LocalDateTime.now());
                             examAttendanceRepository.save(notValidatedExamAttendance);
 
                             return new ResponseDTO("OK", "Attendance verified successfully", student);

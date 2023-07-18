@@ -15,9 +15,12 @@ public class AuthRouteMatcher {
 
     public AuthRouteMatcher() {
         List<String> protectedEndpoints = Arrays.asList(
-                "/rand/a/**",
-                "/pend",
-                "/admin/exam-attendance/**"
+                "/admin/exam-attendance/**",
+                "/admin/lecture-attendance/**",
+                "/admin/exam/**",
+                "/admin/hall/**",
+                "/admin/lecture/**",
+                "/student/exam-attendance/mark-exam-attendance"
         );
 
         PathPatternParser parser = new PathPatternParser();

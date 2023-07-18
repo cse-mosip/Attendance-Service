@@ -16,7 +16,7 @@ public class HallService {
 
     @Autowired
     private HallRepository hallRepository;
-@Autowired
+    @Autowired
     private ModelMapper modelMapper;
     // get all lecture halls
     public Iterable<HallDTO> getAllHalls() {
@@ -43,7 +43,7 @@ public class HallService {
                 updatedHall.setName(hall.getName());
                 updatedHall.setLocation(hall.getLocation());
                 updatedHall.setCapacity(hall.getCapacity());
-                updatedHall = hallRepository.save(updatedHall);
+                hallRepository.save(updatedHall);
                 responseDTO.setData(hall);
                 responseDTO.setMessage("Updated lecture hall successfully!");
                 responseDTO.setStatus("HALL_UPDATED_SUCCESSFULLY");
@@ -79,7 +79,7 @@ public class HallService {
         } else {
             Hall deletedHall = hallRepository.findById(hallId).get();
             deletedHall.setActive(false);
-            deletedHall = hallRepository.save(deletedHall);
+            hallRepository.save(deletedHall);
             responseDTO.setMessage("Deleted lecture hall successfully!");
             responseDTO.setStatus("HALL_DELETED_SUCCESSFULLY");
         }
@@ -91,11 +91,11 @@ public class HallService {
     public ResponseDTO getHallById(long hallId) {
         ResponseDTO responseDTO = new ResponseDTO();
         if (hallRepository.findById(hallId).isEmpty()) {
-            responseDTO.setMessage("No hall found corresponding to the hall ID!");
+            responseDTO.setMessage("No hall found respective to the hall ID!");
             responseDTO.setStatus("HALL_NOT_FOUND");
         } else {
             responseDTO.setData(hallRepository.findById(hallId).get());
-            responseDTO.setMessage("Get lecture hall successfully!");
+            responseDTO.setMessage("Get lecture hall details successfully!");
             responseDTO.setStatus("HALL_FOUND");
         }
         return responseDTO;

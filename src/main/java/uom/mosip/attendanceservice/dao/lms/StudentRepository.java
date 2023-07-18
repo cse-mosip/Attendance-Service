@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface StudentRepository extends CrudRepository<Student,String> {
 
-    @Query("SELECT s FROM Student s INNER JOIN s.enrolledCourses e WHERE e.moduleCode=?1 AND e.intake=?2")
-    List<Student> fetchCourseByModuleCodeWithStudents(String moduleCode, int intake);
+    @Query("SELECT s FROM Student s INNER JOIN s.enrolledCourses e WHERE e.id=?1")
+    List<Student> fetchCourseByModuleCodeWithStudents(long courseId);
 }

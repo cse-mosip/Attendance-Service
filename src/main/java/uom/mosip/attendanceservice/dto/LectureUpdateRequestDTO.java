@@ -14,9 +14,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LectureUpdateRequestDTO {
     private Long lectureId;
-    private String moduleCode;
-    private String moduleName;
-    private int intake;
+    private long courseId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean isStarted;

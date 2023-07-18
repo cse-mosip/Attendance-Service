@@ -28,6 +28,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, unique = true)
+    private String mosipId;
+
     @Column(nullable = false)
     private int userType;
 
