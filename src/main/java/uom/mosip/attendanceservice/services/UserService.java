@@ -16,6 +16,10 @@ public class UserService {
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public Optional<User> getUserByMosipID(String mosipID) {
+        return userRepository.findByMosipId(mosipID);
+    }
   
     public User saveUser(User user) throws Exception {
         Optional<User> existingUserByEmail = userRepository.findByEmail(user.getEmail());

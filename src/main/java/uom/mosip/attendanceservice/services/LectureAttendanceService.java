@@ -39,7 +39,7 @@ public class LectureAttendanceService {
             return new ResponseDTO("INVALID_DATA", "Fingerprint or Lecture id is not set");
         }
 
-        String student_id = authenticationService.authenticateStudent(fingerprint);
+        String student_id = authenticationService.authenticate(fingerprint);
 
         if (student_id != null) {
             Optional<Lecture> lecture = lectureRepository.findById(lecture_id);
