@@ -337,15 +337,22 @@ paths:
         - access_token: [ ]
 
   /admin/hall/getAllHalls:
-      get:
+      post:
         tags:
           - Halls
         summary: Get all of the Halls
         description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
         operationId: getAllHalls
+        requestBody:
+          description: Start time and End time if it required otherwise empty.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetHallRequestDTO'
+          required: false
         responses:
           '200':
-            description: Get all lecture halls successfully!.
+            description: If there is start and end time it provide free lecture halls otherwise provides all lecture halls .
             content:
               application/json:
                 schema:
@@ -573,6 +580,15 @@ components:
           type: integer
           description: Intake of course
           example: 22
+    GetHallRequestDTO:
+      startTime:
+        type: date-time
+        description: Start Time
+        example: "2023-07-15T10:00:00"
+      endTime:
+        type: date-time
+        description: End Time
+        example: "2023-07-15T12:00:00"
 
   securitySchemes:
     access_token:
