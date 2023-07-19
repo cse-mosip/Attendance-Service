@@ -5,6 +5,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.HallRepository;
+import uom.mosip.attendanceservice.dto.CreateHallRequestDTO;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Exam;
@@ -31,6 +32,28 @@ public class HallService {
     }
 
     // Create lecture hall
+    public ResponseDTO createHall(CreateHallRequestDTO createHallRequestDTO) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Hall hall = new Hall();
+
+        String errorMessage = validateHallInputs(createHallRequestDTO);
+        if (errorMessage != null) {
+            responseDTO.setMessage(errorMessage);
+            responseDTO.setStatus("INVALID_INPUTS");
+        } else {
+            hall.setName(createHallRequestDTO.getName());
+            hall.setLocation(createHallRequestDTO.getLocation());
+            hall.setCapacity(createHallRequestDTO.getCapacity());
+
+            hallRepository.save(hall);
+
+            responseDTO.setData(hall.getId());
+            responseDTO.setMessage("Hall created Successfully");
+            responseDTO.setStatus("HALL_CREATED_SUCCESSFULLY");
+        }
+
+        return responseDTO;
+    }
 
     // update lecture hall
     public ResponseDTO updateHall(HallDTO hall) {
@@ -58,7 +81,6 @@ public class HallService {
         }
         return responseDTO;
     }
-
     private String validateHallInputs(HallDTO hall) {
         String message = null;
         if (hall.getCapacity() <= 0) {
@@ -70,6 +92,17 @@ public class HallService {
             if (hallRepository.findByName(hall.getName()).getId() != hall.getId()) {
                 message = "Already exist a hall with given name. Try with different name.";
             }
+        }
+        return message;
+    }
+
+    private String validateHallInputs(CreateHallRequestDTO createHallRequestDTO) {
+        String message = null;
+
+        if (createHallRequestDTO.getCapacity() <= 0) {
+            message = "Capacity must be a positive number";
+        } else if (hallRepository.findByName(createHallRequestDTO.getName()) != null) {
+                message = "Already exist a hall with given name";
         }
         return message;
     }
