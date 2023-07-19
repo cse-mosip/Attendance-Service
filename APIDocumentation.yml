@@ -416,6 +416,82 @@ paths:
       security:
         - access_token: []
 
+  /admin/lecture/deleteLecture/{lectureId}:
+    get:
+      tags:
+        - Lectures
+      summary: Delete a lecture
+      description: This endpoint will provide functionality for a admin to delete a lecture.
+      operationId: deleteLectureByID
+      parameters:
+        - name: lectureId
+          in: path
+          description: ID of the lecture
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Deleted lecture successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "LECTURE_DELETED_SUCCESSFULLY"
+                  message:
+                    type: string
+                    example: "Deleted lecture successfully!"
+                  data:
+                    type: integer
+                    format: int64
+                    description: "Lecture id"
+                    example: 43872
+        '400':
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "LECTURE_NOT_FOUND"
+                  message:
+                    type: string
+                    example: "No Lecture found corresponding to the lecture ID!"
+      security:
+        - access_token: [ ]
+
+  /admin/lecture/getCurrentLectures:
+    get:
+      tags:
+        - Lectures
+      summary: Get currently started lectures
+      description: This endpoint will provide functionality for a lecturer to view his/her lectures that are currently started.
+      operationId: getCurrentLectures
+      responses:
+        '200':
+          description: Lectures Fetched.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Lectures Fetched"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LectureDTO'
+
+      security:
+        - access_token: [ ]
+
   /admin/hall/getAllHalls:
       post:
         tags:
@@ -717,6 +793,22 @@ components:
         invigilator_id:
           type: integer
           example: 987
+
+    LectureDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of lecture
+          example: 32
+          nullable: false
+        attendance:
+          type: integer
+          format: int64
+          description: Number of students attending
+          example: 32
+          nullable: false
         start_time:
           type: string
           format: date-time
@@ -728,6 +820,31 @@ components:
         expected_attendance:
           type: integer
           example: 128
+        moduleCode:
+          type: string
+          example: "CS1012"
+        moduleName:
+          type: string
+          example: "Programming Fundamentals"
+        intake:
+          type: integer
+          description: Intake of course
+          example: 22
+        hall_id:
+          type: integer
+          example: 6
+        lecturer_id:
+          type: integer
+          example: 6
+        course_id:
+          type: integer
+          example: 6
+        is_started:
+          type: boolean
+          example: true
+        is_ended:
+          type: boolean
+          example: false
 
   securitySchemes:
     access_token:
