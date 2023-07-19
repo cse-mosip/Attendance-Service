@@ -9,6 +9,7 @@ import uom.mosip.attendanceservice.dto.GetHallRequestDTO;
 import uom.mosip.attendanceservice.dto.CreateHallRequestDTO;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
+import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.services.HallService;
 
 import java.util.Objects;

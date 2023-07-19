@@ -86,6 +86,9 @@ public class LectureService {
             return null;
         }
     }
+    public Optional<Lecture> getAttendanceForLectureById(long lectureId) {
+        return lectureRepository.findById(lectureId);
+    }
 
     // create lecture
     public ResponseDTO createLecture(CreateLectureRequestDTO lectureRequestDTO) {
