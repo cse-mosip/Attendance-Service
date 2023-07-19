@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import uom.mosip.attendanceservice.dto.LectureAttendanceDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.dto.StudentDTO;
+import uom.mosip.attendanceservice.dto.StudentLectureAttendanceDTO;
 import uom.mosip.attendanceservice.models.Lecture;
 import uom.mosip.attendanceservice.models.LectureAttendance;
 import uom.mosip.attendanceservice.services.AdminService;
@@ -36,13 +37,14 @@ public class AdminController {
 
     @GetMapping("/admin/lecture-attendance/student/{studentId}")
     public ResponseEntity<ResponseDTO> getStudentAttendance(@PathVariable String studentId) {
-        ResponseDTO responseDTO = new ResponseDTO();
-
         List<LectureAttendance> attendanceList = adminService.getStudentAttendance(studentId);
-
-        responseDTO.setData(attendanceList);
-        responseDTO.setStatus("200");
-        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+        List<StudentLectureAttendanceDTO> studentLectureAttendanceDTOS = new LinkedList<>();
+        for (LectureAttendance la:attendanceList) {
+            studentLectureAttendanceDTOS.add(new StudentLectureAttendanceDTO(
+                    lectureService.getLectureById(la.getLecture().getId()),la.getArrivalTime(),la.getId()));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDTO("OK","Student Attendance Fetched",studentLectureAttendanceDTOS));
     }
 
     @GetMapping("/admin/lecture-attendance/lecture/{lectureId}")
