@@ -3,9 +3,13 @@ package uom.mosip.attendanceservice.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.ExamRepository;
+import uom.mosip.attendanceservice.dto.CreateExamRequestDTO;
 import uom.mosip.attendanceservice.dto.ExamDTO;
 import uom.mosip.attendanceservice.dto.GetExamsRequestDTO;
+import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Exam;
+import uom.mosip.attendanceservice.models.Hall;
+import uom.mosip.attendanceservice.models.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,6 +24,12 @@ public class ExamService {
 
     @Autowired
     private LMSService lmsService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private HallService hallService;
 
     public Optional<Exam> getAttendanceForAnExamById(long examId) {
         return examRepository.fetchExamAttendanceById(examId);
@@ -69,14 +79,61 @@ public class ExamService {
         examDTO.setExpectedAttendance(exam.getExpectedAttendance());
         examDTO.setAttendance(exam.getAttendance());
         examDTO.setHall(exam.getHall());
-        examDTO.setLecturerName(exam.getInvigilator().getName());
-        examDTO.setAttendees(exam.getAttendees());
+        examDTO.setInvigilatorName(exam.getInvigilator().getName());
 
         return examDTO;
     }
 
-    public List<Exam> getExamsInTimePeriod(LocalDateTime startTime, LocalDateTime endTime) {
-        return examRepository.fetchExamsByStartTimeAndEndTime(startTime, endTime);
+    public ResponseDTO createExam(CreateExamRequestDTO examRequestDTO) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Exam exam = new Exam();
+
+        String errorMessage = validateExamInputs(examRequestDTO);
+        if (errorMessage != null) {
+            responseDTO.setMessage(errorMessage);
+            responseDTO.setStatus("INVALID_INPUTS");
+        } else {
+            exam.setCourseId(examRequestDTO.getCourseId());
+            exam.setStartTime(examRequestDTO.getStartTime());
+            exam.setEndTime(examRequestDTO.getEndTime());
+            exam.setExpectedAttendance(examRequestDTO.getExpectedAttendance());
+
+            Hall hall = hallService.getHallById(examRequestDTO.getHallId());
+            User invigilator = userService.getUserByID(examRequestDTO.getInvigilatorId()).get();
+
+            exam.setHall(hall);
+            exam.setInvigilator(invigilator);
+
+            examRepository.save(exam);
+
+            responseDTO.setData(exam.getId());
+            responseDTO.setMessage("Exam created successfully!");
+            responseDTO.setStatus("EXAM_CREATED_SUCCESSFULLY");
+        }
+
+        return responseDTO;
     }
 
+    private String validateExamInputs(CreateExamRequestDTO examRequestDTO) {
+        String message = null;
+
+        LocalDateTime startTime = examRequestDTO.getStartTime();
+        LocalDateTime endTime = examRequestDTO.getEndTime();
+
+        Hall hall = hallService.getHallById(examRequestDTO.getHallId());
+        Optional<User> responseDTOExam = userService.getUserByID(examRequestDTO.getInvigilatorId());
+
+        if (startTime == null || endTime == null) {
+            message = "Cannot be empty";
+        } else if (startTime.isAfter(endTime)) {
+            message = "Start time should be earlier than End time";
+        } else if (responseDTOExam.isEmpty()) {
+            message = "Invalid lecturer id";
+        } else if (hall == null) {
+            message = "Invalid hall id";
+        } else if (!hallService.isHallAvailable(hall, startTime, endTime)) {
+            message = "Hall unavailable";
+        }
+        return message;
+    }
 }

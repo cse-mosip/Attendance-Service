@@ -33,6 +33,6 @@ public class Hall {
     private List<Lecture> lectures;
 
     @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY)
-    private List<Lecture> exams;
+    private List<Exam> exams;
 
 }
