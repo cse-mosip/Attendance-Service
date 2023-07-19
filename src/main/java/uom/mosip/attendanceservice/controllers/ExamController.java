@@ -22,12 +22,12 @@ public class ExamController {
         this.examService = examService;
         this.authHelper = authHelper;
     }
+
     //Create exam method like exam create method
     @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> createExam(@RequestBody CreateExamRequestDTO createExamRequestDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(examService.createExam(createExamRequestDTO));
     }
-
 
     @GetMapping("/get-exam/{examId}")
     public ResponseEntity<ResponseDTO> getExamById(@PathVariable long examId) {

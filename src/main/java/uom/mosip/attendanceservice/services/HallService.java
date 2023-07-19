@@ -61,12 +61,15 @@ public class HallService {
     public ResponseEntity<ResponseDTO> updateHall(HallDTO hall) {
 
         ResponseDTO responseDTO = new ResponseDTO();
-        if (hallRepository.findById(hall.getId()).isEmpty()) {
+
+        Optional<Hall> hallOptional = hallRepository.findById(hall.getId());
+
+        if (hallOptional.isEmpty()) {
             responseDTO.setMessage("Error occur when loading existing hall data!");
             responseDTO.setStatus("HALL_NOT_FOUND");
             return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
         } else{
-            Hall updatedHall = hallRepository.findById(hall.getId()).get();
+            Hall updatedHall = hallOptional.get();
             String errorMessage = validateHallInputs(hall);
             if (errorMessage != null) {
                 responseDTO.setMessage(errorMessage);
@@ -85,6 +88,7 @@ public class HallService {
         }
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
     private String validateHallInputs(HallDTO hall) {
         String message = null;
         if (hall.getCapacity() <= 0) {

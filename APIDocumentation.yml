@@ -10,9 +10,9 @@ servers:
 
 tags:
   - name: Exams
-    description: APIs related to exam attendance
+    description: APIs related to exam and exam attendance
   - name: Lectures
-    description: APIs related to lecture attendance
+    description: APIs related to lecture and lecture attendance
   - name: Users
     description:  APIs related to user authentication/registration
   - name: Halls

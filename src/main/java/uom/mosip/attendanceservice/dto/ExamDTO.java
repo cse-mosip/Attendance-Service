@@ -5,11 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uom.mosip.attendanceservice.dto.lms.CourseDTO;
-import uom.mosip.attendanceservice.models.ExamAttendance;
 import uom.mosip.attendanceservice.models.Hall;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +23,5 @@ public class ExamDTO {
     private int expectedAttendance;
     private int attendance;
     private Hall hall;
-    private String lecturerName;
-    private List<ExamAttendance> attendees;
+    private String invigilatorName;
 }

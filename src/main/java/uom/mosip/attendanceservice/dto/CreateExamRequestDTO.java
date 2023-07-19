@@ -18,7 +18,5 @@ public class CreateExamRequestDTO {
     private LocalDateTime endTime;
     private int expectedAttendance;
     private long hallId;
-    private long lecturerId;
-
-
+    private long invigilatorId;
 }

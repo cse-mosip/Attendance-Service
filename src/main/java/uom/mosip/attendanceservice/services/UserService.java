@@ -13,6 +13,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public Optional<User> getUserByID(long id) {
+        return userRepository.findById(id);
+    }
+
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -36,7 +40,6 @@ public class UserService {
             System.out.println(user.getId()+" user already exists");
             throw new Exception("User with the same ID exists");
         }
-        User savedUser = userRepository.save(user);
-        return savedUser;
+        return userRepository.save(user);
     }
 }

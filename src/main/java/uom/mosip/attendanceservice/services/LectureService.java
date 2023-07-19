@@ -103,7 +103,7 @@ public class LectureService {
             lecture.setExpectedAttendance(lectureRequestDTO.getExpectedAttendance());
 
             Hall hall = hallService.getHallById(lectureRequestDTO.getHallId());
-            User lecturer = userService.getUserByMosipID(Long.toString(lectureRequestDTO.getLecturerId())).get();
+            User lecturer = userService.getUserByID(lectureRequestDTO.getLecturerId()).get();
 
             lecture.setHall(hall);
             lecture.setLecturer(lecturer);
@@ -125,7 +125,7 @@ public class LectureService {
         LocalDateTime endTime = lectureRequestDTO.getEndTime();
 
         Hall hall = hallService.getHallById(lectureRequestDTO.getHallId());
-        Optional<User> responseDTOLecturer = userService.getUserByMosipID(Long.toString(lectureRequestDTO.getLecturerId()));
+        Optional<User> responseDTOLecturer = userService.getUserByID(lectureRequestDTO.getLecturerId());
 
         if (startTime == null || endTime == null) {
             message = "Cannot be empty";
@@ -205,8 +205,7 @@ public class LectureService {
         lectureDTO.setExpectedAttendance(lecture.getExpectedAttendance());
         lectureDTO.setAttendance(lecture.getAttendance());
         lectureDTO.setHall(lecture.getHall());
-        lectureDTO.setLecturer(lecture.getLecturer());
-        lectureDTO.setAttendees(lecture.getAttendees());
+        lectureDTO.setLecturerName(lecture.getLecturer().getName());
 
         return lectureDTO;
     }

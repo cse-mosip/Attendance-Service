@@ -3,10 +3,12 @@ package uom.mosip.attendanceservice.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.ExamRepository;
-import uom.mosip.attendanceservice.dto.*;
+import uom.mosip.attendanceservice.dto.CreateExamRequestDTO;
+import uom.mosip.attendanceservice.dto.ExamDTO;
+import uom.mosip.attendanceservice.dto.GetExamsRequestDTO;
+import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Exam;
 import uom.mosip.attendanceservice.models.Hall;
-import uom.mosip.attendanceservice.models.Lecture;
 import uom.mosip.attendanceservice.models.User;
 
 import java.time.LocalDateTime;
@@ -77,8 +79,7 @@ public class ExamService {
         examDTO.setExpectedAttendance(exam.getExpectedAttendance());
         examDTO.setAttendance(exam.getAttendance());
         examDTO.setHall(exam.getHall());
-        examDTO.setLecturerName(exam.getInvigilator().getName());
-        examDTO.setAttendees(exam.getAttendees());
+        examDTO.setInvigilatorName(exam.getInvigilator().getName());
 
         return examDTO;
     }
@@ -98,10 +99,10 @@ public class ExamService {
             exam.setExpectedAttendance(examRequestDTO.getExpectedAttendance());
 
             Hall hall = hallService.getHallById(examRequestDTO.getHallId());
-            User lecturer = userService.getUserByMosipID(Long.toString(examRequestDTO.getLecturerId())).get();
+            User invigilator = userService.getUserByID(examRequestDTO.getInvigilatorId()).get();
 
             exam.setHall(hall);
-            exam.setInvigilator(lecturer);
+            exam.setInvigilator(invigilator);
 
             examRepository.save(exam);
 
@@ -120,7 +121,7 @@ public class ExamService {
         LocalDateTime endTime = examRequestDTO.getEndTime();
 
         Hall hall = hallService.getHallById(examRequestDTO.getHallId());
-        Optional<User> responseDTOExam = userService.getUserByMosipID(Long.toString(examRequestDTO.getLecturerId()));
+        Optional<User> responseDTOExam = userService.getUserByID(examRequestDTO.getInvigilatorId());
 
         if (startTime == null || endTime == null) {
             message = "Cannot be empty";
