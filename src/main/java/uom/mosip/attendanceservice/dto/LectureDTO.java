@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uom.mosip.attendanceservice.dto.lms.CourseDTO;
-import uom.mosip.attendanceservice.models.Hall;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +21,6 @@ public class LectureDTO {
     private boolean isEnded;
     private int expectedAttendance;
     private int attendance;
-    private Hall hall;
+    private String hallName;
     private String lecturerName;
 }

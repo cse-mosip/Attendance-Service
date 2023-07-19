@@ -207,7 +207,7 @@ public class LectureService {
         lectureDTO.setEnded(lecture.isEnded());
         lectureDTO.setExpectedAttendance(lecture.getExpectedAttendance());
         lectureDTO.setAttendance(lecture.getAttendance());
-        lectureDTO.setHall(lecture.getHall());
+        lectureDTO.setHallName(lecture.getHall().getName());
         lectureDTO.setLecturerName(lecture.getLecturer().getName());
 
         return lectureDTO;

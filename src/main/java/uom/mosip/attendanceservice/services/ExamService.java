@@ -78,7 +78,7 @@ public class ExamService {
         examDTO.setEnded(exam.isEnded());
         examDTO.setExpectedAttendance(exam.getExpectedAttendance());
         examDTO.setAttendance(exam.getAttendance());
-        examDTO.setHall(exam.getHall());
+        examDTO.setHallName(exam.getHall().getName());
         examDTO.setInvigilatorName(exam.getInvigilator().getName());
 
         return examDTO;
