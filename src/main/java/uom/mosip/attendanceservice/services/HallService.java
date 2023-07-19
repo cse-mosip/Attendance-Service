@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.HallRepository;
+import uom.mosip.attendanceservice.dto.GetHallRequestDTO;
 import uom.mosip.attendanceservice.dto.CreateHallRequestDTO;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
@@ -27,10 +28,17 @@ public class HallService {
     private ModelMapper modelMapper;
 
     // get all lecture halls
-    public Iterable<HallDTO> getAllHalls() {
-        Iterable<Hall> halls = hallRepository.findAll();
-        return modelMapper.map(halls, new TypeToken<List<HallDTO>>() {
-        }.getType());
+    public Iterable<HallDTO> getAllHalls( GetHallRequestDTO getHallRequestDTO) {
+        Iterable<Hall> halls;
+        if(getHallRequestDTO.getStartTime() != null && getHallRequestDTO.getEndTime() != null){
+            // if there is start and end time give halls without having lectures or exams
+            halls = hallRepository.findByTime(getHallRequestDTO.getStartTime(),getHallRequestDTO.getEndTime());
+        }else{
+            //otherwise send all halls
+            halls =  hallRepository.findAll();
+            return modelMapper.map(halls,new TypeToken<List<HallDTO>>(){}.getType());
+        }
+        return modelMapper.map(halls,new TypeToken<List<HallDTO>>(){}.getType());
     }
 
     // Create lecture hall
