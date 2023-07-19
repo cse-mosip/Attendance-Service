@@ -1,11 +1,10 @@
 package uom.mosip.attendanceservice.controllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uom.mosip.attendanceservice.dto.ExamDTO;
-import uom.mosip.attendanceservice.dto.GetExamsRequestDTO;
-import uom.mosip.attendanceservice.dto.ResponseDTO;
+import uom.mosip.attendanceservice.dto.*;
 import uom.mosip.attendanceservice.dto.auth.UserDetails;
 import uom.mosip.attendanceservice.helpers.AuthHelper;
 import uom.mosip.attendanceservice.services.ExamService;
@@ -23,6 +22,12 @@ public class ExamController {
         this.examService = examService;
         this.authHelper = authHelper;
     }
+    //Create exam method like exam create method
+    @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createExam(@RequestBody CreateExamRequestDTO createExamRequestDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(examService.createExam(createExamRequestDTO));
+    }
+
 
     @GetMapping("/get-exam/{examId}")
     public ResponseEntity<ResponseDTO> getExamById(@PathVariable long examId) {
