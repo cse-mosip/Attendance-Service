@@ -5,11 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uom.mosip.attendanceservice.dto.GetHallRequestDTO;
 import uom.mosip.attendanceservice.dto.CreateHallRequestDTO;
+import uom.mosip.attendanceservice.dto.GetHallRequestDTO;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
-import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.services.HallService;
 
 import java.util.Objects;
@@ -72,12 +71,12 @@ public class HallController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("INVALID_DATA", "Invalid hall id."));
         }
 
-        Hall hall = hallService.getHallById(hallId);
+        HallDTO hallDTO = hallService.getHallDTOById(hallId);
 
-        if (hall == null) {
+        if (hallDTO == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO("INVALID_DATA", "Hall not found by id"));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK", "Hall found", hall));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK", "Hall found", hallDTO));
     }
 
 }

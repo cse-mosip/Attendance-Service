@@ -22,6 +22,10 @@ public interface ExamRepository extends CrudRepository<Exam, Long> {
     @Query("SELECT e FROM Exam e WHERE e.invigilator.id=?1 AND e.startTime <= ?2")
     List<Exam> fetchExamsByInvigilatorAndMaxTime(long userId, LocalDateTime maxTime);
 
-    @Query("SELECT e FROM Exam e WHERE e.invigilator.id=?1 AND (e.endTime >= ?2 OR e.startTime <= ?3)")
+    @Query("SELECT e FROM Exam e WHERE " +
+            "e.invigilator.id=?1 AND " +
+            "((e.startTime <= ?2 AND e.endTime >= ?2) OR " +
+            "(e.startTime >= ?2 AND e.endTime <= ?3) OR " +
+            "(e.startTime <= ?3 AND e.endTime >= ?3))")
     List<Exam> fetchExamsByInvigilatorAndMinTimeAndMaxTime(long userId, LocalDateTime minTime, LocalDateTime maxTime);
 }

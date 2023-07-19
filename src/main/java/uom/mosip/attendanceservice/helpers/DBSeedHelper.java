@@ -235,8 +235,8 @@ public class DBSeedHelper {
         // Add exams
         Exam exam1 = createExamObject(
                 1,
-                LocalDateTime.of(2023, 8, 13, 13, 0),
-                LocalDateTime.of(2023, 8, 13, 15, 0),
+                LocalDateTime.of(2023, 8, 31, 13, 0),
+                LocalDateTime.of(2023, 8, 31, 15, 0),
                 250,
                 halls.get(0),
                 users.get(0));
@@ -244,24 +244,24 @@ public class DBSeedHelper {
 
         Exam exam2 = createExamObject(
                 2,
-                LocalDateTime.of(2023, 4, 13, 13, 0),
-                LocalDateTime.of(2023, 4, 13, 15, 0),
+                LocalDateTime.of(2023, 4, 30, 13, 0),
+                LocalDateTime.of(2023, 4, 30, 15, 0),
                 250,
                 halls.get(1),
                 users.get(1));
         examRepository.save(exam2);
         Exam exam3 = createExamObject(
                 3,
-                LocalDateTime.of(2023, 8, 15, 13, 0),
-                LocalDateTime.of(2023, 8, 15, 15, 0),
+                LocalDateTime.of(2023, 8, 29, 13, 0),
+                LocalDateTime.of(2023, 8, 29, 15, 0),
                 200,
                 halls.get(2),
                 users.get(2));
         examRepository.save(exam3);
         Exam exam4 = createExamObject(
                 4,
-                LocalDateTime.of(2023, 12, 11, 13, 0),
-                LocalDateTime.of(2023, 12, 11, 15, 0),
+                LocalDateTime.of(2023, 12, 28, 13, 0),
+                LocalDateTime.of(2023, 12, 28, 15, 0),
                 200,
                 halls.get(3),
                 users.get(3));
@@ -269,40 +269,40 @@ public class DBSeedHelper {
 
         Exam exam5 = createExamObject(
                 5,
-                LocalDateTime.of(2021, 3, 13, 13, 0),
-                LocalDateTime.of(2021, 3, 13, 15, 0),
+                LocalDateTime.of(2021, 3, 27, 13, 0),
+                LocalDateTime.of(2021, 3, 27, 15, 0),
                 250,
                 halls.get(4),
                 users.get(4));
         examRepository.save(exam5);
         Exam exam6 = createExamObject(
                 6,
-                LocalDateTime.of(2021, 7, 13, 13, 0),
-                LocalDateTime.of(2021, 7, 13, 15, 0),
+                LocalDateTime.of(2021, 7, 26, 13, 0),
+                LocalDateTime.of(2021, 7, 26, 15, 0),
                 200,
                 halls.get(5),
                 users.get(5));
         examRepository.save(exam6);
         Exam exam7 = createExamObject(
                 7,
-                LocalDateTime.of(2021, 12, 13, 13, 0),
-                LocalDateTime.of(2021, 12, 13, 15, 0),
+                LocalDateTime.of(2021, 12, 25, 13, 0),
+                LocalDateTime.of(2021, 12, 25, 15, 0),
                 200,
                 halls.get(6),
                 users.get(6));
         examRepository.save(exam7);
         Exam exam8 = createExamObject(
                 8,
-                LocalDateTime.of(2022, 4, 13, 13, 0),
-                LocalDateTime.of(2022, 4, 13, 15, 0),
+                LocalDateTime.of(2022, 4, 24, 13, 0),
+                LocalDateTime.of(2022, 4, 24, 15, 0),
                 200,
                 halls.get(7),
                 users.get(7));
         examRepository.save(exam8);
         Exam exam9 = createExamObject(
                 9,
-                LocalDateTime.of(2023, 7, 13, 13, 0),
-                LocalDateTime.of(2023, 7, 13, 15, 0),
+                LocalDateTime.of(2023, 7, 23, 13, 0),
+                LocalDateTime.of(2023, 7, 23, 15, 0),
                 200,
                 halls.get(8),
                 users.get(8));
@@ -310,56 +310,56 @@ public class DBSeedHelper {
 
         Exam exam10 = createExamObject(
                 10,
-                LocalDateTime.of(2020, 5, 13, 13, 0),
-                LocalDateTime.of(2020, 5, 13, 15, 0),
+                LocalDateTime.of(2020, 5, 22, 13, 0),
+                LocalDateTime.of(2020, 5, 22, 15, 0),
                 250,
                 halls.get(9),
                 users.get(9));
         examRepository.save(exam10);
         Exam exam11 = createExamObject(
                 11,
-                LocalDateTime.of(2021, 4, 13, 13, 0),
-                LocalDateTime.of(2021, 4, 13, 15, 0),
+                LocalDateTime.of(2021, 4, 21, 13, 0),
+                LocalDateTime.of(2021, 4, 21, 15, 0),
                 128,
                 halls.get(0),
                 users.get(0));
         examRepository.save(exam11);
         Exam exam12 = createExamObject(
                 12,
-                LocalDateTime.of(2021, 12, 13, 13, 0),
-                LocalDateTime.of(2021, 12, 13, 15, 0),
+                LocalDateTime.of(2021, 12, 20, 13, 0),
+                LocalDateTime.of(2021, 12, 20, 15, 0),
                 128,
                 halls.get(1),
                 users.get(1));
         examRepository.save(exam12);
         Exam exam13 = createExamObject(
                 13,
-                LocalDateTime.of(2022, 6, 13, 13, 0),
-                LocalDateTime.of(2022, 6, 13, 15, 0),
+                LocalDateTime.of(2022, 6, 19, 13, 0),
+                LocalDateTime.of(2022, 6, 19, 15, 0),
                 128,
                 halls.get(2),
                 users.get(2));
         examRepository.save(exam13);
         Exam exam14 = createExamObject(
                 14,
-                LocalDateTime.of(2022, 12, 13, 13, 0),
-                LocalDateTime.of(2022, 12, 13, 15, 0),
+                LocalDateTime.of(2022, 12, 18, 13, 0),
+                LocalDateTime.of(2022, 12, 18, 15, 0),
                 128,
                 halls.get(3),
                 users.get(3));
         examRepository.save(exam14);
         Exam exam15 = createExamObject(
                 15,
-                LocalDateTime.of(2023, 6, 13, 13, 0),
-                LocalDateTime.of(2023, 6, 13, 15, 0),
+                LocalDateTime.of(2023, 6, 17, 13, 0),
+                LocalDateTime.of(2023, 6, 17, 15, 0),
                 128,
                 halls.get(2),
                 users.get(2));
         examRepository.save(exam15);
         Exam exam16 = createExamObject(
                 16,
-                LocalDateTime.of(2023, 12, 13, 13, 0),
-                LocalDateTime.of(2023, 12, 13, 15, 0),
+                LocalDateTime.of(2023, 12, 16, 13, 0),
+                LocalDateTime.of(2023, 12, 16, 15, 0),
                 128,
                 halls.get(3),
                 users.get(3));
@@ -367,16 +367,16 @@ public class DBSeedHelper {
 
         Exam exam17 = createExamObject(
                 17,
-                LocalDateTime.of(2019, 5, 13, 13, 0),
-                LocalDateTime.of(2019, 5, 13, 15, 0),
+                LocalDateTime.of(2019, 5, 15, 13, 0),
+                LocalDateTime.of(2019, 5, 15, 15, 0),
                 250,
                 halls.get(4),
                 users.get(4));
         examRepository.save(exam17);
         Exam exam18 = createExamObject(
                 18,
-                LocalDateTime.of(2019, 11, 13, 13, 0),
-                LocalDateTime.of(2019, 11, 13, 15, 0),
+                LocalDateTime.of(2019, 11, 14, 13, 0),
+                LocalDateTime.of(2019, 11, 14, 15, 0),
                 128,
                 halls.get(5),
                 users.get(5));
@@ -391,40 +391,40 @@ public class DBSeedHelper {
         examRepository.save(exam19);
         Exam exam20 = createExamObject(
                 20,
-                LocalDateTime.of(2021, 6, 13, 13, 0),
-                LocalDateTime.of(2021, 6, 13, 15, 0),
+                LocalDateTime.of(2021, 6, 12, 13, 0),
+                LocalDateTime.of(2021, 6, 12, 15, 0),
                 128,
                 halls.get(7),
                 users.get(7));
         examRepository.save(exam20);
         Exam exam21 = createExamObject(
                 21,
-                LocalDateTime.of(2022, 2, 13, 13, 0),
-                LocalDateTime.of(2022, 2, 13, 15, 0),
+                LocalDateTime.of(2022, 2, 11, 13, 0),
+                LocalDateTime.of(2022, 2, 11, 15, 0),
                 128,
                 halls.get(8),
                 users.get(8));
         examRepository.save(exam21);
         Exam exam22 = createExamObject(
                 22,
-                LocalDateTime.of(2022, 6, 13, 13, 0),
-                LocalDateTime.of(2022, 6, 13, 15, 0),
+                LocalDateTime.of(2022, 6, 10, 13, 0),
+                LocalDateTime.of(2022, 6, 10, 15, 0),
                 128,
                 halls.get(9),
                 users.get(9));
         examRepository.save(exam22);
         Exam exam23 = createExamObject(
                 23,
-                LocalDateTime.of(2022, 12, 13, 13, 0),
-                LocalDateTime.of(2022, 12, 13, 15, 0),
+                LocalDateTime.of(2022, 12, 9, 13, 0),
+                LocalDateTime.of(2022, 12, 9, 15, 0),
                 128,
                 halls.get(0),
                 users.get(0));
         examRepository.save(exam23);
         Exam exam24 = createExamObject(
                 24,
-                LocalDateTime.of(2023, 4, 13, 13, 0),
-                LocalDateTime.of(2023, 4, 13, 15, 0),
+                LocalDateTime.of(2023, 5, 8, 13, 0),
+                LocalDateTime.of(2023, 5, 8, 15, 0),
                 128,
                 halls.get(1),
                 users.get(1));
@@ -441,8 +441,8 @@ public class DBSeedHelper {
         // Add lectures
         Lecture lecture1 = createLectureObject(
                 1,
-                LocalDateTime.of(2023, 8, 1, 8, 0),
-                LocalDateTime.of(2023, 8, 1, 10, 0),
+                LocalDateTime.of(2023, 8, 17, 8, 0),
+                LocalDateTime.of(2023, 8, 17, 10, 0),
                 250,
                 halls.get(0),
                 users.get(0));
@@ -450,24 +450,24 @@ public class DBSeedHelper {
 
         Lecture lecture2 = createLectureObject(
                 2,
-                LocalDateTime.of(2023, 4, 1, 8, 0),
-                LocalDateTime.of(2023, 4, 1, 10, 0),
+                LocalDateTime.of(2023, 4, 16, 8, 0),
+                LocalDateTime.of(2023, 4, 16, 10, 0),
                 250,
                 halls.get(1),
                 users.get(1));
         lectureRepository.save(lecture2);
         Lecture lecture3 = createLectureObject(
                 3,
-                LocalDateTime.of(2023, 8, 7, 8, 0),
-                LocalDateTime.of(2023, 8, 7, 10, 0),
+                LocalDateTime.of(2023, 8, 15, 8, 0),
+                LocalDateTime.of(2023, 8, 15, 10, 0),
                 200,
                 halls.get(2),
                 users.get(2));
         lectureRepository.save(lecture3);
         Lecture lecture4 = createLectureObject(
                 4,
-                LocalDateTime.of(2023, 12, 4, 8, 0),
-                LocalDateTime.of(2023, 12, 4, 10, 0),
+                LocalDateTime.of(2023, 12, 14, 8, 0),
+                LocalDateTime.of(2023, 12, 14, 10, 0),
                 200,
                 halls.get(3),
                 users.get(3));
@@ -475,40 +475,40 @@ public class DBSeedHelper {
 
         Lecture lecture5 = createLectureObject(
                 5,
-                LocalDateTime.of(2021, 3, 6, 10, 0),
-                LocalDateTime.of(2021, 3, 6, 12, 0),
+                LocalDateTime.of(2021, 3, 13, 10, 0),
+                LocalDateTime.of(2021, 3, 13, 12, 0),
                 250,
                 halls.get(4),
                 users.get(4));
         lectureRepository.save(lecture5);
         Lecture lecture6 = createLectureObject(
                 6,
-                LocalDateTime.of(2021, 7, 6, 8, 0),
-                LocalDateTime.of(2021, 7, 6, 10, 0),
+                LocalDateTime.of(2021, 7, 12, 8, 0),
+                LocalDateTime.of(2021, 7, 12, 10, 0),
                 200,
                 halls.get(5),
                 users.get(5));
         lectureRepository.save(lecture6);
         Lecture lecture7 = createLectureObject(
                 7,
-                LocalDateTime.of(2021, 12, 5, 13, 0),
-                LocalDateTime.of(2021, 12, 5, 15, 0),
+                LocalDateTime.of(2021, 12, 11, 13, 0),
+                LocalDateTime.of(2021, 12, 11, 15, 0),
                 200,
                 halls.get(6),
                 users.get(6));
         lectureRepository.save(lecture7);
         Lecture lecture8 = createLectureObject(
                 8,
-                LocalDateTime.of(2022, 4, 3, 11, 0),
-                LocalDateTime.of(2022, 4, 3, 13, 0),
+                LocalDateTime.of(2022, 4, 10, 11, 0),
+                LocalDateTime.of(2022, 4, 10, 13, 0),
                 200,
                 halls.get(7),
                 users.get(7));
         lectureRepository.save(lecture8);
         Lecture lecture9 = createLectureObject(
                 9,
-                LocalDateTime.of(2023, 7, 2, 13, 0),
-                LocalDateTime.of(2023, 7, 2, 15, 0),
+                LocalDateTime.of(2023, 7, 9, 13, 0),
+                LocalDateTime.of(2023, 7, 9, 15, 0),
                 200,
                 halls.get(8),
                 users.get(8));
@@ -516,56 +516,56 @@ public class DBSeedHelper {
 
         Lecture lecture10 = createLectureObject(
                 10,
-                LocalDateTime.of(2020, 5, 7, 8, 0),
-                LocalDateTime.of(2020, 5, 7, 10, 0),
+                LocalDateTime.of(2020, 5, 8, 8, 0),
+                LocalDateTime.of(2020, 5, 8, 10, 0),
                 250,
                 halls.get(9),
                 users.get(9));
         lectureRepository.save(lecture10);
         Lecture lecture11 = createLectureObject(
                 11,
-                LocalDateTime.of(2021, 4, 1, 10, 0),
-                LocalDateTime.of(2021, 4, 1, 12, 0),
+                LocalDateTime.of(2021, 4, 7, 10, 0),
+                LocalDateTime.of(2021, 4, 7, 12, 0),
                 128,
                 halls.get(0),
                 users.get(0));
         lectureRepository.save(lecture11);
         Lecture lecture12 = createLectureObject(
                 12,
-                LocalDateTime.of(2021, 12, 4, 15, 0),
-                LocalDateTime.of(2021, 12, 4, 17, 0),
+                LocalDateTime.of(2021, 12, 6, 15, 0),
+                LocalDateTime.of(2021, 12, 6, 17, 0),
                 128,
                 halls.get(1),
                 users.get(1));
         lectureRepository.save(lecture12);
         Lecture lecture13 = createLectureObject(
                 13,
-                LocalDateTime.of(2022, 6, 3, 15, 0),
-                LocalDateTime.of(2022, 6, 3, 17, 0),
+                LocalDateTime.of(2022, 6, 5, 15, 0),
+                LocalDateTime.of(2022, 6, 5, 17, 0),
                 128,
                 halls.get(2),
                 users.get(2));
         lectureRepository.save(lecture13);
         Lecture lecture14 = createLectureObject(
                 14,
-                LocalDateTime.of(2022, 12, 1, 8, 0),
-                LocalDateTime.of(2022, 12, 1, 10, 0),
+                LocalDateTime.of(2022, 12, 4, 8, 0),
+                LocalDateTime.of(2022, 12, 4, 10, 0),
                 128,
                 halls.get(3),
                 users.get(3));
         lectureRepository.save(lecture14);
         Lecture lecture15 = createLectureObject(
                 15,
-                LocalDateTime.of(2023, 6, 5, 10, 0),
-                LocalDateTime.of(2023, 6, 5, 12, 0),
+                LocalDateTime.of(2023, 6, 3, 10, 0),
+                LocalDateTime.of(2023, 6, 3, 12, 0),
                 128,
                 halls.get(2),
                 users.get(2));
         lectureRepository.save(lecture15);
         Lecture lecture16 = createLectureObject(
                 16,
-                LocalDateTime.of(2023, 12, 8, 13, 0),
-                LocalDateTime.of(2023, 12, 8, 15, 0),
+                LocalDateTime.of(2023, 12, 2, 13, 0),
+                LocalDateTime.of(2023, 12, 2, 15, 0),
                 128,
                 halls.get(3),
                 users.get(3));
@@ -573,64 +573,64 @@ public class DBSeedHelper {
 
         Lecture lecture17 = createLectureObject(
                 17,
-                LocalDateTime.of(2019, 5, 6, 10, 0),
-                LocalDateTime.of(2019, 5, 6, 12, 0),
+                LocalDateTime.of(2019, 5, 1, 10, 0),
+                LocalDateTime.of(2019, 5, 1, 12, 0),
                 250,
                 halls.get(4),
                 users.get(4));
         lectureRepository.save(lecture17);
         Lecture lecture18 = createLectureObject(
                 18,
-                LocalDateTime.of(2019, 11, 4, 15, 0),
-                LocalDateTime.of(2019, 11, 4, 17, 0),
+                LocalDateTime.of(2019, 10, 31, 15, 0),
+                LocalDateTime.of(2019, 10, 31, 17, 0),
                 128,
                 halls.get(5),
                 users.get(5));
         lectureRepository.save(lecture18);
         Lecture lecture19 = createLectureObject(
                 19,
-                LocalDateTime.of(2020, 8, 9, 8, 0),
-                LocalDateTime.of(2020, 8, 9, 10, 0),
+                LocalDateTime.of(2020, 7, 30, 8, 0),
+                LocalDateTime.of(2020, 7, 30, 10, 0),
                 128,
                 halls.get(6),
                 users.get(6));
         lectureRepository.save(lecture19);
         Lecture lecture20 = createLectureObject(
                 20,
-                LocalDateTime.of(2021, 6, 2, 9, 0),
-                LocalDateTime.of(2021, 6, 2, 11, 0),
+                LocalDateTime.of(2021, 5, 29, 9, 0),
+                LocalDateTime.of(2021, 5, 29, 11, 0),
                 128,
                 halls.get(7),
                 users.get(7));
         lectureRepository.save(lecture20);
         Lecture lecture21 = createLectureObject(
                 21,
-                LocalDateTime.of(2022, 2, 4, 7, 0),
-                LocalDateTime.of(2022, 2, 4, 9, 0),
+                LocalDateTime.of(2022, 1, 28, 7, 0),
+                LocalDateTime.of(2022, 1, 28, 9, 0),
                 128,
                 halls.get(8),
                 users.get(8));
         lectureRepository.save(lecture21);
         Lecture lecture22 = createLectureObject(
                 22,
-                LocalDateTime.of(2022, 6, 10, 11, 0),
-                LocalDateTime.of(2022, 6, 10, 13, 0),
+                LocalDateTime.of(2022, 5, 27, 11, 0),
+                LocalDateTime.of(2022, 5, 27, 13, 0),
                 128,
                 halls.get(9),
                 users.get(9));
         lectureRepository.save(lecture22);
         Lecture lecture23 = createLectureObject(
                 23,
-                LocalDateTime.of(2022, 12, 6, 8, 0),
-                LocalDateTime.of(2022, 12, 6, 10, 0),
+                LocalDateTime.of(2022, 11, 26, 8, 0),
+                LocalDateTime.of(2022, 11, 26, 10, 0),
                 128,
                 halls.get(0),
                 users.get(0));
         lectureRepository.save(lecture23);
         Lecture lecture24 = createLectureObject(
                 24,
-                LocalDateTime.of(2023, 4, 2, 10, 0),
-                LocalDateTime.of(2023, 4, 2, 12, 0),
+                LocalDateTime.of(2023, 3, 25, 10, 0),
+                LocalDateTime.of(2023, 3, 25, 12, 0),
                 128,
                 halls.get(1),
                 users.get(1));

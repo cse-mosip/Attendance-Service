@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.HallRepository;
-import uom.mosip.attendanceservice.dto.GetHallRequestDTO;
 import uom.mosip.attendanceservice.dto.CreateHallRequestDTO;
+import uom.mosip.attendanceservice.dto.GetHallRequestDTO;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Exam;
@@ -28,17 +28,19 @@ public class HallService {
     private ModelMapper modelMapper;
 
     // get all lecture halls
-    public Iterable<HallDTO> getAllHalls( GetHallRequestDTO getHallRequestDTO) {
+    public Iterable<HallDTO> getAllHalls(GetHallRequestDTO getHallRequestDTO) {
         Iterable<Hall> halls;
-        if(getHallRequestDTO.getStartTime() != null && getHallRequestDTO.getEndTime() != null){
+        if (getHallRequestDTO.getStartTime() != null && getHallRequestDTO.getEndTime() != null) {
             // if there is start and end time give halls without having lectures or exams
-            halls = hallRepository.findByTime(getHallRequestDTO.getStartTime(),getHallRequestDTO.getEndTime());
-        }else{
+            halls = hallRepository.findByTime(getHallRequestDTO.getStartTime(), getHallRequestDTO.getEndTime());
+        } else {
             //otherwise send all halls
-            halls =  hallRepository.findAll();
-            return modelMapper.map(halls,new TypeToken<List<HallDTO>>(){}.getType());
+            halls = hallRepository.findAll();
+            return modelMapper.map(halls, new TypeToken<List<HallDTO>>() {
+            }.getType());
         }
-        return modelMapper.map(halls,new TypeToken<List<HallDTO>>(){}.getType());
+        return modelMapper.map(halls, new TypeToken<List<HallDTO>>() {
+        }.getType());
     }
 
     // Create lecture hall
@@ -76,7 +78,7 @@ public class HallService {
             responseDTO.setMessage("Error occur when loading existing hall data!");
             responseDTO.setStatus("HALL_NOT_FOUND");
             return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
-        } else{
+        } else {
             Hall updatedHall = hallOptional.get();
             String errorMessage = validateHallInputs(hall);
             if (errorMessage != null) {
@@ -118,7 +120,7 @@ public class HallService {
         if (createHallRequestDTO.getCapacity() <= 0) {
             message = "Capacity must be a positive number";
         } else if (hallRepository.findByName(createHallRequestDTO.getName()) != null) {
-                message = "Already exist a hall with given name";
+            message = "Already exist a hall with given name";
         }
         return message;
     }
@@ -149,6 +151,7 @@ public class HallService {
     }
 
     public boolean isHallAvailable(Hall hall, LocalDateTime startTime, LocalDateTime endTime) {
+
         if (!hall.isActive()) {
             return false;
         }
@@ -157,18 +160,38 @@ public class HallService {
         List<Exam> examList = hall.getExams();
 
         for (Lecture lecture : lectureList) {
-            if (lecture.getEndTime().isAfter(startTime) || lecture.getStartTime().isBefore(endTime)) {
+            if (!((lecture.getStartTime().isBefore(startTime) && lecture.getEndTime().isBefore(startTime)) ||
+                    (lecture.getStartTime().isAfter(endTime) && lecture.getEndTime().isAfter(endTime)))) {
                 return false;
             }
         }
 
         for (Exam exam : examList) {
-            if (exam.getEndTime().isAfter(startTime) || exam.getStartTime().isBefore(endTime)) {
+            if (!((exam.getStartTime().isBefore(startTime) && exam.getEndTime().isBefore(startTime)) ||
+                    (exam.getStartTime().isAfter(endTime) && exam.getEndTime().isAfter(endTime)))) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    public HallDTO getHallDTOById(long hallId) {
+        Optional<Hall> hallOptional = hallRepository.findById(hallId);
+
+        if (hallOptional.isEmpty()) {
+            return null;
+        }
+
+        Hall hall = hallOptional.get();
+        HallDTO hallDTO = new HallDTO();
+        hallDTO.setId(hall.getId());
+        hallDTO.setName(hall.getName());
+        hallDTO.setLocation(hall.getLocation());
+        hallDTO.setCapacity(hall.getCapacity());
+        hallDTO.setActive(hall.isActive());
+
+        return hallDTO;
     }
 
 }

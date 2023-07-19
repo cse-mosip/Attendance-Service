@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.UserRepository;
 import uom.mosip.attendanceservice.models.User;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,14 +32,14 @@ public class UserService {
             System.out.println(user.getEmail()+" already exist in the database");
             throw new Exception("User with the same email exists");
         }
-        if (user.getId() == 0) {
-            System.out.println("ID should be provided");
-            throw new Exception("ID should be provided");
+        if (Objects.equals(user.getMosipId(), "0")) {
+            System.out.println("MOSIP ID should be provided");
+            throw new Exception("MOSIP ID should be provided");
         }
-        Optional<User> existingUserById = userRepository.findById(user.getId());
+        Optional<User> existingUserById = userRepository.findByMosipId(user.getMosipId());
         if (existingUserById.isPresent()) {
-            System.out.println(user.getId()+" user already exists");
-            throw new Exception("User with the same ID exists");
+            System.out.println(user.getId()+" MOSIP ID already exists");
+            throw new Exception("User with the same MOSIP ID exists");
         }
         return userRepository.save(user);
     }
