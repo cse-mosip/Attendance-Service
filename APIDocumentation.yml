@@ -19,6 +19,40 @@ tags:
     description:  APIs related to Halls
 
 paths:
+  /admin/exam/create:
+    post:
+      tags:
+        - Exams
+      summary: Create an exam
+      description: This endpoint will provide functionality to create an exam.
+      operationId: createExam
+      requestBody:
+        description: Exam details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExamRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Exam created successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Exam created successfully"
+                  data:
+                    $ref: '#/components/schemas/Exam'
+        '400':
+          description: Invalid or missing details
+      security:
+        - access_token: [ ]
+
   /admin/exam-attendance/{examId}:
     get:
       tags:
@@ -409,6 +443,40 @@ paths:
       security:
         - access_token: []
 
+  /admin/hall/getHall/{hallId}:
+    get:
+      tags:
+        - Halls
+      summary: Get a hall
+      description: This endpoint will provide a hall with the conducting lectures and exams of it.
+      operationId: getHall
+      parameters:
+        - name: hallId
+          in: path
+          description: ID of the hall
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get lecture hall successfully!.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Get lecture hall successfully!"
+                  data:
+                    $ref: "#/components/schemas/HallsDTO"
+      security:
+        - access_token: []
+
+
 components:
   schemas:
     ExamAttendance:
@@ -619,6 +687,29 @@ components:
           type: integer
           description: Intake of course
           example: 22
+    CreateExamRequestDTO:
+      type: object
+      properties:
+        course_id:
+          type: integer
+          example: 1341
+        hall_id:
+          type: integer
+          example: 6
+        invigilator_id:
+          type: integer
+          example: 987
+        start_time:
+          type: string
+          format: date-time
+          example: 2023-07-15T11:00:00
+        end_time:
+          type: string
+          format: date-time
+          example: 2023-07-15T13:00:00
+        expected_attendance:
+          type: integer
+          example: 128
 
   securitySchemes:
     access_token:
