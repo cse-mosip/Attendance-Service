@@ -6,10 +6,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uom.mosip.attendanceservice.dto.GetHallRequestDTO;
+import uom.mosip.attendanceservice.dto.CreateHallRequestDTO;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.services.HallService;
+
+import java.util.Objects;
 
 @RestController
 @RequestMapping("admin/hall")
@@ -32,11 +35,22 @@ public class HallController {
     }
 
     // Create lecture hall
+    @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createHall(@RequestBody CreateHallRequestDTO createHallRequestDTO) {
+        ResponseDTO responseDTO = hallService.createHall(createHallRequestDTO);
+
+        if (Objects.equals(responseDTO.getStatus(), "INVALID_INPUTS")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
 
     // update lecture hall
-    @PostMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/update",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> updateHall(@RequestBody HallDTO hall) {
-        return new ResponseEntity<>(hallService.updateHall(hall), HttpStatus.OK);
+        return hallService.updateHall(hall);
     }
 
     // delete lecture hall
@@ -65,6 +79,5 @@ public class HallController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK", "Hall found", hall));
     }
-
 
 }

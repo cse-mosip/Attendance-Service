@@ -4,24 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uom.mosip.attendanceservice.dto.lms.CourseDTO;
-import uom.mosip.attendanceservice.models.Hall;
 
 import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExamDTO {
-    private long id;
-    private CourseDTO course;
+public class CreateExamRequestDTO {
+    private long courseId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private boolean isStarted;
-    private boolean isEnded;
     private int expectedAttendance;
-    private int attendance;
-    private Hall hall;
-    private String invigilatorName;
+    private long hallId;
+    private long invigilatorId;
 }
