@@ -340,34 +340,80 @@ paths:
                     type: string
                     example: "Invalid lecture"
       security:
-        - access_token: [ ]
+        - access_token: []
+
+  /admin/hall/update:
+    post:
+      tags:
+        - Hall
+      summary: Update the hall information
+      description: This endpoint will provide functionality for an admin to update the information for selected hall.
+      operationId: updateHall
+      requestBody:
+        description: Information to update the selected hall
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HallsDTO"
+        required: true
+      responses:
+        "200":
+          description: Hall updated successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "HALL_UPDATED_SUCCESSFULLY"
+                  message:
+                    type: string
+                    example: "Updated lecture hall successfully!"
+                  data:
+                    type: object
+                    items:
+                      $ref: "#/components/schemas/HallsDTO"
+        "400":
+          description: Invalid or missing details
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "INVALID_INPUTS"
+                  message:
+                    type: string
+                    example: "Already exist a hall with given name. Try with different name"
+      security:
+        - access_token: []
 
   /admin/hall/getAllHalls:
-      get:
-        tags:
-          - Halls
-        summary: Get all of the Halls
-        description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
-        operationId: getAllHalls
-        responses:
-          '200':
-            description: Get all lecture halls successfully!.
-            content:
-              application/json:
-                schema:
-                  properties:
-                    status:
-                      type: string
-                      example: "OK"
-                    message:
-                      type: string
-                      example: "Get all lecture halls successfully!"
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/HallsDTO'
-        security:
-          - access_token: []
+    get:
+      tags:
+        - Halls
+      summary: Get all of the Halls
+      description: This endpoint will provide a list of halls with the conducting lectures and exams of them.
+      operationId: getAllHalls
+      responses:
+        "200":
+          description: Get all lecture halls successfully!.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Get all lecture halls successfully!"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/HallsDTO"
+      security:
+        - access_token: []
 
 components:
   schemas:

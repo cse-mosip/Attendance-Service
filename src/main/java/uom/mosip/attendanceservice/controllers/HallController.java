@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uom.mosip.attendanceservice.dto.HallDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
-import uom.mosip.attendanceservice.models.Hall;
 import uom.mosip.attendanceservice.services.HallService;
 
 @RestController
@@ -34,9 +33,11 @@ public class HallController {
     // Create lecture hall
 
     // update lecture hall
-    @PostMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/update",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> updateHall(@RequestBody HallDTO hall) {
-        return new ResponseEntity<>(hallService.updateHall(hall), HttpStatus.OK);
+        return hallService.updateHall(hall);
     }
 
     // delete lecture hall
