@@ -61,15 +61,16 @@ public class AdminController {
         Lecture lecture = lectureOptional.get();
         List<LectureAttendance> lectureAttendances = lecture.getAttendees();
         Map<String,LectureAttendance> lectureAttendanceMap = new HashMap<>();
+        
         for (LectureAttendance la:lectureAttendances){
             lectureAttendanceMap.put(la.getStudentId(),la);
         }
-        List<String> enrolledStudentIds = lmsService.getStudentsForACourse(lecture.getCourseId());
+        List<String> enrolleStudentIds = lmsService.getStudentsForACourse(lecture.getCourseId());
 
         Map<String, StudentDTO> studentDetailsMap = registrationService.getStudentDetailsMap(enrolledStudentIds);
 
-        List<LectureAttendaneDTO> attendanceDTOS = new LinkedList<>();
-
+        List<LectureAttendanceDTO> attendanceDTOS = new LinkedList<>();
+        
         for (String studentId: enrolledStudentIds) {
             LectureAttendance la = null;
             StudentDTO studentDTO = null;
