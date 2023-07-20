@@ -78,7 +78,8 @@ public class AdminController {
             attendanceDTOS.add(new LectureAttendanceDTO(studentId, la, studentDTO));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK","Lecture Attendance Fetched",attendanceDTOS));
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK","Lecture Attendance Fetched By Lecture ID",attendanceDTOS));
     }
 
 }
