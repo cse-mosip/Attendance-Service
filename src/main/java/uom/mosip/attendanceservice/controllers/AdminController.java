@@ -68,7 +68,8 @@ public class AdminController {
 
         Map<String, StudentDTO> studentDetailsMap = registrationService.getStudentDetailsMap(enrolledStudentIds);
 
-        List<LectureAttendanceDTO> attendanceDTOS = new LinkedList<>();
+        List<LectureAttendaneDTO> attendanceDTOS = new LinkedList<>();
+
         for (String studentId: enrolledStudentIds) {
             LectureAttendance la = null;
             StudentDTO studentDTO = null;
@@ -77,7 +78,6 @@ public class AdminController {
 
             attendanceDTOS.add(new LectureAttendanceDTO(studentId, la, studentDTO));
         }
-
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK","Lecture Attendance Fetched By Lecture ID",attendanceDTOS));
     }
