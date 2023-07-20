@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LectureDTO {
+public class ExamDTO {
     private long id;
     private CourseDTO course;
     private LocalDateTime startTime;
@@ -22,5 +22,5 @@ public class LectureDTO {
     private int expectedAttendance;
     private int attendance;
     private String hallName;
-    private String lecturerName;
+    private String invigilatorName;
 }

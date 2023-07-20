@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
-import uom.mosip.attendanceservice.models.ExamAttendance;
+import uom.mosip.attendanceservice.models.LectureAttendance;
 
 import java.time.LocalDateTime;
 
@@ -13,35 +13,28 @@ import java.time.LocalDateTime;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ExamAttendanceDTO {
+public class LectureAttendanceDTO {
 
-    public ExamAttendanceDTO(String studentId, ExamAttendance examAttendance, StudentDTO studentDTO) {
+    public LectureAttendanceDTO(String studentId, LectureAttendance lectureAttendance, StudentDTO studentDTO) {
         this.studentId = studentId;
 
-        if (examAttendance != null) {
+        if (lectureAttendance != null) {
             this.isPresent = true;
-            this.markedTime = examAttendance.getMarkedTime();
-            this.isValidated = examAttendance.isValidated();
-            this.validatedTime = examAttendance.getValidatedTime();
+            this.arrivalTime = lectureAttendance.getArrivalTime();
         } else {
             this.isPresent = false;
-            this.isValidated = false;
         }
-
         if (studentDTO != null) {
             this.studentName = studentDTO.getName();
             this.indexNo = studentDTO.getIndex_number();
             this.picture = studentDTO.getPicture();
         }
     }
-
     private String studentId;
     private String indexNo;
     private String studentName;
     private String picture;
     private boolean isPresent;
-    private LocalDateTime markedTime;
-    private boolean isValidated;
-    private LocalDateTime validatedTime;
+    private LocalDateTime arrivalTime;
 
 }

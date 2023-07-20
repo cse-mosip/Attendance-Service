@@ -19,14 +19,8 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(length = 8, nullable = false)
-    private String moduleCode;
-
     @Column(nullable = false)
-    private String moduleName;
-
-    @Column(nullable = false)
-    private int intake;
+    private long courseId;
 
     @Column(nullable = false)
     private LocalDateTime startTime;

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.UserRepository;
 import uom.mosip.attendanceservice.models.User;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -13,8 +14,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public Optional<User> getUserByID(long id) {
+        return userRepository.findById(id);
+    }
+
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> getUserByMosipID(String mosipID) {
+        return userRepository.findByMosipId(mosipID);
     }
   
     public User saveUser(User user) throws Exception {
@@ -23,16 +32,15 @@ public class UserService {
             System.out.println(user.getEmail()+" already exist in the database");
             throw new Exception("User with the same email exists");
         }
-        if (user.getId() == 0) {
-            System.out.println("ID should be provided");
-            throw new Exception("ID should be provided");
+        if (Objects.equals(user.getMosipId(), "0")) {
+            System.out.println("MOSIP ID should be provided");
+            throw new Exception("MOSIP ID should be provided");
         }
-        Optional<User> existingUserById = userRepository.findById(user.getId());
+        Optional<User> existingUserById = userRepository.findByMosipId(user.getMosipId());
         if (existingUserById.isPresent()) {
-            System.out.println(user.getId()+" user already exists");
-            throw new Exception("User with the same ID exists");
+            System.out.println(user.getId()+" MOSIP ID already exists");
+            throw new Exception("User with the same MOSIP ID exists");
         }
-        User savedUser = userRepository.save(user);
-        return savedUser;
+        return userRepository.save(user);
     }
 }

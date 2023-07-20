@@ -19,12 +19,16 @@ public class LectureAttendanceService {
     private final LectureRepository lectureRepository;
     private final LectureAttendanceRepository lectureAttendanceRepository;
     private final LMSService lmsService;
+    private final AuthenticationService authenticationService;
+    private final RegistrationService registrationService;
 
     @Autowired
-    public LectureAttendanceService(LectureRepository lectureRepository, LectureAttendanceRepository lectureAttendanceRepository, LMSService lmsService) {
+    public LectureAttendanceService(LectureRepository lectureRepository, LectureAttendanceRepository lectureAttendanceRepository, LMSService lmsService, AuthenticationService authenticationService, RegistrationService registrationService) {
         this.lectureRepository = lectureRepository;
         this.lectureAttendanceRepository = lectureAttendanceRepository;
         this.lmsService = lmsService;
+        this.authenticationService = authenticationService;
+        this.registrationService = registrationService;
     }
 
     public ResponseDTO markLectureAttendance(MarkAttendanceRequestDTO markAttendanceRequestDTO) {
@@ -35,8 +39,7 @@ public class LectureAttendanceService {
             return new ResponseDTO("INVALID_DATA", "Fingerprint or Lecture id is not set");
         }
 
-        // TODO  - call authentication service and get the student id
-        String student_id = "S-123";
+        String student_id = authenticationService.authenticate(fingerprint);
 
         if (student_id != null) {
             Optional<Lecture> lecture = lectureRepository.findById(lecture_id);
@@ -49,7 +52,7 @@ public class LectureAttendanceService {
                 } else if (validLecture.isEnded()) {
                     return new ResponseDTO("INVALID_DATA", "Lecture has already ended");
                 } else {
-                    List<String> studentList = lmsService.getStudentsForACourse(validLecture.getModuleCode(), validLecture.getIntake());
+                    List<String> studentList = lmsService.getStudentsForACourse(validLecture.getCourseId());
 
                     boolean canAttend = studentList.contains(student_id);
 
@@ -69,8 +72,7 @@ public class LectureAttendanceService {
                         validLecture.setAttendance(validLecture.getAttendance() + 1);
                         lectureRepository.save(validLecture);
 
-                        // TODO - get full details of the student from registration service
-                        StudentDTO student = new StudentDTO();
+                        StudentDTO student = registrationService.getStudentDetails(student_id);
 
                         return new ResponseDTO("OK", "Attendance marked successfully", student);
                     } else {

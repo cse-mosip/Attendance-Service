@@ -22,7 +22,7 @@ public class TokenService {
     @Value("${custom.jwt.expiry-time}")
     private int jwtExpiryTimeout;
 
-    public AccessTokenDTO generateJWTToken(String username, String userType) {
+    public AccessTokenDTO generateJWTToken(String username, String userType, long userId, String userTypeName) {
         Date currentTime = new Date();
         Date expirationTime = DateUtils.addSeconds(currentTime, jwtExpiryTimeout);
         Date notBeforeTime = DateUtils.addSeconds(currentTime, -1);
@@ -37,7 +37,7 @@ public class TokenService {
                 .signWith(getJWTSigningKey())
                 .compact();
 
-        return new AccessTokenDTO(accessToken, jwtExpiryTimeout);
+        return new AccessTokenDTO(accessToken, jwtExpiryTimeout, userId, userTypeName);
     }
 
     public TokenDTO decodeJWTToken(String token) {

@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import uom.mosip.attendanceservice.dto.ExamAttendanceDTO;
 import uom.mosip.attendanceservice.dto.MarkAttendanceRequestDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
+import uom.mosip.attendanceservice.dto.StudentDTO;
 import uom.mosip.attendanceservice.models.Exam;
 import uom.mosip.attendanceservice.models.ExamAttendance;
 import uom.mosip.attendanceservice.services.ExamAttendanceService;
 import uom.mosip.attendanceservice.services.ExamService;
 import uom.mosip.attendanceservice.services.LMSService;
+import uom.mosip.attendanceservice.services.RegistrationService;
 
 import java.util.*;
 
@@ -23,6 +25,9 @@ public class ExamAttendanceController {
 
     @Autowired
     private LMSService lmsService;
+
+    @Autowired
+    private RegistrationService registrationService;
 
     private final ExamAttendanceService examAttendanceService;
 
@@ -57,15 +62,21 @@ public class ExamAttendanceController {
             attendanceMap.put(ea.getStudentId(), ea);
         }
 
-        // Get all enrolled Students and map their attendance
-        List<String> enrolledStudentIds = lmsService.getStudentsForACourse(exam.getModuleCode(), exam.getIntake());
+        // Get all enrolled Students
+        List<String> enrolledStudentIds = lmsService.getStudentsForACourse(exam.getCourseId());
+
+        // Get Student Details
+        Map<String, StudentDTO> studentDetailsMap = registrationService.getStudentDetailsMap(enrolledStudentIds);
+
+        // Map the students with their details and attendance
         List<ExamAttendanceDTO> attendanceDTOS = new LinkedList<>();
         for (String studentId: enrolledStudentIds) {
             ExamAttendance ea = null;
-            if (attendanceMap.containsKey(studentId)) {
-                ea = attendanceMap.get(studentId);
-            }
-            attendanceDTOS.add(new ExamAttendanceDTO(studentId, ea));
+            StudentDTO studentDTO = null;
+            if (attendanceMap.containsKey(studentId)) ea = attendanceMap.get(studentId);
+            if (studentDetailsMap.containsKey(studentId)) studentDTO = studentDetailsMap.get(studentId);
+
+            attendanceDTOS.add(new ExamAttendanceDTO(studentId, ea, studentDTO));
         }
 
         return new ResponseDTO("OK", "Attendance Fetched.", attendanceDTOS);
