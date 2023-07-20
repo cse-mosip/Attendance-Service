@@ -42,6 +42,7 @@ public class AdminController {
         }
         responseDTO.setData(attendanceList);
         responseDTO.setStatus("200");
+        
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
