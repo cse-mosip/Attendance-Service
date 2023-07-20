@@ -55,7 +55,7 @@ public class AdminController {
         Optional<Lecture> lectureOptional = lectureService.getAttendanceForLectureById(lectureId);
         if (lectureOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseDTO("LECTURE_NOT_FOUND", "Lecture ID is not found."));
+                    .body(new ResponseDTO("LECTURE_ID_NOT_FOUND", "Lecture ID is not found."));
         }
 
         Lecture lecture = lectureOptional.get();
