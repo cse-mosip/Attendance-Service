@@ -27,7 +27,6 @@ import java.util.Map;
 
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
@@ -83,7 +82,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         // Match for the protected endpoints and include them in this filter
-        for (PathPattern pattern: authRouteMatcher.getPatterns()) {
+        for (PathPattern pattern : authRouteMatcher.getPatterns()) {
             if (pattern.matches(PathContainer.parsePath(request.getRequestURI())))
                 return false;
         }
@@ -91,7 +90,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void rejectRequest(HttpServletResponse response, String status, String message) throws IOException {
-        Map<String,String> responseBody = new HashMap<>();
+        Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", status);
         responseBody.put("message", message);
 
@@ -104,4 +103,5 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         requestAttributes.setAttribute("authenticatedUserDetails", userDetails, RequestAttributes.SCOPE_REQUEST);
     }
+
 }

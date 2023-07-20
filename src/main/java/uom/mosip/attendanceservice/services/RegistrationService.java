@@ -21,7 +21,7 @@ public class RegistrationService {
     public List<StudentDTO> getStudentListDetails(List<String> student_id_list) {
         // TODO - call registration service and get the details of all the students
         List<StudentDTO> studentDTOList = new LinkedList<>();
-        for (String studentId: student_id_list) {
+        for (String studentId : student_id_list) {
             studentDTOList.add(getSampleStudentDTO(studentId));
         }
         return studentDTOList;
@@ -47,4 +47,5 @@ public class RegistrationService {
         studentDTO.setPicture("https://ibb.co/sKvy5Tb");
         return studentDTO;
     }
+
 }

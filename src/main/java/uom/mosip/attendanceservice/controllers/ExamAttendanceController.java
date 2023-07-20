@@ -58,7 +58,7 @@ public class ExamAttendanceController {
         Exam exam = examOptional.get();
         List<ExamAttendance> examAttendance = exam.getAttendees();
         Map<String, ExamAttendance> attendanceMap = new HashMap<>();
-        for (ExamAttendance ea: examAttendance) {
+        for (ExamAttendance ea : examAttendance) {
             attendanceMap.put(ea.getStudentId(), ea);
         }
 
@@ -70,7 +70,7 @@ public class ExamAttendanceController {
 
         // Map the students with their details and attendance
         List<ExamAttendanceDTO> attendanceDTOS = new LinkedList<>();
-        for (String studentId: enrolledStudentIds) {
+        for (String studentId : enrolledStudentIds) {
             ExamAttendance ea = null;
             StudentDTO studentDTO = null;
             if (attendanceMap.containsKey(studentId)) ea = attendanceMap.get(studentId);
@@ -81,4 +81,5 @@ public class ExamAttendanceController {
 
         return new ResponseDTO("OK", "Attendance Fetched.", attendanceDTOS);
     }
+
 }

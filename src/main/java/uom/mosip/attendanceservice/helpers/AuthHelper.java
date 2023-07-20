@@ -19,4 +19,5 @@ public class AuthHelper {
 
         return (UserDetails) authenticatedUserDetails;
     }
+
 }

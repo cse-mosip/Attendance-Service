@@ -85,6 +85,6 @@ public class LectureAttendanceService {
         } else {
             return new ResponseDTO("INVALID_DATA", "No Match");
         }
-
     }
+
 }

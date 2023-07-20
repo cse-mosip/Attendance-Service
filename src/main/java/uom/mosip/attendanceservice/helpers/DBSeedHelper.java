@@ -49,8 +49,8 @@ public class DBSeedHelper {
     public void runSeed() {
         usersSeed();
         hallSeed();
-        courseSeed();
         studentSeed();
+        courseSeed();
         examSeed();
         lectureSeed();
     }
@@ -111,118 +111,118 @@ public class DBSeedHelper {
         hallRepository.save(hall10);
     }
 
-    private void courseSeed() {
-        // If the table is not empty, do not seed
-        if (courseRepository.count() > 0) return;
-
-        // Add courses
-        Course course1 = createCourseObject("CS1032", "Programming Fundamentals", 22);
-        courseRepository.save(course1);
-
-        Course course2 = createCourseObject("CS1032", "Programming Fundamentals", 21);
-        courseRepository.save(course2);
-        Course course3 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 21);
-        courseRepository.save(course3);
-        Course course4 = createCourseObject("CS2042", "Operating Systems", 21);
-        courseRepository.save(course4);
-
-        Course course5 = createCourseObject("CS1032", "Programming Fundamentals", 20);
-        courseRepository.save(course5);
-        Course course6 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 20);
-        courseRepository.save(course6);
-        Course course7 = createCourseObject("CS2042", "Operating Systems", 20);
-        courseRepository.save(course7);
-        Course course8 = createCourseObject("CS3022", "Software Engineering", 20);
-        courseRepository.save(course8);
-        Course course9 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 20);
-        courseRepository.save(course9);
-
-        Course course10 = createCourseObject("CS1032", "Programming Fundamentals", 19);
-        courseRepository.save(course10);
-        Course course11 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 19);
-        courseRepository.save(course11);
-        Course course12 = createCourseObject("CS2042", "Operating Systems", 19);
-        courseRepository.save(course12);
-        Course course13 = createCourseObject("CS3022", "Software Engineering", 19);
-        courseRepository.save(course13);
-        Course course14 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 19);
-        courseRepository.save(course14);
-        Course course15 = createCourseObject("CS4012", "Professional Practice", 19);
-        courseRepository.save(course15);
-        Course course16 = createCourseObject("CS4622", "Machine Learning", 19);
-        courseRepository.save(course16);
-
-        Course course17 = createCourseObject("CS1032", "Programming Fundamentals", 18);
-        courseRepository.save(course17);
-        Course course18 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 18);
-        courseRepository.save(course18);
-        Course course19 = createCourseObject("CS2042", "Operating Systems", 18);
-        courseRepository.save(course19);
-        Course course20 = createCourseObject("CS3022", "Software Engineering", 18);
-        courseRepository.save(course20);
-        Course course21 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 18);
-        courseRepository.save(course21);
-        Course course22 = createCourseObject("CS4012", "Professional Practice", 18);
-        courseRepository.save(course22);
-        Course course23 = createCourseObject("CS4622", "Machine Learning", 18);
-        courseRepository.save(course23);
-        Course course24 = createCourseObject("MA4053", "Numerical Analysis for Scientific Computing ", 18);
-        courseRepository.save(course24);
-    }
-
     private void studentSeed() {
         // If the table is not empty, do not seed
         if (studentRepository.count() > 0) return;
 
-        List<Course> courseList = courseRepository.fetchAllCourses();
-
         // Add students
-        Student student1 = createStudentObject("S1", courseList.subList(0, 1));
+        Student student1 = createStudentObject("S1");
         studentRepository.save(student1);
-        Student student2 = createStudentObject("S2", courseList.subList(0, 1));
+        Student student2 = createStudentObject("S2");
         studentRepository.save(student2);
-        Student student3 = createStudentObject("S3", courseList.subList(0, 1));
+        Student student3 = createStudentObject("S3");
         studentRepository.save(student3);
-        Student student4 = createStudentObject("S4", courseList.subList(0, 1));
+        Student student4 = createStudentObject("S4");
         studentRepository.save(student4);
-        Student student5 = createStudentObject("S5", courseList.subList(0, 1));
+        Student student5 = createStudentObject("S5");
         studentRepository.save(student5);
 
-        Student student6 = createStudentObject("S6", courseList.subList(0, 4));
+        Student student6 = createStudentObject("S6");
         studentRepository.save(student6);
-        Student student7 = createStudentObject("S7", courseList.subList(0, 4));
+        Student student7 = createStudentObject("S7");
         studentRepository.save(student7);
-        Student student8 = createStudentObject("S8", courseList.subList(0, 4));
+        Student student8 = createStudentObject("S8");
         studentRepository.save(student8);
-        Student student9 = createStudentObject("S9", courseList.subList(0, 4));
+        Student student9 = createStudentObject("S9");
         studentRepository.save(student9);
-        Student student10 = createStudentObject("S10", courseList.subList(0, 4));
+        Student student10 = createStudentObject("S10");
         studentRepository.save(student10);
 
-        Student student11 = createStudentObject("S11", courseList.subList(0, 9));
+        Student student11 = createStudentObject("S11");
         studentRepository.save(student11);
-        Student student12 = createStudentObject("S12", courseList.subList(0, 9));
+        Student student12 = createStudentObject("S12");
         studentRepository.save(student12);
-        Student student13 = createStudentObject("S13", courseList.subList(0, 9));
+        Student student13 = createStudentObject("S13");
         studentRepository.save(student13);
-        Student student14 = createStudentObject("S14", courseList.subList(0, 9));
+        Student student14 = createStudentObject("S14");
         studentRepository.save(student14);
-        Student student15 = createStudentObject("S15", courseList.subList(0, 9));
+        Student student15 = createStudentObject("S15");
         studentRepository.save(student15);
 
-        Student student16 = createStudentObject("S16", courseList.subList(0, 15));
+        Student student16 = createStudentObject("S16");
         studentRepository.save(student16);
-        Student student17 = createStudentObject("S17", courseList.subList(0, 15));
+        Student student17 = createStudentObject("S17");
         studentRepository.save(student17);
-        Student student18 = createStudentObject("S18", courseList.subList(0, 15));
+        Student student18 = createStudentObject("S18");
         studentRepository.save(student18);
 
-        Student student19 = createStudentObject("S19", courseList);
+        Student student19 = createStudentObject("S19");
         studentRepository.save(student19);
-        Student student20 = createStudentObject("S20", courseList);
+        Student student20 = createStudentObject("S20");
         studentRepository.save(student20);
-        Student student21 = createStudentObject("S21", courseList);
+        Student student21 = createStudentObject("S21");
         studentRepository.save(student21);
+    }
+
+    private void courseSeed() {
+        // If the table is not empty, do not seed
+        if (courseRepository.count() > 0) return;
+
+        List<Student> studentList = (List<Student>) studentRepository.findAll();
+
+        // Add courses
+        Course course1 = createCourseObject("CS1032", "Programming Fundamentals", 22, studentList.subList(0, 5));
+        courseRepository.save(course1);
+
+        Course course2 = createCourseObject("CS1032", "Programming Fundamentals", 21, studentList.subList(5, 10));
+        courseRepository.save(course2);
+        Course course3 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 21, studentList.subList(5, 10));
+        courseRepository.save(course3);
+        Course course4 = createCourseObject("CS2042", "Operating Systems", 21, studentList.subList(5, 10));
+        courseRepository.save(course4);
+
+        Course course5 = createCourseObject("CS1032", "Programming Fundamentals", 20, studentList.subList(10, 15));
+        courseRepository.save(course5);
+        Course course6 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 20, studentList.subList(10, 15));
+        courseRepository.save(course6);
+        Course course7 = createCourseObject("CS2042", "Operating Systems", 20, studentList.subList(10, 15));
+        courseRepository.save(course7);
+        Course course8 = createCourseObject("CS3022", "Software Engineering", 20, studentList.subList(10, 15));
+        courseRepository.save(course8);
+        Course course9 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 20, studentList.subList(10, 15));
+        courseRepository.save(course9);
+
+        Course course10 = createCourseObject("CS1032", "Programming Fundamentals", 19, studentList.subList(15, 18));
+        courseRepository.save(course10);
+        Course course11 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 19, studentList.subList(15, 18));
+        courseRepository.save(course11);
+        Course course12 = createCourseObject("CS2042", "Operating Systems", 19, studentList.subList(15, 18));
+        courseRepository.save(course12);
+        Course course13 = createCourseObject("CS3022", "Software Engineering", 19, studentList.subList(15, 18));
+        courseRepository.save(course13);
+        Course course14 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 19, studentList.subList(15, 18));
+        courseRepository.save(course14);
+        Course course15 = createCourseObject("CS4012", "Professional Practice", 19, studentList.subList(15, 18));
+        courseRepository.save(course15);
+        Course course16 = createCourseObject("CS4622", "Machine Learning", 19, studentList.subList(15, 18));
+        courseRepository.save(course16);
+
+        Course course17 = createCourseObject("CS1032", "Programming Fundamentals", 18, studentList.subList(18, 21));
+        courseRepository.save(course17);
+        Course course18 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 18, studentList.subList(18, 21));
+        courseRepository.save(course18);
+        Course course19 = createCourseObject("CS2042", "Operating Systems", 18, studentList.subList(18, 21));
+        courseRepository.save(course19);
+        Course course20 = createCourseObject("CS3022", "Software Engineering", 18, studentList.subList(18, 21));
+        courseRepository.save(course20);
+        Course course21 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 18, studentList.subList(18, 21));
+        courseRepository.save(course21);
+        Course course22 = createCourseObject("CS4012", "Professional Practice", 18, studentList.subList(18, 21));
+        courseRepository.save(course22);
+        Course course23 = createCourseObject("CS4622", "Machine Learning", 18, studentList.subList(18, 21));
+        courseRepository.save(course23);
+        Course course24 = createCourseObject("MA4053", "Numerical Analysis for Scientific Computing ", 18, studentList.subList(18, 21));
+        courseRepository.save(course24);
     }
 
     private void examSeed() {
@@ -657,18 +657,18 @@ public class DBSeedHelper {
         return hall;
     }
 
-    private Course createCourseObject(String moduleCode, String moduleName, int intake) {
+    private Course createCourseObject(String moduleCode, String moduleName, int intake, List<Student> students) {
         Course course = new Course();
         course.setModuleCode(moduleCode);
         course.setModuleName(moduleName);
         course.setIntake(intake);
+        course.setEnrolledStudents(students);
         return course;
     }
 
-    private Student createStudentObject(String MOSIPId, List<Course> courseList) {
+    private Student createStudentObject(String MOSIPId) {
         Student student = new Student();
         student.setStudentId(MOSIPId);
-        student.setEnrolledCourses(courseList);
         return student;
     }
 
@@ -698,4 +698,5 @@ public class DBSeedHelper {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder.encode(password);
     }
+    
 }

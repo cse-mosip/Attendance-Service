@@ -21,7 +21,6 @@ public class LectureService {
     private final LectureRepository lectureRepository;
     private final HallService hallService;
     private final UserService userService;
-
     private final LMSService lmsService;
 
     @Autowired
@@ -86,6 +85,7 @@ public class LectureService {
             return null;
         }
     }
+
     public Optional<Lecture> getAttendanceForLectureById(long lectureId) {
         return lectureRepository.findById(lectureId);
     }
@@ -213,7 +213,7 @@ public class LectureService {
         return lectureDTO;
     }
 
-    public List<LectureDTO> getCurrentLectures(Long userId){
+    public List<LectureDTO> getCurrentLectures(Long userId) {
         List<Lecture> lectureList = lectureRepository.fetchCurrentLecturesByLecturer(userId);
         List<LectureDTO> lectureDTOList = new ArrayList<>();
 
@@ -224,4 +224,5 @@ public class LectureService {
 
         return lectureDTOList;
     }
+
 }

@@ -10,7 +10,6 @@ import java.util.List;
 
 @Component
 public class AuthRouteMatcher {
-
     private final List<PathPattern> patterns;
 
     public AuthRouteMatcher() {
@@ -25,7 +24,7 @@ public class AuthRouteMatcher {
 
         PathPatternParser parser = new PathPatternParser();
         List<PathPattern> patterns = new LinkedList<>();
-        for (String endpoint: protectedEndpoints){
+        for (String endpoint : protectedEndpoints) {
             patterns.add(parser.parse(endpoint));
         }
         this.patterns = patterns;
@@ -34,4 +33,5 @@ public class AuthRouteMatcher {
     public List<PathPattern> getPatterns() {
         return patterns;
     }
+
 }

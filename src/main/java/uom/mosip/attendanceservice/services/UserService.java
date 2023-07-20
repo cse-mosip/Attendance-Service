@@ -25,11 +25,11 @@ public class UserService {
     public Optional<User> getUserByMosipID(String mosipID) {
         return userRepository.findByMosipId(mosipID);
     }
-  
+
     public User saveUser(User user) throws Exception {
         Optional<User> existingUserByEmail = userRepository.findByEmail(user.getEmail());
         if (existingUserByEmail.isPresent()) {
-            System.out.println(user.getEmail()+" already exist in the database");
+            System.out.println(user.getEmail() + " already exist in the database");
             throw new Exception("User with the same email exists");
         }
         if (Objects.equals(user.getMosipId(), "0")) {
@@ -38,9 +38,10 @@ public class UserService {
         }
         Optional<User> existingUserById = userRepository.findByMosipId(user.getMosipId());
         if (existingUserById.isPresent()) {
-            System.out.println(user.getId()+" MOSIP ID already exists");
+            System.out.println(user.getId() + " MOSIP ID already exists");
             throw new Exception("User with the same MOSIP ID exists");
         }
         return userRepository.save(user);
     }
+
 }

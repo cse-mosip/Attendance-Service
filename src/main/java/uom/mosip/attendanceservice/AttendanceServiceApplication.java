@@ -11,8 +11,10 @@ public class AttendanceServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(AttendanceServiceApplication.class, args);
     }
+
     @Bean
     public ModelMapper getModelMapper() {
         return new ModelMapper();
     }
+
 }

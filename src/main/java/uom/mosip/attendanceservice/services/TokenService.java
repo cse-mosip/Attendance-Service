@@ -19,6 +19,7 @@ public class TokenService {
 
     @Value("${custom.jwt.secret}")
     private String jwtSecret;
+
     @Value("${custom.jwt.expiry-time}")
     private int jwtExpiryTimeout;
 
@@ -45,7 +46,7 @@ public class TokenService {
         String userType = tokenBody.get("user_type", String.class);
 
         if (tokenBody.getExpiration() == null || tokenBody.getIssuedAt() == null || tokenBody.getNotBefore() == null ||
-            tokenBody.getSubject() == null) {
+                tokenBody.getSubject() == null) {
             throw new MalformedJwtException("Required fields are null in the JWT Token.");
         }
 
@@ -56,4 +57,5 @@ public class TokenService {
     private Key getJWTSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
+
 }

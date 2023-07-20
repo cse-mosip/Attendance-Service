@@ -21,9 +21,9 @@ import java.util.Optional;
 
 @Service
 public class HallService {
-
     @Autowired
     private HallRepository hallRepository;
+
     @Autowired
     private ModelMapper modelMapper;
 

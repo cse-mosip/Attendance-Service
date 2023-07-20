@@ -82,7 +82,7 @@ public class ExamAttendanceService {
 
                             return new ResponseDTO("OK", "Attendance verified successfully", student);
 
-                        } else if (studentExamAttendance.size() == 1 && studentExamAttendance.get(0).isValidated()){
+                        } else if (studentExamAttendance.size() == 1 && studentExamAttendance.get(0).isValidated()) {
                             return new ResponseDTO("INVALID_DATA", "Attendance already marked and validated");
                         } else {
                             return new ResponseDTO("INVALID_DATA", "Server Error");
@@ -99,4 +99,5 @@ public class ExamAttendanceService {
         }
 
     }
+
 }

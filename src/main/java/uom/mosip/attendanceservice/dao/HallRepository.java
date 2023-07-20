@@ -22,7 +22,6 @@ public interface HallRepository extends CrudRepository<Hall,Long> {
             "      ));", nativeQuery = true)
     Iterable<Hall> findByTime(LocalDateTime startTime, LocalDateTime endTime);
 
-
     Hall findByName(String name);
 
     @Query(value = "SELECT MAX(expected_attendance) AS max_expected_attendance " +

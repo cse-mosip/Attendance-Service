@@ -23,8 +23,10 @@ public class Hall {
 
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String location;
+
     @Column(nullable = false)
     private int capacity;
 

@@ -55,4 +55,5 @@ public class Lecture {
     @JsonManagedReference
     @OneToMany(mappedBy = "lecture", fetch = FetchType.LAZY)
     private List<LectureAttendance> attendees;
+
 }

@@ -48,11 +48,12 @@ public class AdminRegisterController {
                 adminRegisterRequestDTO.getEmail() != null &&
                 adminRegisterRequestDTO.getPassword() != null &&
                 adminRegisterRequestDTO.getMosipId() != null &&
-                (adminRegisterRequestDTO.getUserType() == 1 || adminRegisterRequestDTO.getUserType() == 2) ;
+                (adminRegisterRequestDTO.getUserType() == 1 || adminRegisterRequestDTO.getUserType() == 2);
     }
 
     private String encryptPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
+
 }

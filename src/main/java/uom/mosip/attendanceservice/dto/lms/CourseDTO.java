@@ -18,4 +18,5 @@ public class CourseDTO {
         this.moduleName = c.getModuleName();
         this.intake = c.getIntake();
     }
+
 }

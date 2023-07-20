@@ -14,6 +14,12 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class LectureAttendanceDTO {
+    private String studentId;
+    private String indexNo;
+    private String studentName;
+    private String picture;
+    private boolean isPresent;
+    private LocalDateTime arrivalTime;
 
     public LectureAttendanceDTO(String studentId, LectureAttendance lectureAttendance, StudentDTO studentDTO) {
         this.studentId = studentId;
@@ -30,11 +36,5 @@ public class LectureAttendanceDTO {
             this.picture = studentDTO.getPicture();
         }
     }
-    private String studentId;
-    private String indexNo;
-    private String studentName;
-    private String picture;
-    private boolean isPresent;
-    private LocalDateTime arrivalTime;
 
 }

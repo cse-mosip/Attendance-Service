@@ -3,7 +3,9 @@ package uom.mosip.attendanceservice.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import uom.mosip.attendanceservice.dto.LectureAttendanceDTO;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.dto.StudentDTO;
@@ -25,10 +27,8 @@ public class AdminController {
     private final LMSService lmsService;
     private final RegistrationService registrationService;
 
-
-
     @Autowired
-    public AdminController(AdminService adminService,LectureService lectureService,LMSService lmsService,RegistrationService registrationService) {
+    public AdminController(AdminService adminService, LectureService lectureService, LMSService lmsService, RegistrationService registrationService) {
         this.adminService = adminService;
         this.lectureService = lectureService;
         this.lmsService = lmsService;
@@ -39,12 +39,12 @@ public class AdminController {
     public ResponseEntity<ResponseDTO> getStudentAttendance(@PathVariable String studentId) {
         List<LectureAttendance> attendanceList = adminService.getStudentAttendance(studentId);
         List<StudentLectureAttendanceDTO> studentLectureAttendanceDTOS = new LinkedList<>();
-        for (LectureAttendance la:attendanceList) {
+        for (LectureAttendance la : attendanceList) {
             studentLectureAttendanceDTOS.add(new StudentLectureAttendanceDTO(
-                    lectureService.getLectureById(la.getLecture().getId()),la.getArrivalTime(),la.getId()));
+                    lectureService.getLectureById(la.getLecture().getId()), la.getArrivalTime(), la.getId()));
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseDTO("OK","Student Attendance Fetched",studentLectureAttendanceDTOS));
+                new ResponseDTO("OK", "Student Attendance Fetched", studentLectureAttendanceDTOS));
     }
 
     @GetMapping("/admin/lecture-attendance/lecture/{lectureId}")
@@ -53,24 +53,24 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("INVALID_DATA", "Lecture ID is invalid."));
         }
         Optional<Lecture> lectureOptional = lectureService.getAttendanceForLectureById(lectureId);
-        if (lectureOptional.isEmpty()){
+        if (lectureOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResponseDTO("LECTURE_ID_NOT_FOUND", "Lecture ID is not found."));
         }
 
         Lecture lecture = lectureOptional.get();
         List<LectureAttendance> lectureAttendances = lecture.getAttendees();
-        Map<String,LectureAttendance> lectureAttendanceMap = new HashMap<>();
-        for (LectureAttendance la:lectureAttendances){
-            lectureAttendanceMap.put(la.getStudentId(),la);
+        Map<String, LectureAttendance> lectureAttendanceMap = new HashMap<>();
+        for (LectureAttendance la : lectureAttendances) {
+            lectureAttendanceMap.put(la.getStudentId(), la);
         }
         List<String> enrolledStudentIds = lmsService.getStudentsForACourse(lecture.getCourseId());
 
         Map<String, StudentDTO> studentDetailsMap = registrationService.getStudentDetailsMap(enrolledStudentIds);
 
         List<LectureAttendanceDTO> attendanceDTOS = new LinkedList<>();
-        
-        for (String studentId: enrolledStudentIds) {
+
+        for (String studentId : enrolledStudentIds) {
             LectureAttendance la = null;
             StudentDTO studentDTO = null;
             if (lectureAttendanceMap.containsKey(studentId)) la = lectureAttendanceMap.get(studentId);
@@ -79,7 +79,7 @@ public class AdminController {
             attendanceDTOS.add(new LectureAttendanceDTO(studentId, la, studentDTO));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK","Lecture Attendance Fetched By Lecture ID",attendanceDTOS));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("OK", "Lecture Attendance Fetched By Lecture ID", attendanceDTOS));
     }
 
 }

@@ -20,4 +20,5 @@ public class ResponseDTO {
         this.status = status;
         this.message = message;
     }
+
 }

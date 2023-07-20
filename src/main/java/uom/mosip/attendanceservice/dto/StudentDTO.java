@@ -12,8 +12,6 @@ import lombok.Setter;
 public class StudentDTO {
     private String id;
     private String index_number;
-
     private String name;
-
     private String picture;
 }

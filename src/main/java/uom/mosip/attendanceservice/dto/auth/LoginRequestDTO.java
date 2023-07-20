@@ -16,8 +16,6 @@ public class LoginRequestDTO {
     private String grant_type;
 
     private String username;
-
     private String password;
-
     private String fingerprint;
 }

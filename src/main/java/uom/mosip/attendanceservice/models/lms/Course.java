@@ -23,8 +23,10 @@ public class Course {
 
     @Column(name = "module_code", nullable = false, length = 8)
     private String moduleCode;
+
     @Column(nullable = false)
     private String moduleName;
+
     @Column(nullable = false)
     private int intake;
 
@@ -34,5 +36,7 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
+
     private List<Student> enrolledStudents;
+
 }

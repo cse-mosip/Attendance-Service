@@ -38,8 +38,7 @@ public class AuthController {
             return handlePasswordLogin(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
         } else if (loginRequestDTO.getGrant_type().equals("fingerprint")) {
             return handleFingerprintLogin(loginRequestDTO.getFingerprint());
-        }
-        else {
+        } else {
             return ResponseEntity.badRequest().body(new ResponseDTO("INVALID_GRANT", "Invalid grant type."));
         }
     }

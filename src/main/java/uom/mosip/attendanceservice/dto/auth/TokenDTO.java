@@ -20,5 +20,4 @@ public class TokenDTO {
     private Date notBeforeTime;
     private String username;
     private String userType;
-
 }

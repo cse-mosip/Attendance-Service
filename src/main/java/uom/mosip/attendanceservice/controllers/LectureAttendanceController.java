@@ -32,4 +32,5 @@ public class LectureAttendanceController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
+
 }
