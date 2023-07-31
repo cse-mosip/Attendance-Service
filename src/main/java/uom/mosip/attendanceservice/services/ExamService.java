@@ -1,6 +1,7 @@
 package uom.mosip.attendanceservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.ExamRepository;
 import uom.mosip.attendanceservice.dto.CreateExamRequestDTO;
@@ -134,6 +135,22 @@ public class ExamService {
             message = "Hall unavailable";
         }
         return message;
+    }
+
+    public ResponseDTO deleteExam(long examId) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Optional<Exam> examOptional = examRepository.findById(examId);
+
+        if (examOptional.isPresent()) {
+            Exam exam = examOptional.get();
+            examRepository.delete(exam);
+            responseDTO.setMessage("Exam deleted successfully.");
+            responseDTO.setStatus("EXAM_DELETED_SUCCESSFULLY");
+        } else {
+            responseDTO.setMessage("Exam not found.");
+            responseDTO.setStatus("EXAM_NOT_FOUND");
+        }
+        return responseDTO;
     }
 
 }

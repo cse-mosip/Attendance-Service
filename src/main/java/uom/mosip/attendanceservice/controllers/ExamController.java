@@ -58,4 +58,11 @@ public class ExamController {
                 .body(new ResponseDTO("OK", "Exams Fetched.", examDTOList));
     }
 
+    @DeleteMapping("/delete/{examId}")
+    public ResponseDTO deleteExam(@PathVariable long examId) {
+        return examService.deleteExam(examId);
+    }
+
+
+
 }
