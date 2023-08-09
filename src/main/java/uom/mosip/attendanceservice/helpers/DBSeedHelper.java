@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component;
 import uom.mosip.attendanceservice.dao.*;
 import uom.mosip.attendanceservice.dao.lms.CourseRepository;
 import uom.mosip.attendanceservice.dao.lms.StudentRepository;
-import uom.mosip.attendanceservice.models.Exam;
-import uom.mosip.attendanceservice.models.Hall;
-import uom.mosip.attendanceservice.models.Lecture;
-import uom.mosip.attendanceservice.models.User;
+import uom.mosip.attendanceservice.models.*;
 import uom.mosip.attendanceservice.models.lms.Course;
 import uom.mosip.attendanceservice.models.lms.Student;
 
@@ -637,6 +634,28 @@ public class DBSeedHelper {
         lectureRepository.save(lecture24);
     }
 
+    private void lectureAttendanceSeed() {
+
+        // If the table is not empty, do not seed
+        if (lectureAttendanceRepository.count() > 0) return;
+
+        List<Lecture> lectureList = (List<Lecture>) lectureRepository.findAll();
+
+        // Add lecture attendance
+
+    }
+
+    private void examAttendanceSeed() {
+
+        // If the table is not empty, do not seed
+        if (examAttendanceRepository.count() > 0) return;
+
+        List<Exam> examList = (List<Exam>) examRepository.findAll();
+
+        // Add exam attendance
+
+    }
+
 
     // Builders
     private User createUserObject(String name, String email, String password, String mosipId, int userType) {
@@ -694,9 +713,27 @@ public class DBSeedHelper {
         return lecture;
     }
 
+    private LectureAttendance createLectureAttendanceObject(String studentId, LocalDateTime arrivalTime, Lecture lecture) {
+        LectureAttendance lectureAttendance = new LectureAttendance();
+        lectureAttendance.setStudentId(studentId);
+        lectureAttendance.setArrivalTime(arrivalTime);
+        lectureAttendance.setLecture(lecture);
+        return lectureAttendance;
+    }
+
+    private ExamAttendance createExamAttendanceObject(String studentId, LocalDateTime markedTime, boolean isValidated, LocalDateTime validatedTime, Exam exam) {
+        ExamAttendance examAttendance = new ExamAttendance();
+        examAttendance.setStudentId(studentId);
+        examAttendance.setMarkedTime(markedTime);
+        examAttendance.setValidated(isValidated);
+        examAttendance.setValidatedTime(validatedTime);
+        examAttendance.setExam(exam);
+        return examAttendance;
+    }
+
     private String encodePassword(String password) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder.encode(password);
     }
-    
+
 }

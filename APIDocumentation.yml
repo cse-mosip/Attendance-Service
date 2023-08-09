@@ -47,7 +47,9 @@ paths:
                     type: string
                     example: "Exam created successfully"
                   data:
-                    $ref: '#/components/schemas/Exam'
+                    type: number
+                    description: Exam id
+                    example: 2
         '400':
           description: Invalid or missing details
       security:
@@ -370,6 +372,42 @@ paths:
       security:
         - access_token: []
 
+  /admin/lecture/create:
+    get:
+      tags:
+        - Lectures
+      summary: Create a lecture
+      description: This endpoint will provide functionality for a admin to create a lecture.
+      operationId: create
+      requestBody:
+        description: Lecture details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLectureRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Lecture created successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "LECTURE_CREATED_SUCCESSFULLY"
+                  message:
+                    type: string
+                    example: "Lecture created successfully!"
+                  data:
+                    type: number
+                    description: Lecture id
+                    example: 2
+        '400':
+          description: Invalid or missing details
+      security:
+        - access_token: [ ]
+
   /admin/hall/update:
     post:
       tags:
@@ -580,7 +618,7 @@ components:
           type: string
           example: "https://imgbb.com/abcdefgh"
           nullable: true
-        present:
+        is_present:
           type: boolean
           example: true
         marked_time:
@@ -588,7 +626,7 @@ components:
           format: date-time
           example: 2023-07-15T11:36:50
           nullable: true
-        validated:
+        is_validated:
           type: boolean
           example: true
         validated_time:
@@ -600,17 +638,11 @@ components:
     Exam:
       type: object
       properties:
-        exam_id:
+        id:
           type: integer
           example: 1341
         course:
           $ref: '#/components/schemas/CourseDTO'
-        hall_id:
-          type: integer
-          example: 6
-        invigilator_id:
-          type: integer
-          example: 987
         start_time:
           type: string
           format: date-time
@@ -631,15 +663,12 @@ components:
         attendance:
           type: integer
           example: 126
-        hall:
-          $ref: '#/components/schemas/HallsDTO'
-        lecturer:
+        hall_name:
           type: string
-          example: "Prof. Indika Perera"
-        attendees:
-          type: array
-          items:
-            $ref: '#/components/schemas/StudentDTO'
+          example: Seminar Room
+        invigilator_name:
+          type: string
+          example: James Doe
 
     LoginRequestDTO:
       type: object
@@ -772,27 +801,66 @@ components:
           example: 22
 
     GetHallRequestDTO:
-      startTime:
-        type: date-time
-        description: Start Time
-        example: "2023-07-15T10:00:00"
-      endTime:
-        type: date-time
-        description: End Time
-        example: "2023-07-15T12:00:00"
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+          description: Start Time
+          example: "2023-07-15T10:00:00"
+        end_time:
+          type: string
+          format: date-time
+          description: End Time
+          example: "2023-07-15T12:00:00"
+
+    CreateLectureRequestDTO:
+      type: object
+      properties:
+        course_id:
+          type: integer
+          example: 65
+        hall_id:
+          type: integer
+          example: 11
+        lecturer_id:
+          type: integer
+          example: 37
+        start_time:
+          type: string
+          format: date-time
+          example: "2023-07-15T10:00:00"
+        end_time:
+          type: string
+          format: date-time
+          example: "2023-07-15T12:00:00"
+        expected_attendance:
+          type: integer
+          example: 128
 
     CreateExamRequestDTO:
       type: object
       properties:
         course_id:
           type: integer
-          example: 1341
+          example: 2
         hall_id:
           type: integer
-          example: 6
+          example: 4
         invigilator_id:
           type: integer
-          example: 987
+          example: 19
+        start_time:
+          type: string
+          format: date-time
+          example: "2023-07-15T10:00:00"
+        end_time:
+          type: string
+          format: date-time
+          example: "2023-07-15T12:00:00"
+        expected_attendance:
+          type: integer
+          example: 200
 
     LectureDTO:
       type: object
