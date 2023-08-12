@@ -2,6 +2,7 @@ package uom.mosip.attendanceservice.services;
 
 import okhttp3.*;
 import org.springframework.stereotype.Service;
+import uom.mosip.attendanceservice.dto.http.HttpResponseDTO;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,18 +20,26 @@ public class HttpService {
     }
 
 
-    public void post(String url, String requestBody) {
+    public HttpResponseDTO post(String url, String requestBody) {
         Request request = new Request.Builder()
                 .url(url)
                 .post(RequestBody.create(requestBody, HttpService.JSON))
                 .build();
+
+        return sendRequest(request);
     }
 
-    public void sendRequest(Request request) {
+    public HttpResponseDTO sendRequest(Request request) {
         try (Response response = client.newCall(request).execute()) {
+            HttpResponseDTO responseDTO
+                    = new HttpResponseDTO(response.code(), response.message(), response.isSuccessful());
+            if (response.body() != null)
+                responseDTO.setRequestBody(response.body().string());
 
+            return responseDTO;
         } catch (Exception e) {
             e.printStackTrace();
+            return new HttpResponseDTO(true);
         }
     }
 }

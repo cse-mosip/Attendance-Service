@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.dto.auth.LoginRequestDTO;
+import uom.mosip.attendanceservice.dto.auth.RSUser;
 import uom.mosip.attendanceservice.helpers.UserTypeHelper;
 import uom.mosip.attendanceservice.models.User;
 import uom.mosip.attendanceservice.services.AuthenticationService;
+import uom.mosip.attendanceservice.services.RSAuthService;
 import uom.mosip.attendanceservice.services.TokenService;
 import uom.mosip.attendanceservice.services.UserService;
 
@@ -25,6 +27,9 @@ public class AuthController {
     private TokenService tokenService;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RSAuthService rsAuthService;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -44,22 +49,17 @@ public class AuthController {
     }
 
     private Object handlePasswordLogin(String username, String password) {
-        Optional<User> user = userService.getUserByEmail(username);
-        if (user.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseDTO("EMAIL_NOT_FOUND", "Email cannot be found."));
-        }
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        if (!passwordEncoder.matches(password, user.get().getPassword())) {
+        RSUser rsUser = rsAuthService.authenticateUser(username, password);
+        if (rsUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ResponseDTO("INCORRECT_PASSWORD", "Incorrect Password."));
+                    .body(new ResponseDTO("INVALID_CREDENTIALS", "Invalid credentials."));
         }
 
-        return tokenService.generateJWTToken(String.valueOf(user.get().getId()),
-                String.valueOf(user.get().getUserType()),
-                user.get().getId(),
-                userTypeHelper.getUserTypeName(user.get().getUserType()));
+
+        return tokenService.generateJWTToken(String.valueOf(rsUser.email),
+                rsUser.role,
+                1,
+                rsUser.role);
     }
 
     private Object handleFingerprintLogin(String fingerprint) {
