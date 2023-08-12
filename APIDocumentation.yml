@@ -17,6 +17,8 @@ tags:
     description:  APIs related to user authentication/registration
   - name: Halls
     description:  APIs related to Halls
+  - name: Courses
+    description:  APIs related to Courses
 
 paths:
   /admin/exam/create:
@@ -711,6 +713,32 @@ paths:
       security:
         - access_token: []
 
+#----------------------------
+/admin/user/get-lecturers:
+    get:
+      tags:
+        - Users
+      summary: Get all lecturers
+      description: This endpoint will provide all lecturers.
+      operationId: getLecturers
+      responses:
+        "200":
+          description: Get lecture hall successfully!.
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Lecturers Fetched"
+                  data:
+                    $ref: "#/components/schemas/UserDTO"
+      security:
+        - access_token: []
+
 
 components:
   schemas:
@@ -1069,6 +1097,34 @@ components:
           description: Picture of student
           example: 23xcewjf4wyfcw4093ixh32feefr4f4cgttrbtrbt
           nullable: false
+
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of user
+          example: 32
+          nullable: false
+
+        email:
+          type: string
+          description: Email of user
+          example: abc@gmail.com
+          nullable: false
+
+        name:
+          type: string
+          description: Name of user
+          example: Nuwan
+          nullable: false
+
+        mosipid:
+          type: string
+          description: Mosip id of user
+          nullable: false
+
 
   securitySchemes:
     access_token:

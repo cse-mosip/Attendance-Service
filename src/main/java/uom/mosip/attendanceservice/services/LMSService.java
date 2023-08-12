@@ -32,6 +32,12 @@ public class LMSService {
                 .toList();
     }
 
+    public List<CourseDTO> getCoursesByIntake(long intake) {
+        return courseRepository.fetchCoursesByIntake(intake)
+                .stream().map(CourseDTO::new)
+                .toList();
+    }
+
     public CourseDTO getCourseByID(String courseId) {
         Optional<Course> c = courseRepository.findById(courseId);
         return c.map(CourseDTO::new).orElse(null);

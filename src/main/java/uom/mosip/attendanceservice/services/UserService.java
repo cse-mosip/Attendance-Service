@@ -3,8 +3,11 @@ package uom.mosip.attendanceservice.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uom.mosip.attendanceservice.dao.UserRepository;
+import uom.mosip.attendanceservice.dto.UserDTO;
+import uom.mosip.attendanceservice.dto.lms.CourseDTO;
 import uom.mosip.attendanceservice.models.User;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -42,6 +45,11 @@ public class UserService {
             throw new Exception("User with the same MOSIP ID exists");
         }
         return userRepository.save(user);
+    }
+
+    public List<UserDTO> getALlUsers() {
+        return userRepository.fetchAllUsers().stream().map(UserDTO::new)
+                .toList();
     }
 
 }

@@ -10,4 +10,7 @@ public interface CourseRepository extends CrudRepository<Course, String> {
 
     @Query("SELECT c FROM Course c")
     List<Course> fetchAllCourses();
+
+    @Query("SELECT c FROM Course c WHERE c.intake=?1")
+    List<Course> fetchCoursesByIntake(long intake);
 }
