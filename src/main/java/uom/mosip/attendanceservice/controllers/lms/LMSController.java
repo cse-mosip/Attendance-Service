@@ -1,9 +1,8 @@
 package uom.mosip.attendanceservice.controllers.lms;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import uom.mosip.attendanceservice.dto.ResponseDTO;
 import uom.mosip.attendanceservice.services.LMSService;
 
 @RestController
@@ -16,6 +15,11 @@ public class LMSController {
     @GetMapping("/getAllModules")
     public Object getAllModules() {
         return lmsService.getAllCourses();
+    }
+
+    @GetMapping("/getModules/{intake}")
+    public Object getCoursesByIntake(@PathVariable("intake") long intake) {
+        return lmsService.getCoursesByIntake(intake);
     }
 
 }

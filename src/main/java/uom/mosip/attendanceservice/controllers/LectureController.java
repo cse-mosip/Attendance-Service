@@ -98,4 +98,6 @@ public class LectureController {
                 .body(new ResponseDTO("OK", "Lectures Fetched.", lectureDTOList));
     }
 
+
+
 }
