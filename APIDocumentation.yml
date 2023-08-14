@@ -714,30 +714,32 @@ paths:
         - access_token: []
 
 #----------------------------
-/admin/user/get-lecturers:
-    get:
-      tags:
-        - Users
-      summary: Get all lecturers
-      description: This endpoint will provide all lecturers.
-      operationId: getLecturers
-      responses:
-        "200":
-          description: Get lecture hall successfully!.
-          content:
-            application/json:
-              schema:
-                properties:
-                  status:
-                    type: string
-                    example: "OK"
-                  message:
-                    type: string
-                    example: "Lecturers Fetched"
-                  data:
-                    $ref: "#/components/schemas/UserDTO"
-      security:
-        - access_token: []
+  /admin/user/get-lecturers:
+      get:
+        tags:
+          - Users
+        summary: Get all lecturers
+        description: This endpoint will provide all lecturers.
+        operationId: getLecturers
+        responses:
+          "200":
+            description: Get lecture hall successfully!.
+            content:
+              application/json:
+                schema:
+                  properties:
+                    status:
+                      type: string
+                      example: "OK"
+                    message:
+                      type: string
+                      example: "Lecturers Fetched"
+                    data:
+                      type: array
+                      items:
+                        $ref: "#/components/schemas/UserDTO"
+        security:
+          - access_token: []
 
 
 components:
@@ -902,6 +904,22 @@ components:
           type: string
           example: James Doe
 
+    Fingerprint:
+      type: object
+      properties:
+        buffer:
+          type: object
+          properties:
+            type:
+              type: string
+              example: Buffer
+            data:
+              type: array
+              example: [255,216,255,224,0,16,74,70,73,70,0,1,1,0,0,1,0,1,0,0,255,254,0,32,67,114,101,97,116,101,100,32,98,121,32,73,110,169,18,75,52,142,169,110,62,240,216,163,1,190,189,43,207,126,58,248,182,120,181,11,63,15,233,215,206,187,131,61,226,138,0,41,13,20,80,2,82,209,69,0,45,20,81,64,5,20,81,64,5,20,81,64,5,20,81,64,5,20,81,64,5,20,81,64,5,20,81,64,31,255,217]
+        bioSubType:
+          type: string
+          example: Right Thumb
+
     GetHallRequestDTO:
       type: object
       properties:
@@ -1046,11 +1064,7 @@ components:
       type: object
       properties:
         fingerprint:
-          type: string
-          format: base64
-          description: Fingerprint object of the user
-          example: 3edfxref5f4e5cf54tec5eg544gve5tge6vtercf
-          nullable: false
+          $ref: '#/components/schemas/Fingerprint'
         eventId:
           type: integer
           format: int64

@@ -19,7 +19,7 @@ public class AuthRouteMatcher {
                 "/admin/exam/**",
                 "/admin/hall/**",
                 "/admin/lecture/**",
-                "admin/user/**",
+                "/admin/user/**",
                 "/student/exam-attendance/mark-exam-attendance"
         );
 

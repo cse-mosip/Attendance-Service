@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uom.mosip.attendanceservice.models.User;
-import uom.mosip.attendanceservice.models.lms.Course;
 
 
 @Getter
@@ -24,6 +23,7 @@ public class UserDTO {
         this.name = u.getName();
         this.mosipId = u.getMosipId();
     }
+
 }
 
 
