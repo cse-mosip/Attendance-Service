@@ -17,3 +17,6 @@ custom.jwt.expiry-time=3600
 
 ## Registration Service URL
 custom.rs.url=http://localhost:3000
+
+## Authentication Service URL
+custom.as.url=https://biometric-sdk-svc-docker.onrender.com
