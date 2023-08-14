@@ -31,9 +31,8 @@ public class LectureAttendanceDTO {
             this.isPresent = false;
         }
         if (studentDTO != null) {
-            this.studentName = studentDTO.getName();
-            this.indexNo = studentDTO.getIndex_number();
-            this.picture = studentDTO.getPicture();
+            this.studentName = studentDTO.getFirstName() + " " + studentDTO.getLastName();
+            this.indexNo = studentDTO.getIndex();
         }
     }
 
