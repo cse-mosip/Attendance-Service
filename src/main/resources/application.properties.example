@@ -14,3 +14,6 @@ spring.jpa.properties.hibernate.format_sql=true
 ## JWT Token Properties
 custom.jwt.secret=RSBz5n7LLAENSqDtIbi6alKrLsMjeYM63HKIk2NKK0YbxL5r48aPVPBPZxAsokv4pOQ9Tx5YXDQniYqlIdrl3ibcQV3+mFpW8E
 custom.jwt.expiry-time=3600
+
+## Registration Service URL
+custom.rs.url=http://localhost:3000

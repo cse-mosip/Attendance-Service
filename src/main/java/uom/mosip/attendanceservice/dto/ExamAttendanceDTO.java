@@ -17,7 +17,6 @@ public class ExamAttendanceDTO {
     private String studentId;
     private String indexNo;
     private String studentName;
-    private String picture;
     private boolean isPresent;
     private LocalDateTime markedTime;
     private boolean isValidated;
@@ -37,9 +36,8 @@ public class ExamAttendanceDTO {
         }
 
         if (studentDTO != null) {
-            this.studentName = studentDTO.getName();
-            this.indexNo = studentDTO.getIndex_number();
-            this.picture = studentDTO.getPicture();
+            this.studentName = studentDTO.getFirstName() + " " + studentDTO.getLastName();
+            this.indexNo = studentDTO.getIndex();
         }
     }
 
