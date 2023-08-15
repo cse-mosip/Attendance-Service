@@ -134,12 +134,19 @@ paths:
         - access_token: [ ]
 
   /admin/exam/all-exams:
-    get:
+    post:
       tags:
         - Exams
       summary: Get all exams
       description: This endpoint will provide details of all exams of the system.
       operationId: getAllExams
+      requestBody:
+        description: Time period consisting Start time and end time
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetExamsRequestDTO'
+        required: false
       responses:
         '200':
           description: Exams fetched successfully.
@@ -919,6 +926,22 @@ components:
         bioSubType:
           type: string
           example: Right Thumb
+
+    GetExamsRequestDTO:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+          description: Beginning of time period
+          example: "2023-07-15T10:00:00"
+          required: false
+        end_time:
+          type: string
+          format: date-time
+          description: End of time period
+          example: "2023-07-15T12:00:00"
+          required: false
 
     GetHallRequestDTO:
       type: object
