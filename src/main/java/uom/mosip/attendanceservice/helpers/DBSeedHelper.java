@@ -426,6 +426,23 @@ public class DBSeedHelper {
                 halls.get(1),
                 users.get(1));
         examRepository.save(exam24);
+
+        Exam exam25 = createExamObject(
+                14,
+                LocalDateTime.of(2023, 8, 16, 10, 0),
+                LocalDateTime.of(2023, 8, 16, 12, 0),
+                128,
+                halls.get(2),
+                users.get(2));
+        examRepository.save(exam25);
+        Exam exam26 = createExamObject(
+                15,
+                LocalDateTime.of(2023, 8, 16, 13, 0),
+                LocalDateTime.of(2023, 8, 16, 15, 0),
+                128,
+                halls.get(3),
+                users.get(3));
+        examRepository.save(exam26);
     }
 
     private void lectureSeed() {
@@ -632,6 +649,23 @@ public class DBSeedHelper {
                 halls.get(1),
                 users.get(1));
         lectureRepository.save(lecture24);
+
+        Lecture lecture25 = createLectureObject(
+                14,
+                LocalDateTime.of(2023, 8, 16, 10, 0),
+                LocalDateTime.of(2023, 8, 16, 12, 0),
+                128,
+                halls.get(4),
+                users.get(4));
+        lectureRepository.save(lecture25);
+        Lecture lecture26 = createLectureObject(
+                15,
+                LocalDateTime.of(2023, 8, 16, 13, 0),
+                LocalDateTime.of(2023, 8, 16, 15, 0),
+                128,
+                halls.get(5),
+                users.get(5));
+        lectureRepository.save(lecture26);
     }
 
     private void lectureAttendanceSeed() {
