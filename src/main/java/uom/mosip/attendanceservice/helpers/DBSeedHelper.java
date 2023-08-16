@@ -439,7 +439,7 @@ public class DBSeedHelper {
         examRepository.save(exam25);
         Exam exam26 = createExamObject(
                 15,
-                LocalDateTime.of(2023, 8, 16, 12, 30),
+                LocalDateTime.of(2023, 8, 16, 13, 30),
                 LocalDateTime.of(2023, 8, 16, 15, 30),
                 128,
                 halls.get(3),
