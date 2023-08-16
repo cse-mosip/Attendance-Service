@@ -24,7 +24,6 @@ public class AuthenticationService {
 
     // authenticate a student based on biometric data
     public String authenticate(Object fingerprint) {
-        // TODO - call authentication service and get the student MOSIP id
         String url = asURL + "/upload";
 
         ArrayList<Object> fingerprintList = new ArrayList<>();

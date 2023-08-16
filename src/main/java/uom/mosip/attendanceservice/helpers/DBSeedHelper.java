@@ -50,6 +50,8 @@ public class DBSeedHelper {
         courseSeed();
         examSeed();
         lectureSeed();
+        lectureAttendanceSeed();
+        examAttendanceSeed();
     }
 
 
@@ -146,18 +148,19 @@ public class DBSeedHelper {
         Student student15 = createStudentObject("S15");
         studentRepository.save(student15);
 
-        Student student16 = createStudentObject("S16");
+        // TODO - Change
+        Student student16 = createStudentObject("190623V");
         studentRepository.save(student16);
-        Student student17 = createStudentObject("S17");
+        Student student17 = createStudentObject("190415K");
         studentRepository.save(student17);
-        Student student18 = createStudentObject("S18");
+        Student student18 = createStudentObject("190241X");
         studentRepository.save(student18);
 
-        Student student19 = createStudentObject("S19");
+        Student student19 = createStudentObject("190211G");
         studentRepository.save(student19);
-        Student student20 = createStudentObject("S20");
+        Student student20 = createStudentObject("1900456J");
         studentRepository.save(student20);
-        Student student21 = createStudentObject("S21");
+        Student student21 = createStudentObject("190488J");
         studentRepository.save(student21);
     }
 
@@ -429,16 +432,16 @@ public class DBSeedHelper {
 
         Exam exam25 = createExamObject(
                 14,
-                LocalDateTime.of(2023, 8, 16, 10, 0),
-                LocalDateTime.of(2023, 8, 16, 12, 0),
+                LocalDateTime.of(2023, 8, 15, 8, 0),
+                LocalDateTime.of(2023, 8, 15, 10, 0),
                 128,
                 halls.get(2),
-                users.get(2));
+                users.get(1));
         examRepository.save(exam25);
         Exam exam26 = createExamObject(
                 15,
-                LocalDateTime.of(2023, 8, 16, 13, 0),
-                LocalDateTime.of(2023, 8, 16, 15, 0),
+                LocalDateTime.of(2023, 8, 16, 8, 0),
+                LocalDateTime.of(2023, 8, 16, 23, 0),
                 128,
                 halls.get(3),
                 users.get(3));
@@ -651,20 +654,20 @@ public class DBSeedHelper {
         lectureRepository.save(lecture24);
 
         Lecture lecture25 = createLectureObject(
-                14,
-                LocalDateTime.of(2023, 8, 16, 10, 0),
-                LocalDateTime.of(2023, 8, 16, 12, 0),
+                13,
+                LocalDateTime.of(2023, 8, 15, 15, 0),
+                LocalDateTime.of(2023, 8, 15, 17, 0),
                 128,
                 halls.get(4),
-                users.get(4));
+                users.get(1));
         lectureRepository.save(lecture25);
         Lecture lecture26 = createLectureObject(
-                15,
-                LocalDateTime.of(2023, 8, 16, 13, 0),
-                LocalDateTime.of(2023, 8, 16, 15, 0),
+                16,
+                LocalDateTime.of(2023, 8, 16, 8, 0),
+                LocalDateTime.of(2023, 8, 16, 23, 0),
                 128,
                 halls.get(5),
-                users.get(5));
+                users.get(1));
         lectureRepository.save(lecture26);
     }
 
@@ -676,7 +679,39 @@ public class DBSeedHelper {
         List<Lecture> lectureList = (List<Lecture>) lectureRepository.findAll();
 
         // Add lecture attendance
+        LectureAttendance lectureAttendance1 = createLectureAttendanceObject(
+                "190623V",
+                LocalDateTime.of(2021, 4, 7, 10, 10),
+                lectureList.get(10)
+        );
+        lectureAttendanceRepository.save(lectureAttendance1);
 
+        updateLecture(lectureList.get(10), true, true, 1);
+
+        LectureAttendance lectureAttendance2 = createLectureAttendanceObject(
+                "190623V",
+                LocalDateTime.of(2023, 8, 15, 15, 1),
+                lectureList.get(24)
+        );
+        lectureAttendanceRepository.save(lectureAttendance2);
+
+        LectureAttendance lectureAttendance3 = createLectureAttendanceObject(
+                "190415K",
+                LocalDateTime.of(2023, 8, 15, 15, 2),
+                lectureList.get(24)
+        );
+        lectureAttendanceRepository.save(lectureAttendance3);
+
+        updateLecture(lectureList.get(24), true, true, 2);
+
+        LectureAttendance lectureAttendance4 = createLectureAttendanceObject(
+                "190241X",
+                LocalDateTime.of(2023, 8, 16, 10, 0),
+                lectureList.get(25)
+        );
+        lectureAttendanceRepository.save(lectureAttendance4);
+
+        updateLecture(lectureList.get(25), true, false, 1);
     }
 
     private void examAttendanceSeed() {
@@ -687,7 +722,65 @@ public class DBSeedHelper {
         List<Exam> examList = (List<Exam>) examRepository.findAll();
 
         // Add exam attendance
+        ExamAttendance examAttendance1 = createExamAttendanceObject(
+                "190415K",
+                LocalDateTime.of(2021, 4, 21, 12, 50),
+                true,
+                LocalDateTime.of(2021, 4, 21, 15, 3),
+                examList.get(10)
+        );
+        examAttendanceRepository.save(examAttendance1);
 
+        ExamAttendance examAttendance2 = createExamAttendanceObject(
+                "190241X",
+                LocalDateTime.of(2021, 4, 21, 12, 55),
+                true,
+                LocalDateTime.of(2021, 4, 21, 15, 1),
+                examList.get(10)
+        );
+        examAttendanceRepository.save(examAttendance2);
+
+        updateExam(examList.get(10), true, true, 2);
+
+        ExamAttendance examAttendance3 = createExamAttendanceObject(
+                "190623V",
+                LocalDateTime.of(2023, 8, 15, 7, 55),
+                true,
+                LocalDateTime.of(2023, 8, 15, 10, 5),
+                examList.get(24)
+        );
+        examAttendanceRepository.save(examAttendance3);
+
+        ExamAttendance examAttendance4 = createExamAttendanceObject(
+                "190415K",
+                LocalDateTime.of(2023, 8, 15, 7, 56),
+                true,
+                LocalDateTime.of(2023, 8, 15, 10, 1),
+                examList.get(24)
+        );
+        examAttendanceRepository.save(examAttendance4);
+
+        ExamAttendance examAttendance5 = createExamAttendanceObject(
+                "190241X",
+                LocalDateTime.of(2023, 8, 15, 7, 57),
+                true,
+                LocalDateTime.of(2023, 8, 15, 10, 15),
+                examList.get(24)
+        );
+        examAttendanceRepository.save(examAttendance5);
+
+        updateExam(examList.get(24), true, true, 3);
+
+        ExamAttendance examAttendance6 = createExamAttendanceObject(
+                "190241X",
+                LocalDateTime.of(2023, 8, 16, 7, 59),
+                false,
+                null,
+                examList.get(25)
+        );
+        examAttendanceRepository.save(examAttendance6);
+
+        updateExam(examList.get(25), true, false, 1);
     }
 
 
@@ -768,6 +861,22 @@ public class DBSeedHelper {
     private String encodePassword(String password) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder.encode(password);
+    }
+
+    private void updateLecture(Lecture lecture, boolean isStarted, boolean isEnded, int attendance) {
+        lecture.setStarted(isStarted);
+        lecture.setEnded(isEnded);
+        lecture.setAttendance(attendance);
+
+        lectureRepository.save(lecture);
+    }
+
+    private void updateExam(Exam exam, boolean isStarted, boolean isEnded, int attendance) {
+        exam.setStarted(isStarted);
+        exam.setEnded(isEnded);
+        exam.setAttendance(attendance);
+
+        examRepository.save(exam);
     }
 
 }
