@@ -154,13 +154,17 @@ public class DBSeedHelper {
         studentRepository.save(student17);
         Student student18 = createStudentObject("190241X");
         studentRepository.save(student18);
-
-        Student student19 = createStudentObject("190211G");
+        Student student19 = createStudentObject("190601D");
         studentRepository.save(student19);
-        Student student20 = createStudentObject("1900456J");
+        Student student20 = createStudentObject("190365F");
         studentRepository.save(student20);
-        Student student21 = createStudentObject("190488J");
+
+        Student student21 = createStudentObject("190211G");
         studentRepository.save(student21);
+        Student student22 = createStudentObject("1900456J");
+        studentRepository.save(student22);
+        Student student23 = createStudentObject("190488J");
+        studentRepository.save(student23);
     }
 
     private void courseSeed() {
@@ -191,36 +195,36 @@ public class DBSeedHelper {
         Course course9 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 20, studentList.subList(10, 15));
         courseRepository.save(course9);
 
-        Course course10 = createCourseObject("CS1032", "Programming Fundamentals", 19, studentList.subList(15, 18));
+        Course course10 = createCourseObject("CS1032", "Programming Fundamentals", 19, studentList.subList(15, 20));
         courseRepository.save(course10);
-        Course course11 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 19, studentList.subList(15, 18));
+        Course course11 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 19, studentList.subList(15, 20));
         courseRepository.save(course11);
-        Course course12 = createCourseObject("CS2042", "Operating Systems", 19, studentList.subList(15, 18));
+        Course course12 = createCourseObject("CS2042", "Operating Systems", 19, studentList.subList(15, 20));
         courseRepository.save(course12);
-        Course course13 = createCourseObject("CS3022", "Software Engineering", 19, studentList.subList(15, 18));
+        Course course13 = createCourseObject("CS3022", "Software Engineering", 19, studentList.subList(15, 20));
         courseRepository.save(course13);
-        Course course14 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 19, studentList.subList(15, 18));
+        Course course14 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 19, studentList.subList(15, 20));
         courseRepository.save(course14);
-        Course course15 = createCourseObject("CS4012", "Professional Practice", 19, studentList.subList(15, 18));
+        Course course15 = createCourseObject("CS4012", "Professional Practice", 19, studentList.subList(15, 20));
         courseRepository.save(course15);
-        Course course16 = createCourseObject("CS4622", "Machine Learning", 19, studentList.subList(15, 18));
+        Course course16 = createCourseObject("CS4622", "Machine Learning", 19, studentList.subList(15, 20));
         courseRepository.save(course16);
 
-        Course course17 = createCourseObject("CS1032", "Programming Fundamentals", 18, studentList.subList(18, 21));
+        Course course17 = createCourseObject("CS1032", "Programming Fundamentals", 18, studentList.subList(20, 23));
         courseRepository.save(course17);
-        Course course18 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 18, studentList.subList(18, 21));
+        Course course18 = createCourseObject("CS2012", "Principles of Object Oriented Programming", 18, studentList.subList(20, 23));
         courseRepository.save(course18);
-        Course course19 = createCourseObject("CS2042", "Operating Systems", 18, studentList.subList(18, 21));
+        Course course19 = createCourseObject("CS2042", "Operating Systems", 18, studentList.subList(20, 23));
         courseRepository.save(course19);
-        Course course20 = createCourseObject("CS3022", "Software Engineering", 18, studentList.subList(18, 21));
+        Course course20 = createCourseObject("CS3022", "Software Engineering", 18, studentList.subList(20, 23));
         courseRepository.save(course20);
-        Course course21 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 18, studentList.subList(18, 21));
+        Course course21 = createCourseObject("MN3042", "Business Economics and Financial Accounting", 18, studentList.subList(20, 23));
         courseRepository.save(course21);
-        Course course22 = createCourseObject("CS4012", "Professional Practice", 18, studentList.subList(18, 21));
+        Course course22 = createCourseObject("CS4012", "Professional Practice", 18, studentList.subList(20, 23));
         courseRepository.save(course22);
-        Course course23 = createCourseObject("CS4622", "Machine Learning", 18, studentList.subList(18, 21));
+        Course course23 = createCourseObject("CS4622", "Machine Learning", 18, studentList.subList(20, 23));
         courseRepository.save(course23);
-        Course course24 = createCourseObject("MA4053", "Numerical Analysis for Scientific Computing ", 18, studentList.subList(18, 21));
+        Course course24 = createCourseObject("MA4053", "Numerical Analysis for Scientific Computing ", 18, studentList.subList(20, 23));
         courseRepository.save(course24);
     }
 
@@ -439,8 +443,8 @@ public class DBSeedHelper {
         examRepository.save(exam25);
         Exam exam26 = createExamObject(
                 15,
-                LocalDateTime.of(2023, 8, 16, 13, 30),
-                LocalDateTime.of(2023, 8, 16, 15, 30),
+                LocalDateTime.of(2023, 8, 16, 8, 30),
+                LocalDateTime.of(2023, 8, 16, 22, 30),
                 128,
                 halls.get(3),
                 users.get(3));
