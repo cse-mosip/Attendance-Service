@@ -148,7 +148,6 @@ public class DBSeedHelper {
         Student student15 = createStudentObject("S15");
         studentRepository.save(student15);
 
-        // TODO - Change
         Student student16 = createStudentObject("190623V");
         studentRepository.save(student16);
         Student student17 = createStudentObject("190415K");
